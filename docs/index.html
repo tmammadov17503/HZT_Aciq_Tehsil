@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AçıqTəhsil | Hər Kəs Üçün Təhsil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0a1628;
+      --deep: #0d1f3c;
+      --blue: #1a4fa0;
+      --accent: #e8a020;
+      --gold: #f5c842;
+      --light: #f4f6fb;
+      --white: #ffffff;
+      --text: #1e2d45;
+      --muted: #5a6e8a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw;
+      height: 70px;
+      background: rgba(10,22,40,0.96);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.75);
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--navy) !important;
+      padding: 0.45rem 1.1rem;
+      border-radius: 6px;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: var(--gold) !important; color: var(--navy) !important; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: white; transition: all 0.3s; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--deep) 50%, #0e2847 100%);
+      display: flex; align-items: center;
+      padding: 100px 5vw 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(26,79,160,0.35) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+      max-width: 1200px; margin: 0 auto; width: 100%;
+      position: relative; z-index: 1;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: rgba(245,200,66,0.15);
+      border: 1px solid rgba(245,200,66,0.4);
+      color: var(--gold);
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 0.35rem 0.9rem; border-radius: 20px;
+      margin-bottom: 1.4rem;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 1.4rem;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-desc {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.05rem; line-height: 1.75;
+      margin-bottom: 2.2rem;
+      max-width: 480px;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-btns {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--navy);
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-weight: 700; font-size: 0.95rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold); transform: translateY(-2px); }
+
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,0.35);
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-weight: 600; font-size: 0.95rem;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    /* Hero visual */
+    .hero-visual {
+      display: flex; flex-direction: column; gap: 1.2rem;
+      animation: fadeIn 1s 0.4s ease both;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 1.4rem 1.8rem;
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; gap: 1.2rem;
+    }
+
+    .stat-icon {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--accent), var(--gold));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 900;
+      color: var(--white); line-height: 1;
+    }
+    .stat-label { color: rgba(255,255,255,0.6); font-size: 0.82rem; margin-top: 2px; }
+
+    /* ── MISSION ── */
+    .mission {
+      background: var(--light);
+      padding: 90px 5vw;
+    }
+
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.8rem;
+    }
+
+    .mission-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+    }
+
+    .mission h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 1.4rem;
+    }
+
+    .mission p {
+      color: var(--muted);
+      font-size: 1rem; line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .mission-quote {
+      border-left: 4px solid var(--accent);
+      padding-left: 1.2rem;
+      margin-top: 1.6rem;
+      font-style: italic;
+      color: var(--text);
+      font-size: 1.05rem; line-height: 1.7;
+    }
+
+    .mission-right {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .value-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 1.6rem;
+      box-shadow: 0 2px 20px rgba(10,22,40,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .value-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(10,22,40,0.13); }
+
+    .value-card .icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .value-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+    .value-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── RESOURCES ── */
+    .resources {
+      padding: 90px 5vw;
+      background: var(--white);
+    }
+
+    .resources-head {
+      text-align: center; margin-bottom: 3.5rem;
+    }
+
+    .resources-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 0.8rem;
+    }
+
+    .resources-head p { color: var(--muted); max-width: 520px; margin: 0 auto; font-size: 1rem; line-height: 1.7; }
+
+    .resources-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.8rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    .res-card {
+      border: 1.5px solid #e6eaf2;
+      border-radius: 18px;
+      padding: 2.2rem 1.8rem;
+      transition: all 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .res-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--blue), var(--accent));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .res-card:hover { border-color: transparent; box-shadow: 0 10px 40px rgba(10,22,40,0.1); transform: translateY(-4px); }
+    .res-card:hover::before { transform: scaleX(1); }
+
+    .res-icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, #e8f0fe, #d2e3fc);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin-bottom: 1.4rem;
+    }
+
+    .res-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--navy); margin-bottom: 0.7rem;
+    }
+
+    .res-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.4rem; }
+
+    .res-link {
+      font-size: 0.88rem; font-weight: 700;
+      color: var(--blue); text-decoration: none;
+      display: flex; align-items: center; gap: 0.4rem;
+      transition: gap 0.2s, color 0.2s;
+    }
+    .res-link:hover { color: var(--accent); gap: 0.7rem; }
+
+    /* ── WHY ── */
+    .why {
+      background: var(--navy);
+      padding: 90px 5vw;
+    }
+
+    .why-head { text-align: center; margin-bottom: 3.5rem; }
+    .why-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 800; color: var(--white);
+    }
+    .why-head p { color: rgba(255,255,255,0.6); margin-top: 0.6rem; font-size: 1rem; }
+
+    .why-grid {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 1.5rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    .why-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; padding: 2rem 1.5rem;
+      text-align: center;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .why-card:hover { background: rgba(255,255,255,0.11); transform: translateY(-4px); }
+
+    .why-card .icon { font-size: 2.4rem; margin-bottom: 1rem; }
+    .why-card h4 { font-size: 1rem; font-weight: 700; color: var(--gold); margin-bottom: 0.6rem; }
+    .why-card p { font-size: 0.87rem; color: rgba(255,255,255,0.6); line-height: 1.65; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      padding: 80px 5vw;
+      background: linear-gradient(135deg, var(--blue) 0%, #0e3a82 100%);
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(245,200,66,0.2) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900; color: var(--white);
+      margin-bottom: 1rem; position: relative;
+    }
+    .cta-banner p { color: rgba(255,255,255,0.75); font-size: 1.05rem; margin-bottom: 2rem; position: relative; }
+
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060e1c;
+      padding: 60px 5vw 30px;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem; max-width: 1100px; margin: 0 auto 3rem;
+    }
+
+    .footer-brand .nav-logo { font-size: 1.4rem; display: block; margin-bottom: 1rem; }
+    .footer-brand p { font-size: 0.87rem; line-height: 1.7; max-width: 300px; }
+
+    footer h5 { color: var(--white); font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1rem; }
+
+    footer ul { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    footer a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+    footer a:hover { color: var(--gold); }
+
+    .footer-contact p { font-size: 0.87rem; margin-bottom: 0.4rem; }
+
+    .social-row { display: flex; gap: 0.8rem; margin-top: 1rem; }
+    .social-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; text-decoration: none;
+      color: rgba(255,255,255,0.65);
+      transition: background 0.2s, color 0.2s;
+    }
+    .social-icon:hover { background: var(--accent); color: var(--navy); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.6rem; text-align: center;
+      font-size: 0.82rem; max-width: 1100px; margin: 0 auto;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-grid, .mission-grid { grid-template-columns: 1fr; }
+      .resources-grid { grid-template-columns: 1fr 1fr; }
+      .why-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    @media (max-width: 560px) {
+      .resources-grid, .why-grid, .mission-right { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 70px; left: 0; right: 0;
+      background: var(--navy);
+      padding: 1.5rem 5vw;
+      z-index: 99;
+      flex-direction: column; gap: 1rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none; font-size: 1rem; font-weight: 500;
+      padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Açıq<span>Təhsil</span></div>
+  <ul class="nav-links">
+    <li><a href="#mission">Missiya</a></li>
+    <li><a href="#resources">Resurslar</a></li>
+    <li><a href="#why">Niyə Biz?</a></li>
+    <li><a href="https://mamedzadejalya.wixsite.com/hsil/challenges">Kurslar</a></li>
+    <li><a href="https://mamedzadejalya.wixsite.com/hsil/book-online">Video Dərslər</a></li>
+    <li><a href="https://mamedzadejalya.wixsite.com/hsil/basvur" class="nav-cta">Başvur</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()" aria-label="Menyu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#mission" onclick="closeMenu()">Missiya</a>
+  <a href="#resources" onclick="closeMenu()">Resurslar</a>
+  <a href="#why" onclick="closeMenu()">Niyə Biz?</a>
+  <a href="https://mamedzadejalya.wixsite.com/hsil/challenges">Kurslar</a>
+  <a href="https://mamedzadejalya.wixsite.com/hsil/book-online">Video Dərslər</a>
+  <a href="https://mamedzadejalya.wixsite.com/hsil/basvur">Başvur</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-tag">🎓 Azərbaycanın Rəqəmsal Təhsil Platforması</div>
+      <h1>Təhsilə <em>Açıq Yol,</em><br>Hər Kəs Üçün</h1>
+      <p class="hero-desc">Pulsuz tədris materialları və geniş resurs kitabxanamızla öyrənməyə başlayın. AçıqTəhsil platforması hər kəs üçün universal əlçatanlığı təmin edir.</p>
+      <div class="hero-btns">
+        <a href="#resources" class="btn-primary">Resursları Kəşf Et →</a>
+        <a href="#mission" class="btn-outline">Bizimlə Tanış Ol</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="stat-card">
+        <div class="stat-icon">📚</div>
+        <div>
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Pulsuz Tədris Materialı</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎥</div>
+        <div>
+          <div class="stat-num">200+</div>
+          <div class="stat-label">Video Mühazirə</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🌍</div>
+        <div>
+          <div class="stat-num">10K+</div>
+          <div class="stat-label">Öyrənən Tələbə</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission" id="mission">
+  <div class="section-inner mission-grid">
+    <div class="reveal">
+      <div class="section-label">Missiyamız</div>
+      <h2>Bizim Missiyamız</h2>
+      <p>AçıqTəhsil olaraq əsas məqsədimiz, coğrafi mövqedən və sosial vəziyyətdən asılı olmayaraq hər kəs üçün keyfiyyətli və pulsuz təhsil resurslarını əlçatan etməkdir.</p>
+      <p>Biz bilginin sərhədlərini aradan qaldıraraq, öyrənmək istəyən hər bir fərdin öz potensialını reallaşdırmasına dəstək oluruq.</p>
+      <blockquote class="mission-quote">
+        Biz inanırıq ki, təhsil cəmiyyəti müsbətə doğru dəyişdirən ən güclü qüvvədir.
+      </blockquote>
+    </div>
+    <div class="mission-right reveal">
+      <div class="value-card">
+        <div class="icon">🆓</div>
+        <h4>Tamamilə Pulsuz</h4>
+        <p>Bütün materiallar hər kəs üçün ödənişsizdir.</p>
+      </div>
+      <div class="value-card">
+        <div class="icon">🏆</div>
+        <h4>Ekspert Bilikləri</h4>
+        <p>Məzmun peşəkar ekspertlər tərəfindən hazırlanır.</p>
+      </div>
+      <div class="value-card">
+        <div class="icon">📱</div>
+        <h4>Hər Yerdən</h4>
+        <p>İstənilən vaxt, hər hansı cihazdan çıxış.</p>
+      </div>
+      <div class="value-card">
+        <div class="icon">🔄</div>
+        <h4>Daim Yenilənir</h4>
+        <p>Resurs bazamız müntəzəm olaraq genişlənir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="resources" id="resources">
+  <div class="section-inner">
+    <div class="resources-head reveal">
+      <div class="section-label">Nə təklif edirik</div>
+      <h2>Təhsil Resurslarımız</h2>
+      <p>Dünya səviyyəli mütəxəssislər tərəfindən hazırlanmış materiallarla öyrənmənizi növbəti səviyyəyə qaldırın.</p>
+    </div>
+    <div class="resources-grid">
+      <div class="res-card reveal">
+        <div class="res-icon">🎙️</div>
+        <h3>Açıq Mühazirələr</h3>
+        <p>Dünyanın ən yaxşı mütəxəssisləri tərəfindən hazırlanan, hər kəs üçün əlçatan olan video mühazirələr və qeydlər mərkəzi.</p>
+        <a href="https://mamedzadejalya.wixsite.com/hsil/book-online" class="res-link">Daha çox <span>→</span></a>
+      </div>
+      <div class="res-card reveal">
+        <div class="res-icon">📖</div>
+        <h3>Rəqəmsal Kitabxana</h3>
+        <p>Yüzlərlə elmi məqalə, dərslik və tədqiqat materialına asan və sürətli çıxış imkanı təmin edən geniş baza.</p>
+        <a href="#" class="res-link">Daha çox <span>→</span></a>
+      </div>
+      <div class="res-card reveal">
+        <div class="res-icon">⚡</div>
+        <h3>Fərdi Öyrənmə</h3>
+        <p>Öz tempinizdə öyrənmək üçün dizayn edilmiş, interaktiv tapşırıqlar və özünüqiymətləndirmə alətləri.</p>
+        <a href="https://mamedzadejalya.wixsite.com/hsil/challenges" class="res-link">Daha çox <span>→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="section-inner">
+    <div class="why-head reveal">
+      <h2>Niyə AçıqTəhsil-i seçməlisiniz?</h2>
+      <p>Minlərlə öyrənənin güvəndiyi platforma</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="icon">🆓</div>
+        <h4>Tamamilə Pulsuz</h4>
+        <p>Bütün tədris materialları hər kəs üçün tamamilə ödənişsizdir.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="icon">🌟</div>
+        <h4>Ekspert Bilikləri</h4>
+        <p>Məzmunumuz yerli və xarici peşəkar ekspertlər tərəfindən hazırlanır.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="icon">📱</div>
+        <h4>Hər Yerdən Öyrən</h4>
+        <p>Dərs materiallarına istənilən vaxt və hər hansı cihazdan çıxışınız var.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="icon">📚</div>
+        <h4>Geniş Seçim</h4>
+        <p>Müxtəlif mövzuları əhatə edən zəngin resurs bazamız daim yenilənir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <h2>Öyrənməyə hazırsınız?</h2>
+  <p>Bilik dünyasına qapılarınızı açın. Pulsuz resurslarımızla təhsilinizi növbəti səviyyəyə qaldırın.</p>
+  <div class="cta-btns">
+    <a href="https://mamedzadejalya.wixsite.com/hsil/basvur" class="btn-primary">İndi Başla →</a>
+    <a href="#resources" class="btn-outline">Resursları Kəşf Et</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">Açıq<span>Təhsil</span></span>
+      <p>Azərbaycanın rəqəmsal təhsil platforması. Hər kəs üçün keyfiyyətli və pulsuz təhsil.</p>
+      <div class="social-row">
+        <a href="http://www.facebook.com" class="social-icon" aria-label="Facebook">f</a>
+        <a href="http://www.instagram.com" class="social-icon" aria-label="Instagram">in</a>
+        <a href="http://www.youtube.com" class="social-icon" aria-label="YouTube">▶</a>
+        <a href="http://www.x.com" class="social-icon" aria-label="X">✕</a>
+        <a href="http://www.linkedin.com" class="social-icon" aria-label="LinkedIn">Li</a>
+        <a href="http://www.tiktok.com" class="social-icon" aria-label="TikTok">♪</a>
+      </div>
+    </div>
+    <div>
+      <h5>Keçidlər</h5>
+      <ul>
+        <li><a href="#mission">Missiya</a></li>
+        <li><a href="#resources">Resurslar</a></li>
+        <li><a href="https://mamedzadejalya.wixsite.com/hsil/challenges">Kurslar</a></li>
+        <li><a href="https://mamedzadejalya.wixsite.com/hsil/book-online">Video Dərslər</a></li>
+        <li><a href="https://mamedzadejalya.wixsite.com/hsil/blog">Kommentlər</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h5>Əlaqə</h5>
+      <p>📍 Bakı şəhəri, Azərbaycan</p>
+      <p>✉️ müraciət@aciqtehsil.az</p>
+      <p>📞 +994 50 123 45 67</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 AçıqTəhsil. Bütün hüquqlar qorunur.</p>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+</script>
+</body>
+</html>
