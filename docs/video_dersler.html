@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Video Dərslər | AçıqTəhsil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0a1628;--deep:#0d1f3c;--blue:#1a4fa0;--accent:#e8a020;--gold:#f5c842;--light:#f4f6fb;--white:#fff;--text:#1e2d45;--muted:#5a6e8a}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;height:70px;background:rgba(10,22,40,.97);backdrop-filter:blur(10px)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:#fff;text-decoration:none}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:1.8rem;list-style:none;align-items:center}
+.nav-links a{text-decoration:none;color:rgba(255,255,255,.75);font-size:.88rem;font-weight:500;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.nav-cta{background:var(--accent)!important;color:var(--navy)!important;padding:.45rem 1.1rem;border-radius:6px;font-weight:700!important}
+.nav-cta:hover{background:var(--gold)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:#fff}
+.mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:var(--navy);padding:1.5rem 5vw;z-index:99;flex-direction:column}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:rgba(255,255,255,.8);text-decoration:none;font-size:1rem;font-weight:500;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.mobile-menu a:hover{color:var(--gold)}
+.page-hero{padding:130px 5vw 70px;background:linear-gradient(135deg,var(--navy),var(--deep));text-align:center;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(26,79,160,.4),transparent 60%);pointer-events:none}
+.page-hero .tag{display:inline-block;background:rgba(245,200,66,.15);border:1px solid rgba(245,200,66,.4);color:var(--gold);font-size:.78rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:.35rem .9rem;border-radius:20px;margin-bottom:1.2rem;position:relative}
+.page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;color:#fff;margin-bottom:1rem;position:relative}
+.page-hero p{color:rgba(255,255,255,.7);font-size:1.05rem;max-width:560px;margin:0 auto;line-height:1.7;position:relative}
+.content{padding:70px 5vw;max-width:1100px;margin:0 auto}
+.breadcrumb{display:flex;align-items:center;gap:.5rem;margin-bottom:2.5rem;font-size:.85rem;color:var(--muted)}
+.breadcrumb a{color:var(--blue);text-decoration:none}.breadcrumb a:hover{color:var(--accent)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.svc-card{border-radius:18px;overflow:hidden;border:1px solid #e6eaf2;transition:transform .3s,box-shadow .3s;background:#fff}
+.svc-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(10,22,40,.14)}
+.svc-thumb{height:190px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative}
+.svc-badge{position:absolute;bottom:12px;left:12px;font-size:.72rem;font-weight:700;padding:.3rem .8rem;border-radius:20px}
+.badge-open{background:rgba(52,199,89,.2);color:#34c759;border:1px solid rgba(52,199,89,.4)}
+.badge-ended{background:rgba(255,59,48,.15);color:#ff3b30;border:1px solid rgba(255,59,48,.3)}
+.badge-soon{background:rgba(255,149,0,.15);color:#ff9500;border:1px solid rgba(255,149,0,.3)}
+.svc-body{padding:1.6rem}
+.svc-cat{font-size:.78rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:.5rem}
+.svc-body h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:800;color:var(--navy);margin-bottom:.6rem}
+.svc-body p{font-size:.88rem;color:var(--muted);line-height:1.7;margin-bottom:1.2rem}
+.svc-price{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:1.2rem}
+.svc-price small{font-size:.85rem;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400}
+.btn-book{display:block;text-align:center;background:var(--blue);color:#fff;padding:.75rem;border-radius:10px;font-weight:600;font-size:.9rem;text-decoration:none;transition:background .2s,color .2s}
+.btn-book:hover{background:var(--accent);color:var(--navy)}
+.btn-book.off{background:#e6eaf2;color:var(--muted);pointer-events:none}
+footer{background:#060e1c;padding:60px 5vw 30px;color:rgba(255,255,255,.55)}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:1100px;margin:0 auto 3rem}
+.ft-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;text-decoration:none;display:block;margin-bottom:.5rem}
+.ft-logo span{color:var(--gold)}
+.ft-brand p{font-size:.87rem;line-height:1.7;max-width:300px;margin-top:.5rem}
+footer h5{color:#fff;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem}
+footer ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+footer ul a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.88rem;transition:color .2s}
+footer ul a:hover{color:var(--gold)}
+.soc-row{display:flex;gap:.8rem;margin-top:1.2rem}
+.soc-icon{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;text-decoration:none;color:rgba(255,255,255,.65);transition:background .2s,color .2s}
+.soc-icon:hover{background:var(--accent);color:var(--navy)}
+.ft-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:1.6rem;text-align:center;font-size:.82rem;max-width:1100px;margin:0 auto}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:900px){.svc-grid{grid-template-columns:1fr 1fr}.nav-links{display:none}.hamburger{display:flex}.ft-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.svc-grid,.ft-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Açıq<span>Təhsil</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Ana Səhifə</a></li>
+    <li><a href="kurslar.html">Kurslar</a></li>
+    <li><a href="video_dersler.html" class="active">Video Dərslər</a></li>
+    <li><a href="kommentler.html">Kommentlər</a></li>
+    <li><a href="bashvur.html" class="nav-cta">Başvur</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menyu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mob">
+  <a href="index.html" onclick="closeMob()">Ana Səhifə</a>
+  <a href="kurslar.html" onclick="closeMob()">Kurslar</a>
+  <a href="video_dersler.html" onclick="closeMob()">Video Dərslər</a>
+  <a href="kommentler.html" onclick="closeMob()">Kommentlər</a>
+  <a href="bashvur.html" onclick="closeMob()">Başvur</a>
+</div>
+
+<div class="page-hero">
+  <div class="tag">🎥 Xidmətlər</div>
+  <h1>Video Dərslər</h1>
+  <p>Peşəkar müəllimlər tərəfindən hazırlanmış kurslarla öyrənməyə başlayın.</p>
+</div>
+
+<div class="content">
+  <div class="breadcrumb"><a href="index.html">Ana Səhifə</a> › <span>Video Dərslər</span></div>
+  <div class="svc-grid">
+    <div class="svc-card reveal">
+      <div class="svc-thumb" style="background:linear-gradient(135deg,#1565c0,#0d47a1)">🧮<span class="svc-badge badge-open">Mövcuddur</span></div>
+      <div class="svc-body">
+        <div class="svc-cat">Riyaziyyat</div>
+        <h3>Math Tutoring</h3>
+        <p>Master Mathematics: From Basics to Advanced. Əsaslardan qabaqcıl səviyyəyə qədər riyaziyyat dərsləri.</p>
+        <div class="svc-price">70 ₼ <small>Azərbaycan manatı</small></div>
+        <a href="bashvur.html" class="btn-book">İndi Yazıl</a>
+      </div>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-thumb" style="background:linear-gradient(135deg,#2e7d32,#1b5e20)">📖<span class="svc-badge badge-ended">Bitmişdir</span></div>
+      <div class="svc-body">
+        <div class="svc-cat">Akademik Bacarıqlar</div>
+        <h3>Study Skills Course</h3>
+        <p>Excel in Academics with Skill Courses. Effektli öyrənmə üsulları və akademik uğur üçün bacarıqlar.</p>
+        <div class="svc-price">50 ₼ <small>Azərbaycan manatı</small></div>
+        <a class="btn-book off">Kurs Bitib</a>
+      </div>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-thumb" style="background:linear-gradient(135deg,#6a1b9a,#4a148c)">🔬<span class="svc-badge badge-soon">Tezliklə</span></div>
+      <div class="svc-body">
+        <div class="svc-cat">Elm</div>
+        <h3>Science Workshops</h3>
+        <p>Explore Science: Unleashing Curiosity and Discoveries. Elmin sirləri ilə tanış olun, maraqlı eksperimentlər.</p>
+        <div class="svc-price">60 ₼ <small>Azərbaycan manatı</small></div>
+        <a href="bashvur.html" class="btn-book">Yazıl</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-grid">
+    <div class="ft-brand"><a href="index.html" class="ft-logo">Açıq<span>Təhsil</span></a><p>Azərbaycanın rəqəmsal təhsil platforması.</p>
+      <div class="soc-row"><a href="#" class="soc-icon">f</a><a href="#" class="soc-icon">in</a><a href="#" class="soc-icon">▶</a><a href="#" class="soc-icon">✕</a></div>
+    </div>
+    <div><h5>Keçidlər</h5><ul><li><a href="index.html">Ana Səhifə</a></li><li><a href="kurslar.html">Kurslar</a></li><li><a href="video_dersler.html">Video Dərslər</a></li><li><a href="kommentler.html">Kommentlər</a></li><li><a href="bashvur.html">Başvur</a></li></ul></div>
+    <div><h5>Əlaqə</h5><p style="font-size:.87rem;margin-bottom:.5rem">📍 Bakı, Azərbaycan</p><p style="font-size:.87rem;margin-bottom:.5rem">✉️ müraciət@aciqtehsil.az</p><p style="font-size:.87rem">📞 +994 50 123 45 67</p></div>
+  </div>
+  <div class="ft-bottom">© 2026 AçıqTəhsil. Bütün hüquqlar qorunur.</div>
+</footer>
+<script>
+const revs=document.querySelectorAll('.reveal');
+const ob=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*100);ob.unobserve(e.target)}})},{threshold:.1});
+revs.forEach(r=>ob.observe(r));
+function toggleMenu(){document.getElementById('mob').classList.toggle('open')}
+function closeMob(){document.getElementById('mob').classList.remove('open')}
+</script>
+</body></html>
