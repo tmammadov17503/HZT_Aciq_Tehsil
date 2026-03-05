@@ -7,7 +7,7 @@
      3. Exports window.AT = { requireLogin, currentUser }
    ================================================================ */
 
-import { auth, registerUser, loginUser, logoutUser, onAuthChange,
+import { registerUser, loginUser, logoutUser, onAuthChange,
          getUserProfile, markNotified }
   from "./firebase-config.js";
 
@@ -204,7 +204,7 @@ let _currentUser = null;
 let _pendingCallback = null;
 
 // ── Auth state listener ───────────────────────────────────────
-onAuthChange(auth, async (user) => {
+onAuthChange(async (user) => {
   _currentUser = user;
   const loggedIn = document.getElementById("at-logged-in");
   const loggedOut = document.getElementById("at-logged-out");
@@ -287,7 +287,7 @@ async function doLogin() {
     const user = await loginUser(email, pass);
     if (!user.emailVerified) {
       showErr("E-poçtunuzu təsdiqləyin. Zəhmət olmasa e-poçtunuzu yoxlayın.");
-      await auth.signOut(); // force sign out until verified
+      await logoutUser(); // force sign out until verified
     }
   } catch (e) {
     const msgs = {
@@ -315,7 +315,7 @@ async function doRegister() {
   try {
     await registerUser(email, pass, name);
     // sign out until email verified
-    await auth.signOut();
+    await logoutUser();
     showOk("✅ Qeydiyyat uğurlu! " + email + " ünvanına təsdiq e-poçtu göndərildi. Zəhmət olmasa e-poçtunuzu təsdiqləyin.");
   } catch (e) {
     const msgs = {
