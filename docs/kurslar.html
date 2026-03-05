@@ -88,7 +88,7 @@ footer ul a:hover{color:var(--gold)}
         <h3>9-cu sinif</h3>
         <p>Azərbaycan dili, İngilis dili və Riyaziyyat üzrə tam tədris proqramı. Mövzu-mövzu video dərslər.</p>
         <div class="course-meta"><span class="meta-item">📚 3 fənn</span><span class="meta-item">🆓 Pulsuz</span></div>
-        <button class="btn-card" onclick="goTo('sinif_9.html')">Detalları Gör</button>
+        <button class="btn-card" data-goto="sinif_9.html">Detalları Gör</button>
       </div>
     </div>
     <div class="course-card reveal">
@@ -98,7 +98,7 @@ footer ul a:hover{color:var(--gold)}
         <h3>10-cu sinif</h3>
         <p>Buraxılış və Blok fənnləri üzrə hazırlıq. 4 ixtisas qrupu üçün ayrılmış materiallar.</p>
         <div class="course-meta"><span class="meta-item">📚 Çox fənn</span><span class="meta-item">🆓 Pulsuz</span></div>
-        <button class="btn-card" onclick="goTo('sinif_10.html')">Detalları Gör</button>
+        <button class="btn-card" data-goto="sinif_10.html">Detalları Gör</button>
       </div>
     </div>
     <div class="course-card reveal">
@@ -108,7 +108,7 @@ footer ul a:hover{color:var(--gold)}
         <h3>11-ci sinif</h3>
         <p>Buraxılış imtahanlarına hazırlıq. Blok fənnləri üzrə qrup seçimi ilə sınaq testlər.</p>
         <div class="course-meta"><span class="meta-item">📚 Çox fənn</span><span class="meta-item">🆓 Pulsuz</span></div>
-        <button class="btn-card" onclick="goTo('sinif_11.html')">Detalları Gör</button>
+        <button class="btn-card" data-goto="sinif_11.html">Detalları Gör</button>
       </div>
     </div>
   </div>
@@ -121,12 +121,27 @@ footer ul a:hover{color:var(--gold)}
   </div>
   <div class="ft-bottom">© 2026 AçıqTəhsil. Bütün hüquqlar qorunur.</div>
 </footer>
-<script>
-function goTo(page){
-  if(window.AT){AT.requireLogin(()=>{window.location.href=page});return;}
-  window.addEventListener("at-ready",()=>AT.requireLogin(()=>{window.location.href=page}),{once:true});
-}
+<script type="module">
+// This module runs AFTER auth-modal.js (modules execute in HTML order).
+// window.AT is guaranteed to be set by the time this runs.
+import { onAuthChange } from './firebase-config.js';
 
+let currentUser = null;
+onAuthChange(user => { currentUser = user; });
+
+document.querySelectorAll('[data-goto]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const page = btn.dataset.goto;
+    if (currentUser) {
+      window.location.href = page;
+    } else {
+      // window.AT is set (auth-modal.js ran before this module)
+      window.AT.requireLogin(() => { window.location.href = page; });
+    }
+  });
+});
+</script>
+<script>
 function toggleMenu(){document.getElementById('mob').classList.toggle('open')}
 function closeMob(){document.getElementById('mob').classList.remove('open')}
 const _revs=document.querySelectorAll('.reveal');
