@@ -122,7 +122,10 @@ footer ul a:hover{color:var(--gold)}
   <div class="ft-bottom">© 2026 AçıqTəhsil. Bütün hüquqlar qorunur.</div>
 </footer>
 <script>
-function goTo(page){const a=()=>{if(window.AT){AT.requireLogin(()=>{window.location.href=page})}else{setTimeout(a,100)}};a()}
+function goTo(page){
+  if(window.AT){AT.requireLogin(()=>{window.location.href=page});return;}
+  window.addEventListener("at-ready",()=>AT.requireLogin(()=>{window.location.href=page}),{once:true});
+}
 
 function toggleMenu(){document.getElementById('mob').classList.toggle('open')}
 function closeMob(){document.getElementById('mob').classList.remove('open')}
