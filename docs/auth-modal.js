@@ -400,3 +400,6 @@ window.AT = {
   _toggleUserDrop: toggleUserDrop,
   showSnack,
 };
+
+// Signal that AT is ready for non-module scripts
+window.dispatchEvent(new Event("at-ready"));
