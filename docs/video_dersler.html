@@ -158,7 +158,7 @@ footer ul a:hover{color:var(--gold)}
         <h3>Math Tutoring</h3>
         <p>Əsaslardan qabaqcıl səviyyəyə qədər riyaziyyat. 1-ə-1 onlayn seans.</p>
         <div class="svc-price">70 ₼ <small>/ seans (1.5 saat)</small></div>
-        <button class="btn-book" onclick="openBooking('Math Tutoring','70 ₼','Riyaziyyat')">İndi Yazıl</button>
+        <button class="btn-book" data-svc="Math Tutoring" data-price="70 ₼" data-cat="Riyaziyyat">İndi Yazıl</button>
       </div>
     </div>
     <div class="svc-card reveal">
@@ -168,7 +168,7 @@ footer ul a:hover{color:var(--gold)}
         <h3>Study Skills Course</h3>
         <p>Effektli öyrənmə üsulları, vaxt idarəetməsi və imtahana hazırlıq.</p>
         <div class="svc-price">50 ₼ <small>/ seans (1 saat)</small></div>
-        <button class="btn-book" onclick="openBooking('Study Skills Course','50 ₼','Akademik Bacarıqlar')">İndi Yazıl</button>
+        <button class="btn-book" data-svc="Study Skills Course" data-price="50 ₼" data-cat="Akademik Bacarıqlar">İndi Yazıl</button>
       </div>
     </div>
     <div class="svc-card reveal">
@@ -178,7 +178,7 @@ footer ul a:hover{color:var(--gold)}
         <h3>Science Workshops</h3>
         <p>Fizika, kimya, biologiya üzrə interaktiv workshops. Laboratoriya tapşırıqları.</p>
         <div class="svc-price">60 ₼ <small>/ seans (1.5 saat)</small></div>
-        <button class="btn-book" onclick="openBooking('Science Workshops','60 ₼','Elm')">İndi Yazıl</button>
+        <button class="btn-book" data-svc="Science Workshops" data-price="60 ₼" data-cat="Elm">İndi Yazıl</button>
       </div>
     </div>
   </div>
@@ -251,66 +251,79 @@ footer ul a:hover{color:var(--gold)}
 </footer>
 
 <script type="module" src="auth-modal.js"></script>
-<script>
-// ── Booking state ─────────────────────────────────────────────
+<script type="module">
+// This module runs AFTER auth-modal.js (modules execute in HTML order).
+// window.AT is guaranteed set. onAuthChange shares the same Firebase auth singleton.
+import { onAuthChange } from './firebase-config.js';
+import { saveBooking } from './firebase-config.js';
+
+let currentUser = null;
+onAuthChange(user => { currentUser = user; });
+
+// ── Booking state ────────────────────────────────────────────
 let _svc="", _price="", _cat="", _selDate=null, _selTime="";
 let _calYear, _calMonth;
 const MONTHS_AZ=["Yanvar","Fevral","Mart","Aprel","May","İyun","İyul","Avqust","Sentyabr","Oktyabr","Noyabr","Dekabr"];
 const DOW_AZ=["B.e","Ç.a","Ç","C.a","C","Ş","B"];
 const TIME_SLOTS=["10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30"];
 
-function openBooking(svc, price, cat) {
-  function doOpen() {
-    AT.requireLogin(() => {
-      _svc=svc; _price=price; _cat=cat;
-      _selDate=null; _selTime="";
-      const now=new Date();
-      _calYear=now.getFullYear(); _calMonth=now.getMonth();
-      document.getElementById("dp-svc").textContent=svc;
-      document.getElementById("dp-price").textContent=price;
-      document.getElementById("dp-date").textContent="—";
-      document.getElementById("dp-time").textContent="—";
-      document.getElementById("dp-dur").textContent="1 saat 30 dəq";
-      document.getElementById("dp-total").textContent=price;
-      document.getElementById("btn-next").disabled=true;
-      document.getElementById("book-main").style.display="block";
-      document.getElementById("book-confirm").style.display="none";
-      document.getElementById("book-overlay").classList.add("open");
-      renderCal();
-    });
-  }
-  if(window.AT) { doOpen(); return; }
-  window.addEventListener("at-ready", doOpen, {once:true});
+function startBooking(svc, price, cat) {
+  _svc=svc; _price=price; _cat=cat;
+  _selDate=null; _selTime="";
+  const now=new Date();
+  _calYear=now.getFullYear(); _calMonth=now.getMonth();
+  document.getElementById("dp-svc").textContent=svc;
+  document.getElementById("dp-price").textContent=price;
+  document.getElementById("dp-date").textContent="—";
+  document.getElementById("dp-time").textContent="—";
+  document.getElementById("dp-dur").textContent="1 saat 30 dəq";
+  document.getElementById("dp-total").textContent=price;
+  document.getElementById("btn-next").disabled=true;
+  document.getElementById("book-main").style.display="block";
+  document.getElementById("book-confirm").style.display="none";
+  document.getElementById("book-overlay").classList.add("open");
+  renderCal();
 }
+
+// ── Attach click handlers to booking buttons ─────────────────
+document.querySelectorAll('[data-svc]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const svc = btn.dataset.svc;
+    const price = btn.dataset.price;
+    const cat = btn.dataset.cat;
+    if (currentUser) {
+      startBooking(svc, price, cat);
+    } else {
+      window.AT.requireLogin(() => startBooking(svc, price, cat));
+    }
+  });
+});
 
 function closeBooking(){
   document.getElementById("book-overlay").classList.remove("open");
 }
-document.getElementById("book-overlay").addEventListener("click",e=>{
+document.getElementById("book-overlay").addEventListener("click", e=>{
   if(e.target===document.getElementById("book-overlay")) closeBooking();
 });
+window.closeBooking = closeBooking;
 
 function prevMonth(){
-  _calMonth--;
-  if(_calMonth<0){_calMonth=11;_calYear--;}
-  _selDate=null; _selTime="";
-  renderCal(); renderTimes();
+  _calMonth--; if(_calMonth<0){_calMonth=11;_calYear--;}
+  _selDate=null; _selTime=""; renderCal(); renderTimes();
 }
 function nextMonth(){
-  _calMonth++;
-  if(_calMonth>11){_calMonth=0;_calYear++;}
-  _selDate=null; _selTime="";
-  renderCal(); renderTimes();
+  _calMonth++; if(_calMonth>11){_calMonth=0;_calYear++;}
+  _selDate=null; _selTime=""; renderCal(); renderTimes();
 }
+window.prevMonth = prevMonth;
+window.nextMonth = nextMonth;
 
 function renderCal(){
   document.getElementById("cal-month-label").textContent=MONTHS_AZ[_calMonth]+" "+_calYear;
   const grid=document.getElementById("cal-grid");
-  // DOW headers (Mon-Sun)
   let html=DOW_AZ.map(d=>`<div class="cal-dow">${d}</div>`).join("");
   const first=new Date(_calYear,_calMonth,1);
   const total=new Date(_calYear,_calMonth+1,0).getDate();
-  // Mon=0 offset
   let startDow=(first.getDay()+6)%7;
   for(let i=0;i<startDow;i++) html+=`<div class="cal-day empty"></div>`;
   const now=new Date(); now.setHours(0,0,0,0);
@@ -322,14 +335,15 @@ function renderCal(){
     const hasSlots=!isPast&&!isWeekend;
     const isSel=_selDate&&_selDate.getTime()===dt.getTime();
     let cls="cal-day";
-    if(isPast)cls+=" past";
-    if(isToday)cls+=" today";
-    if(hasSlots)cls+=" has-slots";
-    if(isSel)cls+=" selected";
-    const click=(!isPast&&!isWeekend)?`onclick="selectDay(${d})"`:""
+    if(isPast)cls+=" past"; if(isToday)cls+=" today";
+    if(hasSlots)cls+=" has-slots"; if(isSel)cls+=" selected";
+    const click=(!isPast&&!isWeekend)?`data-day="${d}"`:"";
     html+=`<button ${click} class="${cls}">${d}</button>`;
   }
   grid.innerHTML=html;
+  grid.querySelectorAll("[data-day]").forEach(b=>{
+    b.addEventListener("click",()=>selectDay(parseInt(b.dataset.day)));
+  });
 }
 
 function selectDay(d){
@@ -338,19 +352,20 @@ function selectDay(d){
   document.getElementById("dp-date").textContent=`${d} ${MONTHS_AZ[_calMonth]} ${_calYear}`;
   document.getElementById("dp-time").textContent="—";
   document.getElementById("btn-next").disabled=true;
-  renderCal();
-  renderTimes();
+  renderCal(); renderTimes();
 }
 
 function renderTimes(){
-  const wrap=document.getElementById("times-wrap")||document.querySelector(".times-wrap");
   const lbl=document.getElementById("times-label");
   const grid=document.getElementById("times-grid");
   if(!_selDate){lbl.textContent="Tarix seçin";grid.innerHTML="";return;}
   lbl.textContent=`${_selDate.getDate()} ${MONTHS_AZ[_selDate.getMonth()]} üçün vaxtlar`;
   grid.innerHTML=TIME_SLOTS.map(t=>`
-    <button class="t-slot${_selTime===t?" selected":""}" onclick="selectTime('${t}')">${t}</button>
+    <button class="t-slot${_selTime===t?" selected":""}" data-time="${t}">${t}</button>
   `).join("");
+  grid.querySelectorAll("[data-time]").forEach(b=>{
+    b.addEventListener("click",()=>selectTime(b.dataset.time));
+  });
 }
 
 function selectTime(t){
@@ -367,21 +382,21 @@ async function confirmBooking(){
   document.getElementById("cf-date").textContent=`${_selDate.getDate()} ${MONTHS_AZ[_selDate.getMonth()]} ${_selDate.getFullYear()}`;
   document.getElementById("cf-time").textContent=_selTime;
   document.getElementById("cf-price").textContent=_price;
-  // Save to Firestore if available
   try {
-    const {saveBooking} = await import("./firebase-config.js");
-    const user = window.AT?.currentUser;
-    if(user) await saveBooking({
-      userId:user.uid, service:_svc, price:_price,
+    if(currentUser) await saveBooking({
+      userId:currentUser.uid, service:_svc, price:_price,
       date:_selDate.toISOString(), time:_selTime
     });
-  } catch(e){ console.log("Booking save skipped",e); }
+  } catch(e){ console.log("Booking save skipped", e); }
 }
+window.confirmBooking = confirmBooking;
 
+</script>
+<script>
+function toggleMenu(){document.getElementById('mob').classList.toggle('open')}
+function closeMob(){document.getElementById('mob').classList.remove('open')}
 const _revs=document.querySelectorAll('.reveal');
 const _ob=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*100);_ob.unobserve(e.target)}})},{threshold:.1});
 _revs.forEach(r=>_ob.observe(r));
-function toggleMenu(){document.getElementById('mob').classList.toggle('open')}
-function closeMob(){document.getElementById('mob').classList.remove('open')}
 </script>
 </body></html>
