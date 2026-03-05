@@ -158,17 +158,17 @@ footer ul a:hover{color:var(--gold)}
         <h3>Math Tutoring</h3>
         <p>Əsaslardan qabaqcıl səviyyəyə qədər riyaziyyat. 1-ə-1 onlayn seans.</p>
         <div class="svc-price">70 ₼ <small>/ seans (1.5 saat)</small></div>
-        <button class="btn-book" onclick="openBooking('Math Tutoring','70 ₼','Riyaziyyat',this)">İndi Yazıl</button>
+        <button class="btn-book" onclick="openBooking('Math Tutoring','70 ₼','Riyaziyyat')">İndi Yazıl</button>
       </div>
     </div>
     <div class="svc-card reveal">
-      <div class="svc-thumb" style="background:linear-gradient(135deg,#2e7d32,#1b5e20)">📖<span class="svc-status s-ended">Bitmişdir</span></div>
+      <div class="svc-thumb" style="background:linear-gradient(135deg,#2e7d32,#1b5e20)">📖<span class="svc-status s-open">Mövcuddur</span></div>
       <div class="svc-body">
         <div class="svc-cat">Akademik Bacarıqlar</div>
         <h3>Study Skills Course</h3>
         <p>Effektli öyrənmə üsulları, vaxt idarəetməsi və imtahana hazırlıq.</p>
         <div class="svc-price">50 ₼ <small>/ seans (1 saat)</small></div>
-        <button class="btn-book disabled">Kurs Bitib</button>
+        <button class="btn-book" onclick="openBooking('Study Skills Course','50 ₼','Akademik Bacarıqlar')">İndi Yazıl</button>
       </div>
     </div>
     <div class="svc-card reveal">
@@ -178,7 +178,7 @@ footer ul a:hover{color:var(--gold)}
         <h3>Science Workshops</h3>
         <p>Fizika, kimya, biologiya üzrə interaktiv workshops. Laboratoriya tapşırıqları.</p>
         <div class="svc-price">60 ₼ <small>/ seans (1.5 saat)</small></div>
-        <button class="btn-book" onclick="openBooking('Science Workshops','60 ₼','Elm',this)">İndi Yazıl</button>
+        <button class="btn-book" onclick="openBooking('Science Workshops','60 ₼','Elm')">İndi Yazıl</button>
       </div>
     </div>
   </div>
@@ -259,29 +259,28 @@ const MONTHS_AZ=["Yanvar","Fevral","Mart","Aprel","May","İyun","İyul","Avqust"
 const DOW_AZ=["B.e","Ç.a","Ç","C.a","C","Ş","B"];
 const TIME_SLOTS=["10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30"];
 
-function openBooking(svc, price, cat, btn) {
-  const attempt = () => {
-    if (window.AT) {
-      AT.requireLogin(() => {
-        _svc=svc; _price=price; _cat=cat;
-        _selDate=null; _selTime="";
-        const now=new Date();
-        _calYear=now.getFullYear(); _calMonth=now.getMonth();
-        document.getElementById("dp-svc").textContent=svc;
-        document.getElementById("dp-price").textContent=price;
-        document.getElementById("dp-date").textContent="—";
-        document.getElementById("dp-time").textContent="—";
-        document.getElementById("dp-dur").textContent="1 saat 30 dəq";
-        document.getElementById("dp-total").textContent=price;
-        document.getElementById("btn-next").disabled=true;
-        document.getElementById("book-main").style.display="block";
-        document.getElementById("book-confirm").style.display="none";
-        document.getElementById("book-overlay").classList.add("open");
-        renderCal();
-      });
-    } else { setTimeout(attempt,100); }
-  };
-  attempt();
+function openBooking(svc, price, cat) {
+  function doOpen() {
+    AT.requireLogin(() => {
+      _svc=svc; _price=price; _cat=cat;
+      _selDate=null; _selTime="";
+      const now=new Date();
+      _calYear=now.getFullYear(); _calMonth=now.getMonth();
+      document.getElementById("dp-svc").textContent=svc;
+      document.getElementById("dp-price").textContent=price;
+      document.getElementById("dp-date").textContent="—";
+      document.getElementById("dp-time").textContent="—";
+      document.getElementById("dp-dur").textContent="1 saat 30 dəq";
+      document.getElementById("dp-total").textContent=price;
+      document.getElementById("btn-next").disabled=true;
+      document.getElementById("book-main").style.display="block";
+      document.getElementById("book-confirm").style.display="none";
+      document.getElementById("book-overlay").classList.add("open");
+      renderCal();
+    });
+  }
+  if(window.AT) { doOpen(); return; }
+  window.addEventListener("at-ready", doOpen, {once:true});
 }
 
 function closeBooking(){
