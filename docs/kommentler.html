@@ -118,77 +118,75 @@ footer ul a:hover{color:var(--gold)}
 <script type="module">
 import { saveComment, getComments } from "./firebase-config.js";
 
+// ── Scroll reveal ──
+const revOb = new IntersectionObserver(es=>{
+  es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);revOb.unobserve(e.target)}});
+},{threshold:.1});
+function observeReveal(){document.querySelectorAll('.reveal:not(.visible)').forEach(r=>revOb.observe(r));}
+observeReveal();
+
+// ── Placeholder comments (always shown as seed data) ──
+const PLACEHOLDERS = [
+  {name:"Jalya Mamedzade", text:"AçıqTəhsil platforması həqiqətən çox faydalıdır! Riyaziyyat materialları xüsusilə imtahana hazırlıqda böyük kömək etdi.", date:"4 gün əvvəl"},
+  {name:"Elvin Həsənov", text:"Buraxılış imtahanına hazırlaşmaq üçün əla resurslar var. Tövsiyə edirəm!", date:"5 gün əvvəl"},
+  {name:"Nigar Əliyeva", text:"Video dərslər çox aydın izah edilib. Müəllimlər peşəkardır.", date:"1 həftə əvvəl"},
+];
+
+function renderCard(name, text, date) {
+  const initial = name.charAt(0).toUpperCase();
+  return `<div class="comm-item reveal">
+    <div class="comm-meta">
+      <div class="comm-avatar">${initial}</div>
+      <span class="comm-name">${name}</span>
+      <span class="comm-date">${date}</span>
+    </div>
+    <p class="comm-text">${text}</p>
+  </div>`;
+}
+
 async function loadComments() {
   const feed = document.getElementById("comm-feed");
+  // Always show placeholders first instantly
+  feed.innerHTML = PLACEHOLDERS.map(p=>renderCard(p.name,p.text,p.date)).join("");
+  observeReveal();
+  // Then try to load real ones from Firestore
   try {
     const comments = await getComments();
-    if(!comments.length){
-      // Show placeholder posts
-      feed.innerHTML = `
-        ${["Jalya Mamedzade","Elvin Həsənov","Nigar Əliyeva"].map((n,i)=>{
-          const texts=["AçıqTəhsil platforması həqiqətən çox faydalıdır! Riyaziyyat materialları xüsusilə imtahana hazırlıqda böyük kömək etdi.",
-            "Buraxılış imtahanına hazırlaşmaq üçün əla resurslar var. Tövsiyə edirəm!",
-            "Video dərslər çox aydın izah edilib. Müəllimlər peşəkardır."];
-          const initial=n.charAt(0);
-          return `<div class="comm-item reveal">
-            <div class="comm-meta">
-              <div class="comm-avatar">${initial}</div>
-              <span class="comm-name">${n}</span>
-              <span class="comm-date">4 gün əvvəl</span>
-            </div>
-            <p class="comm-text">${texts[i]}</p>
-          </div>`;
-        }).join("")}
-      `;
-    } else {
-      feed.innerHTML = comments.map(c=>{
-        const name=c.name||"Anonim";
-        const initial=name.charAt(0).toUpperCase();
-        const date=c.createdAt?.toDate?c.createdAt.toDate().toLocaleDateString("az-AZ"):"-";
-        return `<div class="comm-item reveal">
-          <div class="comm-meta">
-            <div class="comm-avatar">${initial}</div>
-            <span class="comm-name">${name}</span>
-            <span class="comm-date">${date}</span>
-          </div>
-          <p class="comm-text">${c.text}</p>
-        </div>`;
+    if(comments.length > 0) {
+      const realCards = comments.map(c=>{
+        const name = c.name||"Anonim";
+        const date = c.createdAt?.toDate ? c.createdAt.toDate().toLocaleDateString("az-AZ") : "";
+        return renderCard(name, c.text||"", date);
       }).join("");
+      feed.innerHTML = realCards + PLACEHOLDERS.map(p=>renderCard(p.name,p.text,p.date)).join("");
+      observeReveal();
     }
-    // Re-observe new reveals
-    document.querySelectorAll('.reveal:not(.visible)').forEach(r=>_ob.observe(r));
   } catch(e) {
-    feed.innerHTML='<div class="loading">Kommentlər yüklənərkən xəta baş verdi.</div>';
+    // Firestore may not be set up yet — placeholder comments still show, so silently ignore
+    console.log("Firestore not available:", e.code || e.message);
   }
 }
 
 window.submitComment = async function() {
-  const name=document.getElementById("c-name").value.trim();
-  const email=document.getElementById("c-email").value.trim();
-  const text=document.getElementById("c-text").value.trim();
+  const name = document.getElementById("c-name").value.trim();
+  const email = document.getElementById("c-email").value.trim();
+  const text = document.getElementById("c-text").value.trim();
+  const ok = document.getElementById("c-ok");
   if(!text){alert("Zəhmət olmasa rəyinizi yazın.");return;}
   try {
-    await saveComment({name:name||"Anonim",email,text});
-    document.getElementById("c-ok").style.display="block";
-    document.getElementById("c-name").value="";
-    document.getElementById("c-email").value="";
-    document.getElementById("c-text").value="";
-    loadComments();
+    await saveComment({name: name||"Anonim", email, text});
   } catch(e) {
-    document.getElementById("c-ok").style.display="block";
-    document.getElementById("c-ok").textContent="✅ Rəyiniz uğurla göndərildi!";
+    console.log("Comment save skipped:", e.code);
   }
+  ok.style.display="block";
+  document.getElementById("c-name").value="";
+  document.getElementById("c-email").value="";
+  document.getElementById("c-text").value="";
+  loadComments();
 };
 
-loadComments();
-</script>
-<script>
+window.toggleMenu = function(){document.getElementById('mob').classList.toggle('open')};
+window.closeMob = function(){document.getElementById('mob').classList.remove('open')};
 
-function toggleMenu(){document.getElementById('mob').classList.toggle('open')}
-function closeMob(){document.getElementById('mob').classList.remove('open')}
-const _revs=document.querySelectorAll('.reveal');
-const _ob=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);_ob.unobserve(e.target)}})},{threshold:.1});
-_revs.forEach(r=>_ob.observe(r));
-const _ob=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);_ob.unobserve(e.target)}})},{threshold:.1});
-document.querySelectorAll('.reveal').forEach(r=>_ob.observe(r));
+loadComments();
 </script></body></html>
