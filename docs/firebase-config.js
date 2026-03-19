@@ -5,7 +5,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
          sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup,
          updateProfile }
   from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy,
+import { getFirestore, collection, addDoc, getDocs, query,
          serverTimestamp, doc, setDoc, getDoc }
   from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
@@ -74,13 +74,21 @@ export function onAuthChange(cb) {
 // ── Firestore helpers ──────────────────────────────────────────
 
 export async function saveComment(data) {
-  return addDoc(collection(db, "comments"), { ...data, createdAt: serverTimestamp() });
+  // Store both serverTimestamp (for display) and a plain ms timestamp (for sorting without index)
+  return addDoc(collection(db, "comments"), {
+    ...data,
+    createdAt: serverTimestamp(),
+    createdMs: Date.now()
+  });
 }
 
 export async function getComments() {
-  const q = query(collection(db, "comments"), orderBy("createdAt", "desc"));
-  const snap = await getDocs(q);
-  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  // Fetch all comments without orderBy (no index needed), sort client-side by createdMs
+  const snap = await getDocs(collection(db, "comments"));
+  const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  // Sort newest first using the plain numeric timestamp
+  docs.sort((a, b) => (b.createdMs || 0) - (a.createdMs || 0));
+  return docs;
 }
 
 export async function saveApplication(data) {
