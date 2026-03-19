@@ -1,9 +1,12 @@
 // AciqTehsil Firebase Config & Auth Utilities
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-         sendEmailVerification, signOut, onAuthStateChanged }
+         sendEmailVerification, signOut, onAuthStateChanged,
+         sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup,
+         updateProfile }
   from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, setDoc, getDoc }
+import { getFirestore, collection, addDoc, getDocs, query, orderBy,
+         serverTimestamp, doc, setDoc, getDoc }
   from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -20,11 +23,14 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-// ── Auth helpers ──────────────────────────────────────────────
+const googleProvider = new GoogleAuthProvider();
+
+// ── Auth helpers ───────────────────────────────────────────────
+
 export async function registerUser(email, password, displayName) {
   const cred = await createUserWithEmailAndPassword(auth, email, password);
+  await updateProfile(cred.user, { displayName });
   await sendEmailVerification(cred.user);
-  // Save profile to Firestore
   await setDoc(doc(db, "users", cred.user.uid), {
     displayName,
     email,
@@ -39,6 +45,24 @@ export async function loginUser(email, password) {
   return cred.user;
 }
 
+// Google sign-in: works for both new sign-ups and returning users
+export async function loginWithGoogle() {
+  const cred = await signInWithPopup(auth, googleProvider);
+  const user = cred.user;
+  // Upsert profile in Firestore — merge:true so existing data isn't overwritten
+  await setDoc(doc(db, "users", user.uid), {
+    displayName: user.displayName || user.email,
+    email: user.email,
+    createdAt: serverTimestamp(),
+    notified: false
+  }, { merge: true });
+  return user;
+}
+
+export async function resetPassword(email) {
+  await sendPasswordResetEmail(auth, email);
+}
+
 export async function logoutUser() {
   await signOut(auth);
 }
@@ -47,7 +71,8 @@ export function onAuthChange(cb) {
   onAuthStateChanged(auth, cb);
 }
 
-// ── Firestore helpers ─────────────────────────────────────────
+// ── Firestore helpers ──────────────────────────────────────────
+
 export async function saveComment(data) {
   return addDoc(collection(db, "comments"), { ...data, createdAt: serverTimestamp() });
 }
