@@ -326,4 +326,11 @@ window.submitComment = async function() {
   }
 };
 
-window.toggleMenu = function(){ doc
+window.toggleMenu = function(){ document.getElementById('mob').classList.toggle('open'); };
+window.closeMob   = function(){ document.getElementById('mob').classList.remove('open'); };
+
+// ── Initial render: show seeds immediately, then load real comments ──
+renderFeed();
+loadFromFirestore();
+</script>
+</body></html>
