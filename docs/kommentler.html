@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="az"><head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Kommentlər | AçıqTəhsil</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Kommentlər | AçıqTəhsil</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--navy:#0a1628;--deep:#0d1f3c;--blue:#1a4fa0;--accent:#e8a020;--gold:#f5c842;--light:#f4f6fb;--green:#1d5c3e;--orange:#f07d24;--white:#fff;--text:#1e2d45;--muted:#5a6e8a;--bg:#faf8f2;--card:#fff;--border:#e8e2d6}
@@ -32,25 +33,37 @@ footer ul a:hover{color:var(--gold)}
 .reveal.visible{opacity:1;transform:translateY(0)}
 @media(max-width:900px){.nav-links{display:none}.hamburger{display:flex}.ft-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.ft-grid{grid-template-columns:1fr}}
+
+/* ── Hero ── */
 .page-hero{padding:120px 5vw 60px;background:linear-gradient(135deg,var(--navy),var(--deep));text-align:center;position:relative;overflow:hidden}
 .page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(26,79,160,.4),transparent 60%);pointer-events:none}
 .page-hero .tag{display:inline-block;background:rgba(245,200,66,.15);border:1px solid rgba(245,200,66,.4);color:var(--gold);font-size:.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:.35rem .9rem;border-radius:20px;margin-bottom:1rem;position:relative}
 .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;color:#fff;position:relative}
 .page-hero p{color:rgba(255,255,255,.7);font-size:1rem;max-width:520px;margin:.6rem auto 0;position:relative}
-.content{padding:60px 5vw;max-width:1000px;margin:0 auto}
-/* comments feed */
+
+/* ── Layout ── */
+.content{padding:60px 5vw 80px;max-width:1000px;margin:0 auto}
+
+/* ── Comment cards ── */
 .comm-feed{margin-bottom:3rem}
 .comm-item{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:1.4rem 1.6rem;margin-bottom:1.2rem;transition:box-shadow .2s}
 .comm-item:hover{box-shadow:0 4px 20px rgba(10,22,40,.07)}
-.comm-meta{display:flex;align-items:center;gap:.8rem;margin-bottom:.7rem;flex-wrap:wrap}
-.comm-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--orange));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.85rem;flex-shrink:0}
-.comm-name{font-weight:600;font-size:.9rem;color:var(--navy)}
-.comm-date{font-size:.78rem;color:var(--muted);margin-left:auto}
-.comm-text{font-size:.92rem;color:var(--text);line-height:1.7}
-/* form */
+.comm-new{border-color:var(--green)!important;background:#f0faf4!important;animation:commIn .4s ease}
+@keyframes commIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.comm-meta{display:flex;align-items:center;gap:.8rem;margin-bottom:.5rem;flex-wrap:wrap}
+.comm-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--orange));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.88rem;flex-shrink:0}
+.comm-name{font-weight:700;font-size:.9rem;color:var(--navy)}
+.comm-date{font-size:.76rem;color:var(--muted);margin-left:auto}
+.comm-stars{display:flex;gap:2px;margin-bottom:.6rem}
+.comm-stars .star{font-size:1rem;color:#ddd}
+.comm-stars .star.filled{color:#f5c842}
+.comm-text{font-size:.92rem;color:var(--text);line-height:1.75}
+.empty-feed{text-align:center;padding:2.5rem;color:var(--muted);font-size:.95rem}
+
+/* ── Form card ── */
 .form-card{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:2.2rem}
 .form-card h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:.3rem}
-.form-card .sub{color:var(--muted);font-size:.88rem;margin-bottom:1.8rem}
+.form-card .sub{color:var(--muted);font-size:.88rem;margin-bottom:1.6rem}
 .ff{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem}
 .ff label{font-size:.8rem;font-weight:600;color:var(--text)}
 .ff input,.ff textarea{border:1.5px solid var(--border);border-radius:9px;padding:.75rem 1rem;font-size:.9rem;font-family:inherit;color:var(--text);background:#fff;transition:border-color .2s;outline:none;resize:none}
@@ -58,12 +71,24 @@ footer ul a:hover{color:var(--gold)}
 .ff.half{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 .ff.half .inner{display:flex;flex-direction:column;gap:.35rem}
 .ff.half .inner label{font-size:.8rem;font-weight:600;color:var(--text)}
-.btn-sub{background:var(--blue);color:#fff;border:none;padding:.85rem 2rem;border-radius:9px;font-weight:700;font-size:.95rem;cursor:pointer;font-family:inherit;transition:background .2s}
+/* star rating input */
+.star-row{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+.star-row label{font-size:.8rem;font-weight:600;color:var(--text)}
+.star-input{display:flex;gap:6px;flex-direction:row-reverse;justify-content:flex-end}
+.star-input input{display:none}
+.star-input label{font-size:1.7rem;color:#d0c9bb;cursor:pointer;transition:color .15s,transform .15s;line-height:1}
+/* highlight hovered star and all before it (row-reverse trick) */
+.star-input label:hover,
+.star-input label:hover ~ label,
+.star-input input:checked ~ label{color:#f5c842;transform:scale(1.1)}
+/* btn */
+.btn-sub{background:var(--blue);color:#fff;border:none;padding:.85rem;border-radius:9px;font-weight:700;font-size:.95rem;cursor:pointer;font-family:inherit;transition:background .2s;width:100%}
 .btn-sub:hover{background:var(--orange)}
 .ok-msg{display:none;background:#e6f4ea;color:#1d5c3e;padding:.9rem 1.2rem;border-radius:9px;margin-top:1rem;font-size:.9rem;font-weight:500}
-.loading{text-align:center;padding:2rem;color:var(--muted)}
 @media(max-width:560px){.ff.half{grid-template-columns:1fr}}
-</style></head><body>
+</style>
+</head>
+<body>
 <nav>
   <a href="index.html" class="nav-logo">Açıq<span>Təhsil</span></a>
   <ul class="nav-links">
@@ -84,29 +109,48 @@ footer ul a:hover{color:var(--gold)}
   <a href="bashvur.html" onclick="closeMob()">Başvur</a>
 </div>
 <script type="module" src="auth-modal.js"></script>
+
 <div class="page-hero">
   <div class="tag">💬 İcma</div>
   <h1>Kommentlər</h1>
   <p>AçıqTəhsil icmasının rəyləri və tövsiyələri</p>
 </div>
+
 <div class="content">
   <!-- Feed -->
   <div class="comm-feed" id="comm-feed">
-    <div class="loading">⏳ Kommentlər yüklənir...</div>
+    <div class="empty-feed">⏳ Rəylər yüklənir...</div>
   </div>
+
   <!-- Form -->
-  <div class="form-card reveal" id="comm-form">
+  <div class="form-card reveal">
     <h2>💬 Rəy Bildirin</h2>
     <p class="sub">Platformamız haqqında fikirlərinizi bölüşün.</p>
+
     <div class="ff half">
-      <div class="inner"><label>Ad</label><input type="text" id="c-name" placeholder="Adınız"/></div>
-      <div class="inner"><label>E-poçt</label><input type="email" id="c-email" placeholder="email@example.com"/></div>
+      <div class="inner"><label>Ad Soyad *</label><input type="text"  id="c-name"  placeholder="Adınız Soyadınız"/></div>
+      <div class="inner"><label>E-poçt</label>    <input type="email" id="c-email" placeholder="email@example.com"/></div>
     </div>
-    <div class="ff"><label>Rəyiniz *</label><textarea id="c-text" rows="5" placeholder="Rəyinizi buraya yazın..."></textarea></div>
-    <button class="btn-sub" onclick="submitComment()">Rəy Göndər</button>
+
+    <!-- Star rating -->
+    <div class="star-row">
+      <label>Qiymətləndirmə *</label>
+      <div class="star-input" id="star-input">
+        <input type="radio" id="s5" name="stars" value="5"/><label for="s5" title="5 ulduz">★</label>
+        <input type="radio" id="s4" name="stars" value="4"/><label for="s4" title="4 ulduz">★</label>
+        <input type="radio" id="s3" name="stars" value="3"/><label for="s3" title="3 ulduz">★</label>
+        <input type="radio" id="s2" name="stars" value="2"/><label for="s2" title="2 ulduz">★</label>
+        <input type="radio" id="s1" name="stars" value="1"/><label for="s1" title="1 ulduz">★</label>
+      </div>
+    </div>
+
+    <div class="ff"><label>Rəyiniz *</label><textarea id="c-text" rows="4" placeholder="Rəyinizi buraya yazın..."></textarea></div>
+
+    <button class="btn-sub" onclick="submitComment()">Rəy Göndər →</button>
     <div class="ok-msg" id="c-ok">✅ Rəyiniz uğurla göndərildi! Təşəkkür edirik.</div>
   </div>
 </div>
+
 <footer>
   <div class="ft-grid">
     <div class="ft-brand"><a href="index.html" class="ft-logo">Açıq<span>Təhsil</span></a><p>Azərbaycanın rəqəmsal təhsil platforması.</p></div>
@@ -115,78 +159,122 @@ footer ul a:hover{color:var(--gold)}
   </div>
   <div class="ft-bottom">© 2026 AçıqTəhsil. Bütün hüquqlar qorunur.</div>
 </footer>
+
 <script type="module">
 import { saveComment, getComments } from "./firebase-config.js";
 
-// ── Scroll reveal ──
+// ── Scroll reveal ──────────────────────────────────────────────
 const revOb = new IntersectionObserver(es=>{
   es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);revOb.unobserve(e.target)}});
 },{threshold:.1});
-function observeReveal(){document.querySelectorAll('.reveal:not(.visible)').forEach(r=>revOb.observe(r));}
+function observeReveal(){ document.querySelectorAll('.reveal:not(.visible)').forEach(r=>revOb.observe(r)); }
 observeReveal();
 
-// ── Placeholder comments (always shown as seed data) ──
-const PLACEHOLDERS = [
-  {name:"Jalya Mamedzade", text:"AçıqTəhsil platforması həqiqətən çox faydalıdır! Riyaziyyat materialları xüsusilə imtahana hazırlıqda böyük kömək etdi.", date:"4 gün əvvəl"},
-  {name:"Elvin Həsənov", text:"Buraxılış imtahanına hazırlaşmaq üçün əla resurslar var. Tövsiyə edirəm!", date:"5 gün əvvəl"},
-  {name:"Nigar Əliyeva", text:"Video dərslər çox aydın izah edilib. Müəllimlər peşəkardır.", date:"1 həftə əvvəl"},
+// ── Star helper ───────────────────────────────────────────────
+function getSelectedStars() {
+  const checked = document.querySelector('input[name="stars"]:checked');
+  return checked ? parseInt(checked.value) : 0;
+}
+function resetStars() {
+  document.querySelectorAll('input[name="stars"]').forEach(r=>r.checked=false);
+}
+function renderStars(count) {
+  return [1,2,3,4,5].map(i=>`<span class="star${i<=count?' filled':''}">★</span>`).join('');
+}
+
+// ── In-memory list — seed data shown while Firestore loads ────
+let _comments = [
+  {name:"Jalya Mamedzade", stars:5, text:"AçıqTəhsil platforması həqiqətən çox faydalıdır! Riyaziyyat materialları xüsusilə imtahana hazırlıqda böyük kömək etdi.", date:"4 gün əvvəl"},
+  {name:"Elvin Həsənov",   stars:5, text:"Buraxılış imtahanına hazırlaşmaq üçün əla resurslar var. Tövsiyə edirəm!", date:"5 gün əvvəl"},
+  {name:"Nigar Əliyeva",   stars:4, text:"Video dərslər çox aydın izah edilib. Müəllimlər peşəkardır.", date:"1 həftə əvvəl"},
 ];
 
-function renderCard(name, text, date) {
-  const initial = name.charAt(0).toUpperCase();
-  return `<div class="comm-item reveal">
+function renderCard(c, isNew=false) {
+  const initial = (c.name||"A").charAt(0).toUpperCase();
+  return `<div class="comm-item${isNew?' comm-new':''} reveal">
     <div class="comm-meta">
       <div class="comm-avatar">${initial}</div>
-      <span class="comm-name">${name}</span>
-      <span class="comm-date">${date}</span>
+      <span class="comm-name">${c.name||"Anonim"}</span>
+      <span class="comm-date">${c.date||""}</span>
     </div>
-    <p class="comm-text">${text}</p>
+    ${c.stars ? `<div class="comm-stars">${renderStars(c.stars)}</div>` : ''}
+    <p class="comm-text">${c.text||""}</p>
   </div>`;
 }
 
-async function loadComments() {
+function renderFeed(newIdx=-1) {
   const feed = document.getElementById("comm-feed");
-  // Always show placeholders first instantly
-  feed.innerHTML = PLACEHOLDERS.map(p=>renderCard(p.name,p.text,p.date)).join("");
+  if(!_comments.length){ feed.innerHTML='<div class="empty-feed">Hələ rəy yoxdur. İlk rəyi siz yazın!</div>'; return; }
+  feed.innerHTML = _comments.map((c,i)=>renderCard(c, i===newIdx)).join("");
   observeReveal();
-  // Then try to load real ones from Firestore
+}
+
+// ── Load real comments from Firestore ─────────────────────────
+async function loadFromFirestore() {
   try {
-    const comments = await getComments();
-    if(comments.length > 0) {
-      const realCards = comments.map(c=>{
-        const name = c.name||"Anonim";
-        const date = c.createdAt?.toDate ? c.createdAt.toDate().toLocaleDateString("az-AZ") : "";
-        return renderCard(name, c.text||"", date);
-      }).join("");
-      feed.innerHTML = realCards + PLACEHOLDERS.map(p=>renderCard(p.name,p.text,p.date)).join("");
-      observeReveal();
+    const docs = await getComments();
+    if(docs.length > 0) {
+      const seedTexts = new Set(_comments.map(c=>c.text));
+      const real = docs
+        .filter(c => !seedTexts.has(c.text))
+        .map(c => ({
+          name:  c.name  || "Anonim",
+          stars: c.stars || 0,
+          text:  c.text  || "",
+          date:  c.createdAt?.toDate ? c.createdAt.toDate().toLocaleDateString("az-AZ") : "Bu gün"
+        }));
+      if(real.length) {
+        _comments = [...real, ..._comments];
+        renderFeed();
+      }
     }
   } catch(e) {
-    // Firestore may not be set up yet — placeholder comments still show, so silently ignore
-    console.log("Firestore not available:", e.code || e.message);
+    // Firestore not configured yet — seed comments still show
+    console.log("Firestore:", e.code || e.message);
   }
 }
 
+// ── Submit ─────────────────────────────────────────────────────
 window.submitComment = async function() {
-  const name = document.getElementById("c-name").value.trim();
+  const name  = document.getElementById("c-name").value.trim();
   const email = document.getElementById("c-email").value.trim();
-  const text = document.getElementById("c-text").value.trim();
-  const ok = document.getElementById("c-ok");
-  if(!text){alert("Zəhmət olmasa rəyinizi yazın.");return;}
+  const text  = document.getElementById("c-text").value.trim();
+  const stars = getSelectedStars();
+  const ok    = document.getElementById("c-ok");
+
+  if(!name)  { alert("Zəhmət olmasa adınızı daxil edin.");    return; }
+  if(!stars) { alert("Zəhmət olmasa qiymətləndirmə seçin."); return; }
+  if(!text)  { alert("Zəhmət olmasa rəyinizi yazın.");        return; }
+
+  // 1. Immediately add to top of feed — visible right away
+  const newComment = { name, stars, text, date: "İndi" };
+  _comments.unshift(newComment);
+  renderFeed(0);
+
+  // 2. Clear form
+  document.getElementById("c-name").value  = "";
+  document.getElementById("c-email").value = "";
+  document.getElementById("c-text").value  = "";
+  resetStars();
+
+  // 3. Show success message
+  ok.style.display = "block";
+  setTimeout(()=>{ ok.style.display="none"; }, 4500);
+
+  // 4. Try to persist to Firestore
   try {
-    await saveComment({name: name||"Anonim", email, text});
+    await saveComment({ name, email, stars, text });
   } catch(e) {
-    console.log("Comment save skipped:", e.code);
+    console.log("Firestore save skipped:", e.code || e.message);
+    // Comment is already visible in the feed — no problem
   }
-  ok.style.display="block";
-  document.getElementById("c-name").value="";
-  document.getElementById("c-email").value="";
-  document.getElementById("c-text").value="";
-  loadComments();
 };
 
-window.toggleMenu = function(){document.getElementById('mob').classList.toggle('open')};
-window.closeMob = function(){document.getElementById('mob').classList.remove('open')};
+window.toggleMenu = function(){ document.getElementById('mob').classList.toggle('open'); };
+window.closeMob   = function(){ document.getElementById('mob').classList.remove('open'); };
 
-loadComments();
-</script></body></html>
+// Initial load
+renderFeed();
+loadFromFirestore();
+</script>
+</body></html>
