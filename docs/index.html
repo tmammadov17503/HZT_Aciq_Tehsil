@@ -3,9 +3,39 @@
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>AçıqTəhsil | Ana Səhifə</title>
+<link rel="icon" type="image/svg+xml" href="logo.svg"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+/* ── Splash screen ── */
+#at-splash{
+  position:fixed;inset:0;z-index:99999;
+  background:#0a1628;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;
+  transition:opacity .5s ease, visibility .5s ease;
+}
+#at-splash.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.splash-logo{animation:splashPop .6s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes splashPop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+.splash-name{
+  font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;
+  color:#fff;letter-spacing:.02em;
+  animation:splashFade .5s .3s ease both;
+}
+.splash-name span{color:#f5c842}
+.splash-sub{
+  color:rgba(255,255,255,.45);font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;
+  animation:splashFade .5s .45s ease both;
+}
+@keyframes splashFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.splash-dots{display:flex;gap:7px;animation:splashFade .5s .6s ease both}
+.splash-dot{
+  width:7px;height:7px;border-radius:50%;background:#f07d24;
+  animation:dotBounce 1s .7s ease-in-out infinite alternate;
+}
+.splash-dot:nth-child(2){animation-delay:.85s;background:#f5c842}
+.splash-dot:nth-child(3){animation-delay:1s;background:#1d5c3e}
+@keyframes dotBounce{from{transform:translateY(0);opacity:.5}to{transform:translateY(-8px);opacity:1}}
 :root{--navy:#0a1628;--deep:#0d1f3c;--blue:#1a4fa0;--accent:#e8a020;--gold:#f5c842;--light:#f4f6fb;--orange:#f07d24;--green:#1d5c3e;--white:#fff;--text:#1e2d45;--muted:#5a6e8a}
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden}
@@ -104,6 +134,30 @@ footer ul a:hover{color:var(--gold)}
 </style>
 </head>
 <body>
+<!-- ── Splash Screen ── -->
+<div id="at-splash">
+  <div class="splash-logo">
+    <svg width="90" height="90" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="200" height="200" rx="40" fill="#1d5c3e"/>
+      <rect width="200" height="200" rx="40" fill="url(#sg)" opacity="0.3"/>
+      <path d="M40 148 L100 44 L160 148" stroke="#f07d24" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M58 118 L142 118" stroke="white" stroke-width="10" stroke-linecap="round"/>
+      <path d="M100 44 C85 70 62 90 40 100" stroke="white" stroke-width="5" stroke-linecap="round" opacity="0.45"/>
+      <path d="M100 44 C115 70 138 90 160 100" stroke="white" stroke-width="5" stroke-linecap="round" opacity="0.45"/>
+      <circle cx="100" cy="44" r="11" fill="#f07d24"/>
+      <circle cx="100" cy="44" r="6" fill="#f5c842"/>
+      <defs><radialGradient id="sg" cx="50%" cy="30%" r="60%"><stop offset="0%" stop-color="white"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs>
+    </svg>
+  </div>
+  <div class="splash-name">Açıq<span>Təhsil</span></div>
+  <div class="splash-sub">Pulsuz Rəqəmsal Təhsil</div>
+  <div class="splash-dots">
+    <div class="splash-dot"></div>
+    <div class="splash-dot"></div>
+    <div class="splash-dot"></div>
+  </div>
+</div>
+
 <nav>
   <a href="index.html" class="nav-logo">Açıq<span>Təhsil</span></a>
   <ul class="nav-links">
@@ -200,17 +254,29 @@ footer ul a:hover{color:var(--gold)}
   <div class="ft-grid">
     <div class="ft-brand"><a href="index.html" class="ft-logo">Açıq<span>Təhsil</span></a><p>Azərbaycanın rəqəmsal təhsil platforması. Hər kəs üçün keyfiyyətli və pulsuz təhsil.</p></div>
     <div><h5>Keçidlər</h5><ul><li><a href="index.html">Ana Səhifə</a></li><li><a href="kurslar.html">Kurslar</a></li><li><a href="video_dersler.html">Video Dərslər</a></li><li><a href="kommentler.html">Kommentlər</a></li><li><a href="bashvur.html">Başvur</a></li></ul></div>
-    <div><h5>Əlaqə</h5><p style="font-size:.87rem;margin-bottom:.5rem">📍 Bakı, Azərbaycan</p><p style="font-size:.87rem;margin-bottom:.5rem">✉️ müraciət@aciqtehsil.az</p><p style="font-size:.87rem">📞 +994 50 123 45 67</p></div>
+    <div><h5>Əlaqə</h5><p style="font-size:.87rem;margin-bottom:.5rem">📍 Bakı, Azərbaycan</p><p style="font-size:.87rem;margin-bottom:.5rem">✉️ müraciə<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a5d1e5c4c6ccd4d1c0cdd6ccc98bc4df">[email&#160;protected]</a></p><p style="font-size:.87rem">📞 +994 50 123 45 67</p></div>
   </div>
   <div class="ft-bottom">© 2026 AçıqTəhsil. Bütün hüquqlar qorunur.</div>
 </footer>
 
-<script type="module" src="auth-modal.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module" src="auth-modal.js"></script>
 <script>
 const revs=document.querySelectorAll('.reveal');
 const ob=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);ob.unobserve(e.target)}})},{threshold:.1});
 revs.forEach(r=>ob.observe(r));
 function toggleMenu(){document.getElementById('mob').classList.toggle('open')}
 function closeMob(){document.getElementById('mob').classList.remove('open')}
+</script>
+<script>
+// Dismiss splash after page loads — min 1.4s so animation completes
+const _splashMin = new Promise(r => setTimeout(r, 1400));
+const _splashLoad = new Promise(r => {
+  if(document.readyState==='complete') r();
+  else window.addEventListener('load', r);
+});
+Promise.all([_splashMin, _splashLoad]).then(() => {
+  const s = document.getElementById('at-splash');
+  if(s) { s.classList.add('hidden'); setTimeout(()=>s.remove(), 500); }
+});
 </script>
 </body></html>
