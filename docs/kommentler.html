@@ -182,12 +182,13 @@ function renderStars(count) {
   return [1,2,3,4,5].map(i=>`<span class="star${i<=count?' filled':''}">★</span>`).join('');
 }
 
-// ── In-memory list — seed data shown while Firestore loads ────
-let _comments = [
+// ── Seed comments shown before Firestore loads ───────────────
+const _SEEDS = [
   {name:"Jalya Mamedzade", stars:5, text:"AçıqTəhsil platforması həqiqətən çox faydalıdır! Riyaziyyat materialları xüsusilə imtahana hazırlıqda böyük kömək etdi.", date:"4 gün əvvəl"},
   {name:"Elvin Həsənov",   stars:5, text:"Buraxılış imtahanına hazırlaşmaq üçün əla resurslar var. Tövsiyə edirəm!", date:"5 gün əvvəl"},
   {name:"Nigar Əliyeva",   stars:4, text:"Video dərslər çox aydın izah edilib. Müəllimlər peşəkardır.", date:"1 həftə əvvəl"},
 ];
+let _comments = [..._SEEDS];
 
 function renderCard(c, isNew=false) {
   const initial = (c.name||"A").charAt(0).toUpperCase();
@@ -209,28 +210,28 @@ function renderFeed(newIdx=-1) {
   observeReveal();
 }
 
-// ── Load real comments from Firestore ─────────────────────────
+// ── Load ALL comments from Firestore, replace seed data ──────
 async function loadFromFirestore() {
   try {
     const docs = await getComments();
     if(docs.length > 0) {
-      const seedTexts = new Set(_comments.map(c=>c.text));
-      const real = docs
-        .filter(c => !seedTexts.has(c.text))
-        .map(c => ({
-          name:  c.name  || "Anonim",
-          stars: c.stars || 0,
-          text:  c.text  || "",
-          date:  c.createdAt?.toDate ? c.createdAt.toDate().toLocaleDateString("az-AZ") : "Bu gün"
-        }));
-      if(real.length) {
-        _comments = [...real, ..._comments];
-        renderFeed();
-      }
+      // Replace seed data entirely with real Firestore comments
+      // Append seeds only as fallback at the bottom
+      const real = docs.map(c => ({
+        name:  c.name  || "Anonim",
+        stars: c.stars || 0,
+        text:  c.text  || "",
+        date:  c.createdAt?.toDate ? c.createdAt.toDate().toLocaleDateString("az-AZ") : "Bu gün"
+      }));
+      // Keep seeds that aren't already in Firestore (by text match)
+      const realTexts = new Set(real.map(c => c.text));
+      const seedsToKeep = _SEEDS.filter(s => !realTexts.has(s.text));
+      _comments = [...real, ...seedsToKeep];
+      renderFeed();
     }
   } catch(e) {
-    // Firestore not configured yet — seed comments still show
-    console.log("Firestore:", e.code || e.message);
+    // Firestore read failed — seeds already showing, that's fine
+    console.log("Firestore read:", e.code || e.message);
   }
 }
 
@@ -246,27 +247,40 @@ window.submitComment = async function() {
   if(!stars) { alert("Zəhmət olmasa qiymətləndirmə seçin."); return; }
   if(!text)  { alert("Zəhmət olmasa rəyinizi yazın.");        return; }
 
-  // 1. Immediately add to top of feed — visible right away
+  // Optimistically add to top of feed (will be removed if save fails)
   const newComment = { name, stars, text, date: "İndi" };
   _comments.unshift(newComment);
   renderFeed(0);
 
-  // 2. Clear form
+  // Clear form immediately (will restore if save fails)
   document.getElementById("c-name").value  = "";
   document.getElementById("c-email").value = "";
   document.getElementById("c-text").value  = "";
   resetStars();
 
-  // 3. Show success message
-  ok.style.display = "block";
-  setTimeout(()=>{ ok.style.display="none"; }, 4500);
-
-  // 4. Try to persist to Firestore
+  // 4. Persist to Firestore — wait for confirmation before showing success
+  const btn = document.querySelector(".btn-sub");
+  btn.disabled = true; btn.textContent = "Göndərilir...";
   try {
     await saveComment({ name, email, stars, text });
+    // Only show success AFTER Firestore confirms the save
+    ok.textContent = "✅ Rəyiniz uğurla saxlanıldı! Təşəkkür edirik.";
+    ok.style.background = "#e6f4ea"; ok.style.color = "#1d5c3e";
+    ok.style.display = "block";
+    setTimeout(()=>{ ok.style.display="none"; }, 4500);
   } catch(e) {
-    console.log("Firestore save skipped:", e.code || e.message);
-    // Comment is already visible in the feed — no problem
+    // Save failed — put the comment back in form, show error
+    _comments.shift(); // remove the optimistically added comment
+    renderFeed();
+    document.getElementById("c-name").value  = name;
+    document.getElementById("c-email").value = email;
+    document.getElementById("c-text").value  = text;
+    ok.textContent = "❌ Xəta: Rəy saxlanılmadı. Zəhmət olmasa Firebase Firestore-un aktiv olduğunu yoxlayın.";
+    ok.style.background = "#fde8e8"; ok.style.color = "#c0392b";
+    ok.style.display = "block";
+    console.log("Firestore save error:", e.code, e.message);
+  } finally {
+    btn.disabled = false; btn.textContent = "Rəy Göndər →";
   }
 };
 
