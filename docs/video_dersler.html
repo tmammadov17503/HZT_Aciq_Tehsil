@@ -396,4 +396,6 @@ window.confirmBooking = confirmBooking;
 function toggleMenu(){document.getElementById('mob').classList.toggle('open')}
 function closeMob(){document.getElementById('mob').classList.remove('open')}
 const _revs=document.querySelectorAll('.reveal');
-const _ob=new
+const _ob=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*100);_ob.unobserve(e.target)}})},{threshold:.1});
+_revs.forEach(r=>_ob.observe(r));
+</script></body></html>
