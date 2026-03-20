@@ -5,9 +5,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--navy:#0a1628;--deep:#0d1f3c;--blue:#1a4fa0;--accent:#e8a020;--gold:#f5c842;--light:#f4f6fb;--green:#1d5c3e;--orange:#f07d24;--white:#fff;--text:#1e2d45;--muted:#5a6e8a;--bg:#faf8f2;--card:#fff;--border:#e8e2d6}
+:root{--navy:#1a2744;--deep:#1a3d2b;--blue:#1a3d2b;--accent:#e8671a;--gold:#e8671a;--light:#d6e8c8;--green:#1a3d2b;--orange:#e8671a;--white:#fff;--text:#1a2744;--muted:#5a6b55;--bg:#f5f2eb;--card:#fff;--border:#d4ddc8}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;height:70px;background:rgba(10,22,40,.97);backdrop-filter:blur(10px);gap:1rem}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;height:70px;background:rgba(26,39,68,.97);backdrop-filter:blur(10px);gap:1rem}
 .nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;text-decoration:none;flex-shrink:0}
 .nav-logo span{color:var(--gold)}
 .nav-links{display:flex;gap:1.4rem;list-style:none;align-items:center;flex:1;justify-content:center}
@@ -19,7 +19,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:var(--navy);padding:1.5rem 5vw;z-index:99;flex-direction:column}
 .mobile-menu.open{display:flex}
 .mobile-menu a{color:rgba(255,255,255,.8);text-decoration:none;font-size:1rem;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.07)}
-footer{background:#060e1c;padding:60px 5vw 30px;color:rgba(255,255,255,.55)}
+footer{background:#111d0e;padding:60px 5vw 30px;color:rgba(255,255,255,.55)}
 .ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:1100px;margin:0 auto 3rem}
 .ft-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;text-decoration:none;display:block}
 .ft-logo span{color:var(--gold)}
@@ -35,7 +35,7 @@ footer ul a:hover{color:var(--gold)}
 @media(max-width:560px){.ft-grid{grid-template-columns:1fr}}
 
 /* ── Hero ── */
-.page-hero{padding:120px 5vw 60px;background:linear-gradient(135deg,var(--navy),var(--deep));text-align:center;position:relative;overflow:hidden}
+.page-hero{padding:120px 5vw 60px;background:linear-gradient(135deg,#1a3d2b,#0f2519);text-align:center;position:relative;overflow:hidden}
 .page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(26,79,160,.4),transparent 60%);pointer-events:none}
 .page-hero .tag{display:inline-block;background:rgba(245,200,66,.15);border:1px solid rgba(245,200,66,.4);color:var(--gold);font-size:.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:.35rem .9rem;border-radius:20px;margin-bottom:1rem;position:relative}
 .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;color:#fff;position:relative}
@@ -45,20 +45,58 @@ footer ul a:hover{color:var(--gold)}
 .content{padding:60px 5vw 80px;max-width:1000px;margin:0 auto}
 
 /* ── Comment cards ── */
-.comm-feed{margin-bottom:3rem}
-.comm-item{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:1.4rem 1.6rem;margin-bottom:1.2rem;transition:box-shadow .2s}
-.comm-item:hover{box-shadow:0 4px 20px rgba(10,22,40,.07)}
-.comm-new{border-color:var(--green)!important;background:#f0faf4!important;animation:commIn .4s ease}
-@keyframes commIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
-.comm-meta{display:flex;align-items:center;gap:.8rem;margin-bottom:.5rem;flex-wrap:wrap}
-.comm-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--orange));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.88rem;flex-shrink:0}
-.comm-name{font-weight:700;font-size:.9rem;color:var(--navy)}
-.comm-date{font-size:.76rem;color:var(--muted);margin-left:auto}
-.comm-stars{display:flex;gap:2px;margin-bottom:.6rem}
-.comm-stars .star{font-size:1rem;color:#ddd}
-.comm-stars .star.filled{color:#f5c842}
-.comm-text{font-size:.92rem;color:var(--text);line-height:1.75}
-.empty-feed{text-align:center;padding:2.5rem;color:var(--muted);font-size:.95rem}
+/* ── Scrolling ticker ── */
+.ticker-section{margin-bottom:3.5rem;overflow:hidden;position:relative}
+.ticker-section::before,.ticker-section::after{
+  content:'';position:absolute;top:0;bottom:0;z-index:2;width:80px;pointer-events:none;
+}
+.ticker-section::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+.ticker-section::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+.ticker-track{
+  display:flex;gap:1.2rem;
+  animation:tickerScroll 35s linear infinite;
+  width:max-content;
+}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes tickerScroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+/* Each comment card in the ticker */
+.ticker-card{
+  flex-shrink:0;width:280px;
+  background:var(--card);border:1.5px solid var(--border);border-radius:16px;
+  padding:1.3rem 1.4rem;cursor:default;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,width .3s;
+  position:relative;
+}
+.ticker-card:hover{
+  transform:scale(1.06);
+  box-shadow:0 12px 40px rgba(26,61,43,.15);
+  z-index:10;width:320px;
+}
+.tc-meta{display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem}
+.tc-avatar{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--green),var(--orange));
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:700;font-size:.85rem;
+}
+.tc-name{font-weight:700;font-size:.88rem;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tc-date{font-size:.72rem;color:var(--muted);margin-left:auto;white-space:nowrap;flex-shrink:0}
+.tc-stars{display:flex;gap:2px;margin-bottom:.5rem}
+.tc-stars .star{font-size:.9rem;color:#d4ddc8}
+.tc-stars .star.filled{color:#e8671a}
+.tc-text{
+  font-size:.85rem;color:var(--text);line-height:1.6;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+  transition:all .3s;
+}
+.ticker-card:hover .tc-text{-webkit-line-clamp:8}
+.ticker-empty{text-align:center;padding:2.5rem;color:var(--muted);font-size:.95rem}
+/* new card highlight */
+.ticker-card.tc-new{border-color:var(--green);background:#f0f7ec;animation:tcIn .5s ease}
+@keyframes tcIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
 
 /* ── Form card ── */
 .form-wrap{position:relative}
@@ -141,9 +179,11 @@ footer ul a:hover{color:var(--gold)}
 </div>
 
 <div class="content">
-  <!-- Feed -->
-  <div class="comm-feed" id="comm-feed">
-    <div class="empty-feed">⏳ Rəylər yüklənir...</div>
+  <!-- Scrolling ticker feed -->
+  <div class="ticker-section" id="ticker-section">
+    <div class="ticker-track" id="ticker-track">
+      <div class="ticker-empty">⏳ Rəylər yüklənir...</div>
+    </div>
   </div>
 
   <!-- Form -->
@@ -199,23 +239,23 @@ footer ul a:hover{color:var(--gold)}
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
 import { saveComment, getComments, onAuthChange } from "./firebase-config.js";
 
-// ── Show/hide form gate based on auth state ───────────────────
+// ── Auth gate ─────────────────────────────────────────────────
 onAuthChange(user => {
   const gate = document.getElementById("form-gate");
   if (gate) gate.style.display = user ? "none" : "flex";
 });
 
-// ── Scroll reveal ──────────────────────────────────────────────
+// ── Scroll reveal ─────────────────────────────────────────────
 const revOb = new IntersectionObserver(es=>{
   es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);revOb.unobserve(e.target)}});
 },{threshold:.1});
 function observeReveal(){ document.querySelectorAll('.reveal:not(.visible)').forEach(r=>revOb.observe(r)); }
 observeReveal();
 
-// ── Star helper ───────────────────────────────────────────────
+// ── Star helpers ──────────────────────────────────────────────
 function getSelectedStars() {
-  const checked = document.querySelector('input[name="stars"]:checked');
-  return checked ? parseInt(checked.value) : 0;
+  const c = document.querySelector('input[name="stars"]:checked');
+  return c ? parseInt(c.value) : 0;
 }
 function resetStars() {
   document.querySelectorAll('input[name="stars"]').forEach(r=>r.checked=false);
@@ -224,60 +264,73 @@ function renderStars(count) {
   return [1,2,3,4,5].map(i=>`<span class="star${i<=count?' filled':''}">★</span>`).join('');
 }
 
-// ── Seed comments shown before Firestore loads ───────────────
+// ── Ticker card builder ───────────────────────────────────────
+function makeCard(c, isNew=false) {
+  const el = document.createElement('div');
+  el.className = 'ticker-card' + (isNew ? ' tc-new' : '');
+  const initial = (c.name||'A').charAt(0).toUpperCase();
+  el.innerHTML = `
+    <div class="tc-meta">
+      <div class="tc-avatar">${initial}</div>
+      <span class="tc-name">${c.name||'Anonim'}</span>
+      <span class="tc-date">${c.date||''}</span>
+    </div>
+    ${c.stars ? `<div class="tc-stars">${renderStars(c.stars)}</div>` : ''}
+    <p class="tc-text">${c.text||''}</p>
+  `;
+  return el;
+}
+
+// ── In-memory pool ────────────────────────────────────────────
 const _SEEDS = [
   {name:"Jalya Mamedzade", stars:5, text:"AçıqTəhsil platforması həqiqətən çox faydalıdır! Riyaziyyat materialları xüsusilə imtahana hazırlıqda böyük kömək etdi.", date:"4 gün əvvəl"},
   {name:"Elvin Həsənov",   stars:5, text:"Buraxılış imtahanına hazırlaşmaq üçün əla resurslar var. Tövsiyə edirəm!", date:"5 gün əvvəl"},
   {name:"Nigar Əliyeva",   stars:4, text:"Video dərslər çox aydın izah edilib. Müəllimlər peşəkardır.", date:"1 həftə əvvəl"},
 ];
-let _comments = [..._SEEDS];
+let _pool = [..._SEEDS];
 
-function renderCard(c, isNew=false) {
-  const initial = (c.name||"A").charAt(0).toUpperCase();
-  return `<div class="comm-item${isNew?' comm-new':''} reveal">
-    <div class="comm-meta">
-      <div class="comm-avatar">${initial}</div>
-      <span class="comm-name">${c.name||"Anonim"}</span>
-      <span class="comm-date">${c.date||""}</span>
-    </div>
-    ${c.stars ? `<div class="comm-stars">${renderStars(c.stars)}</div>` : ''}
-    <p class="comm-text">${c.text||""}</p>
-  </div>`;
+// ── Render ticker (duplicates cards for seamless loop) ────────
+function renderTicker(highlightFirst=false) {
+  const track = document.getElementById('ticker-track');
+  if(!track) return;
+  if(!_pool.length) {
+    track.innerHTML = '<div class="ticker-empty">Hələ rəy yoxdur. İlk rəyi siz yazın!</div>';
+    return;
+  }
+  track.innerHTML = '';
+  // Build double set for seamless infinite scroll
+  const allCards = [..._pool, ..._pool];
+  allCards.forEach((c, i) => {
+    const card = makeCard(c, highlightFirst && i === 0);
+    track.appendChild(card);
+  });
+  // Adjust animation speed based on count (more cards = faster)
+  const speed = Math.max(20, Math.min(50, _pool.length * 8));
+  track.style.animationDuration = speed + 's';
 }
 
-function renderFeed(newIdx=-1) {
-  const feed = document.getElementById("comm-feed");
-  if(!_comments.length){ feed.innerHTML='<div class="empty-feed">Hələ rəy yoxdur. İlk rəyi siz yazın!</div>'; return; }
-  feed.innerHTML = _comments.map((c,i)=>renderCard(c, i===newIdx)).join("");
-  observeReveal();
-}
-
-// ── Load ALL comments from Firestore, replace seed data ──────
+// ── Load from Firestore ───────────────────────────────────────
 async function loadFromFirestore() {
   try {
     const docs = await getComments();
     if(docs.length > 0) {
-      // Replace seed data entirely with real Firestore comments
-      // Append seeds only as fallback at the bottom
       const real = docs.map(c => ({
         name:  c.name  || "Anonim",
         stars: c.stars || 0,
         text:  c.text  || "",
         date:  c.createdAt?.toDate ? c.createdAt.toDate().toLocaleDateString("az-AZ") : "Bu gün"
       }));
-      // Keep seeds that aren't already in Firestore (by text match)
-      const realTexts = new Set(real.map(c => c.text));
-      const seedsToKeep = _SEEDS.filter(s => !realTexts.has(s.text));
-      _comments = [...real, ...seedsToKeep];
-      renderFeed();
+      const seedTexts = new Set(_SEEDS.map(s=>s.text));
+      const newReal = real.filter(c => !seedTexts.has(c.text));
+      _pool = [...newReal, ..._SEEDS];
+      renderTicker();
     }
   } catch(e) {
-    // Firestore read failed — seeds already showing, that's fine
     console.log("Firestore read:", e.code || e.message);
   }
 }
 
-// ── Submit ─────────────────────────────────────────────────────
+// ── Submit ────────────────────────────────────────────────────
 window.submitComment = async function() {
   const name  = document.getElementById("c-name").value.trim();
   const email = document.getElementById("c-email").value.trim();
@@ -289,31 +342,29 @@ window.submitComment = async function() {
   if(!stars) { alert("Zəhmət olmasa qiymətləndirmə seçin."); return; }
   if(!text)  { alert("Zəhmət olmasa rəyinizi yazın.");        return; }
 
-  // Optimistically add to top of feed (will be removed if save fails)
+  // Optimistically add to ticker
   const newComment = { name, stars, text, date: "İndi" };
-  _comments.unshift(newComment);
-  renderFeed(0);
+  _pool.unshift(newComment);
+  renderTicker(true);
 
-  // Clear form immediately (will restore if save fails)
+  // Clear form
   document.getElementById("c-name").value  = "";
   document.getElementById("c-email").value = "";
   document.getElementById("c-text").value  = "";
   resetStars();
 
-  // 4. Persist to Firestore — wait for confirmation before showing success
+  // Persist to Firestore
   const btn = document.querySelector(".btn-sub");
   btn.disabled = true; btn.textContent = "Göndərilir...";
   try {
     await saveComment({ name, email, stars, text });
-    // Only show success AFTER Firestore confirms the save
     ok.textContent = "✅ Rəyiniz uğurla saxlanıldı! Təşəkkür edirik.";
-    ok.style.background = "#e6f4ea"; ok.style.color = "#1d5c3e";
+    ok.style.background = "#e6f4ea"; ok.style.color = "#1a3d2b";
     ok.style.display = "block";
     setTimeout(()=>{ ok.style.display="none"; }, 4500);
   } catch(e) {
-    // Save failed — put the comment back in form, show error
-    _comments.shift(); // remove the optimistically added comment
-    renderFeed();
+    _pool.shift();
+    renderTicker();
     document.getElementById("c-name").value  = name;
     document.getElementById("c-email").value = email;
     document.getElementById("c-text").value  = text;
@@ -329,8 +380,7 @@ window.submitComment = async function() {
 window.toggleMenu = function(){ document.getElementById('mob').classList.toggle('open'); };
 window.closeMob   = function(){ document.getElementById('mob').classList.remove('open'); };
 
-// ── Initial render: show seeds immediately, then load real comments ──
-renderFeed();
+renderTicker();
 loadFromFirestore();
 </script>
 </body></html>
