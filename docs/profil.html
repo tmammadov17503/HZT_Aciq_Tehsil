@@ -1,1 +1,463 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Profil | AçıqTəhsil</title>
+<link rel="icon" type="image/svg+xml" href="logo.svg"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1a2744;--deep:#1a3d2b;--blue:#1a3d2b;--accent:#e8671a;--gold:#e8671a;--light:#d6e8c8;--green:#1a3d2b;--orange:#e8671a;--white:#fff;--text:#1a2744;--muted:#5a6b55;--bg:#f5f2eb;--card:#fff;--border:#d4ddc8}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;height:70px;background:rgba(26,39,68,.97);backdrop-filter:blur(10px);gap:1rem}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;text-decoration:none;flex-shrink:0}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:1.4rem;list-style:none;align-items:center;flex:1;justify-content:center}
+.nav-links a{text-decoration:none;color:rgba(255,255,255,.75);font-size:.85rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--accent)!important;color:#fff!important;padding:.4rem 1rem;border-radius:6px;font-weight:700!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:#fff}
+.mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:#1a2744;padding:1.5rem 5vw;z-index:99;flex-direction:column}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:rgba(255,255,255,.8);text-decoration:none;font-size:1rem;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.07)}
+/* ── PAGE LAYOUT ── */
+.page-wrap{max-width:1000px;margin:0 auto;padding:100px 4vw 80px;display:grid;grid-template-columns:240px 1fr;gap:2rem;align-items:start}
+/* ── SIDEBAR ── */
+.sidebar{background:var(--card);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;position:sticky;top:90px}
+.profile-head{background:linear-gradient(135deg,var(--green),#0f2519);padding:2rem 1.5rem;text-align:center}
+.profile-avatar-big{
+  width:72px;height:72px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),#c0392b);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:800;font-size:1.8rem;margin:0 auto 1rem;
+  border:3px solid rgba(255,255,255,.3);
+}
+.profile-name-big{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:.2rem}
+.profile-email-small{font-size:.78rem;color:rgba(255,255,255,.6);word-break:break-all}
+.sidebar-nav{padding:.6rem}
+.snav-item{display:flex;align-items:center;gap:.7rem;padding:.75rem 1rem;border-radius:10px;cursor:pointer;transition:background .2s;font-size:.9rem;font-weight:500;color:var(--text);border:none;background:none;width:100%;text-align:left;font-family:inherit}
+.snav-item:hover{background:var(--light)}
+.snav-item.active{background:var(--light);color:var(--green);font-weight:700}
+.snav-item .ico{font-size:1.1rem;width:22px;text-align:center}
+.snav-sep{border:none;border-top:1px solid var(--border);margin:.4rem .6rem}
+.snav-item.danger{color:#c0392b}
+.snav-item.danger:hover{background:#fde8e8}
+/* ── MAIN CONTENT ── */
+.main-content{display:flex;flex-direction:column;gap:1.5rem}
+.profile-section{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:2rem;display:none}
+.profile-section.active{display:block}
+.ps-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:800;color:var(--navy);margin-bottom:.3rem;display:flex;align-items:center;gap:.6rem}
+.ps-sub{color:var(--muted);font-size:.88rem;margin-bottom:1.8rem}
+.ps-divider{border:none;border-top:1.5px solid var(--border);margin:1.6rem 0}
+/* Form fields */
+.pf-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.pf{display:flex;flex-direction:column;gap:.3rem}
+.pf.full{grid-column:1/-1}
+.pf label{font-size:.78rem;font-weight:600;color:var(--text)}
+.pf input,.pf select{border:1.5px solid var(--border);border-radius:9px;padding:.72rem 1rem;font-size:.9rem;font-family:inherit;color:var(--text);background:#fff;outline:none;transition:border-color .2s}
+.pf input:focus,.pf select:focus{border-color:var(--green)}
+.pf input[readonly]{background:#f8f6f0;color:var(--muted);cursor:not-allowed}
+.pf-hint{font-size:.75rem;color:var(--muted);margin-top:.2rem}
+/* Buttons */
+.btn-save{background:var(--green);color:#fff;border:none;padding:.8rem 1.8rem;border-radius:9px;font-weight:700;font-size:.92rem;cursor:pointer;font-family:inherit;transition:background .2s}
+.btn-save:hover{background:#0f2519}
+.btn-outline-sm{background:none;border:1.5px solid var(--border);color:var(--text);padding:.72rem 1.4rem;border-radius:9px;font-weight:600;font-size:.88rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-outline-sm:hover{border-color:var(--green);color:var(--green)}
+.btn-danger{background:#fde8e8;color:#c0392b;border:1.5px solid #f5c6c6;padding:.8rem 1.8rem;border-radius:9px;font-weight:700;font-size:.92rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-danger:hover{background:#c0392b;color:#fff}
+/* Alert boxes */
+.alert-ok{background:#e6f4ea;color:#1a3d2b;border-radius:9px;padding:.75rem 1rem;font-size:.88rem;margin-top:1rem;display:none}
+.alert-err{background:#fde8e8;color:#c0392b;border-radius:9px;padding:.75rem 1rem;font-size:.88rem;margin-top:1rem;display:none}
+/* Stats row */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.8rem}
+.stat-box{background:var(--bg);border:1.5px solid var(--border);border-radius:14px;padding:1.2rem;text-align:center}
+.stat-box .num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:var(--navy)}
+.stat-box .lbl{font-size:.78rem;color:var(--muted);margin-top:.2rem}
+/* Course list */
+.course-list{display:flex;flex-direction:column;gap:.8rem}
+.course-row{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:var(--bg);border:1.5px solid var(--border);border-radius:12px}
+.course-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.course-info{flex:1}
+.course-info h4{font-weight:700;font-size:.92rem;color:var(--navy);margin-bottom:.2rem}
+.course-info p{font-size:.8rem;color:var(--muted)}
+.course-badge{font-size:.72rem;font-weight:700;padding:.3rem .7rem;border-radius:20px;flex-shrink:0}
+.cb-active{background:#e6f4ea;color:#1a3d2b}
+.cb-soon{background:#fef3e2;color:#c0692b}
+/* Security */
+.sec-item{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 0;border-bottom:1px solid var(--border);gap:1rem;flex-wrap:wrap}
+.sec-item:last-child{border-bottom:none}
+.sec-item-info h4{font-size:.92rem;font-weight:700;color:var(--navy);margin-bottom:.2rem}
+.sec-item-info p{font-size:.8rem;color:var(--muted)}
+/* Danger zone */
+.danger-box{border:1.5px solid #f5c6c6;border-radius:14px;padding:1.5rem;background:#fff9f9}
+.danger-box h4{font-size:.95rem;font-weight:700;color:#c0392b;margin-bottom:.4rem}
+.danger-box p{font-size:.85rem;color:#7a4040;line-height:1.6;margin-bottom:1.2rem}
+/* Confirm delete modal */
+#del-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);align-items:center;justify-content:center;padding:20px}
+#del-overlay.open{display:flex}
+#del-modal{background:#fff;border-radius:18px;width:min(420px,96vw);padding:2.2rem;box-shadow:0 20px 60px rgba(0,0,0,.2);text-align:center}
+#del-modal .del-ico{font-size:2.8rem;margin-bottom:1rem}
+#del-modal h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:800;color:#c0392b;margin-bottom:.6rem}
+#del-modal p{color:#666;font-size:.9rem;line-height:1.6;margin-bottom:1.4rem}
+.del-input{width:100%;border:1.5px solid #f5c6c6;border-radius:9px;padding:.75rem 1rem;font-size:.9rem;font-family:inherit;margin-bottom:1rem;outline:none;text-align:center}
+.del-input:focus{border-color:#c0392b}
+.del-btns{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+/* Not logged in screen */
+.not-logged{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;gap:1rem;padding:2rem}
+.not-logged h2{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:800;color:var(--navy)}
+.not-logged p{color:var(--muted);max-width:380px;line-height:1.7}
+/* Footer */
+footer{background:#111d0e;padding:40px 5vw 24px;color:rgba(255,255,255,.5);margin-top:4rem}
+.ft-bottom{text-align:center;font-size:.82rem;max-width:1000px;margin:0 auto}
+@media(max-width:760px){.page-wrap{grid-template-columns:1fr}.sidebar{position:static}.pf-row{grid-template-columns:1fr}.stat-row{grid-template-columns:1fr 1fr}.nav-links{display:none}.hamburger{display:flex}}
+@media(max-width:480px){.stat-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
 
+<nav>
+  <a href="index.html" class="nav-logo">Açıq<span>Təhsil</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Ana Səhifə</a></li>
+    <li><a href="kurslar.html">Kurslar</a></li>
+    <li><a href="video_dersler.html">Video Dərslər</a></li>
+    <li><a href="kommentler.html">Kommentlər</a></li>
+    <li><a href="bashvur.html" class="nav-cta">Başvur</a></li>
+  </ul>
+  <div id="at-nav-slot"></div>
+  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mob">
+  <a href="index.html" onclick="closeMob()">Ana Səhifə</a>
+  <a href="kurslar.html" onclick="closeMob()">Kurslar</a>
+  <a href="video_dersler.html" onclick="closeMob()">Video Dərslər</a>
+  <a href="kommentler.html" onclick="closeMob()">Kommentlər</a>
+  <a href="bashvur.html" onclick="closeMob()">Başvur</a>
+</div>
+<script type="module" src="auth-modal.js"></script>
+
+<!-- Not logged in -->
+<div class="not-logged" id="not-logged-view" style="display:none">
+  <div style="font-size:3rem">🔒</div>
+  <h2>Profili görmək üçün daxil olun</h2>
+  <p>Bu səhifəyə daxil olmaq üçün hesabınıza giriş etməlisiniz.</p>
+  <button class="btn-save" onclick="window.AT.openModal()" style="margin-top:.5rem">Daxil ol</button>
+</div>
+
+<!-- Main profile layout (shown when logged in) -->
+<div class="page-wrap" id="profile-view" style="display:none">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="profile-head">
+      <div class="profile-avatar-big" id="p-avatar-big">?</div>
+      <div class="profile-name-big" id="p-name-big">Yüklənir...</div>
+      <div class="profile-email-small" id="p-email-small"></div>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="snav-item active" onclick="showTab('general',this)">
+        <span class="ico">👤</span> Ümumi məlumat
+      </button>
+      <button class="snav-item" onclick="showTab('courses',this)">
+        <span class="ico">📚</span> Kurslarım
+      </button>
+      <button class="snav-item" onclick="showTab('activity',this)">
+        <span class="ico">📅</span> Fəaliyyət
+      </button>
+      <button class="snav-item" onclick="showTab('security',this)">
+        <span class="ico">🔐</span> Təhlükəsizlik
+      </button>
+      <hr class="snav-sep"/>
+      <button class="snav-item danger" onclick="showTab('danger',this)">
+        <span class="ico">⚠️</span> Hesabı sil
+      </button>
+    </nav>
+  </aside>
+
+  <!-- Content panels -->
+  <div class="main-content">
+
+    <!-- ── GENERAL ── -->
+    <div class="profile-section active" id="tab-general">
+      <div class="ps-title">👤 Ümumi məlumat</div>
+      <p class="ps-sub">Şəxsi məlumatlarınızı idarə edin.</p>
+      <div class="pf-row">
+        <div class="pf"><label>Ad Soyad</label><input type="text" id="p-display-name" placeholder="Adınız Soyadınız"/></div>
+        <div class="pf"><label>E-poçt (dəyişdirilmir)</label><input type="email" id="p-email-field" readonly/></div>
+      </div>
+      <div class="pf-row">
+        <div class="pf"><label>Qeydiyyat tarixi</label><input type="text" id="p-created" readonly/></div>
+        <div class="pf"><label>Son giriş</label><input type="text" id="p-last-login" readonly/></div>
+      </div>
+      <div class="pf-row">
+        <div class="pf"><label>E-poçt təsdiq statusu</label><input type="text" id="p-verified" readonly/></div>
+        <div class="pf"><label>Giriş metodu</label><input type="text" id="p-provider" readonly/></div>
+      </div>
+      <button class="btn-save" onclick="saveDisplayName()">Yadda saxla</button>
+      <div class="alert-ok" id="general-ok">✅ Məlumatlar yeniləndi.</div>
+      <div class="alert-err" id="general-err"></div>
+    </div>
+
+    <!-- ── COURSES ── -->
+    <div class="profile-section" id="tab-courses">
+      <div class="ps-title">📚 Kurslarım</div>
+      <p class="ps-sub">Daxil olduğunuz tədris proqramları.</p>
+      <div class="stat-row">
+        <div class="stat-box"><div class="num">3</div><div class="lbl">Mövcud proqram</div></div>
+        <div class="stat-box"><div class="num">0</div><div class="lbl">Tamamlanmış</div></div>
+        <div class="stat-box"><div class="num">100%</div><div class="lbl">Pulsuz</div></div>
+      </div>
+      <div class="course-list">
+        <div class="course-row">
+          <div class="course-ico" style="background:#e6f4ea">📗</div>
+          <div class="course-info"><h4>9-cu sinif proqramı</h4><p>Azərbaycan dili · İngilis dili · Riyaziyyat</p></div>
+          <span class="course-badge cb-active">Aktiv</span>
+        </div>
+        <div class="course-row">
+          <div class="course-ico" style="background:#e6f4ea">📘</div>
+          <div class="course-info"><h4>10-cu sinif proqramı</h4><p>Buraxılış + 4 Blok qrupu</p></div>
+          <span class="course-badge cb-active">Aktiv</span>
+        </div>
+        <div class="course-row">
+          <div class="course-ico" style="background:#e6f4ea">📙</div>
+          <div class="course-info"><h4>11-ci sinif proqramı</h4><p>Buraxılış + 4 Blok qrupu</p></div>
+          <span class="course-badge cb-active">Aktiv</span>
+        </div>
+        <div class="course-row" style="opacity:.6">
+          <div class="course-ico" style="background:#fef3e2">🎥</div>
+          <div class="course-info"><h4>Video Dərslər</h4><p>Math Tutoring · Study Skills · Science Workshops</p></div>
+          <span class="course-badge cb-soon">Rezervasiya et</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ACTIVITY ── -->
+    <div class="profile-section" id="tab-activity">
+      <div class="ps-title">📅 Fəaliyyət</div>
+      <p class="ps-sub">Hesabınızla bağlı son əməliyyatlar.</p>
+      <div id="activity-list">
+        <p style="color:var(--muted);font-size:.9rem">Fəaliyyət qeydləri tezliklə əlavə olunacaq.</p>
+      </div>
+    </div>
+
+    <!-- ── SECURITY ── -->
+    <div class="profile-section" id="tab-security">
+      <div class="ps-title">🔐 Təhlükəsizlik</div>
+      <p class="ps-sub">Hesabınızın təhlükəsizlik parametrləri.</p>
+
+      <div class="sec-item">
+        <div class="sec-item-info">
+          <h4>Şifrəni dəyiş</h4>
+          <p>E-poçtunuza şifrə sıfırlama linki göndəriləcək.</p>
+        </div>
+        <button class="btn-outline-sm" onclick="sendPassReset()">Sıfırlama linki göndər</button>
+      </div>
+
+      <div class="sec-item">
+        <div class="sec-item-info">
+          <h4>E-poçt təsdiqləməsi</h4>
+          <p id="email-verify-status">Yüklənir...</p>
+        </div>
+        <button class="btn-outline-sm" id="verify-btn" onclick="resendVerification()" style="display:none">Yenidən göndər</button>
+      </div>
+
+      <div class="sec-item">
+        <div class="sec-item-info">
+          <h4>Bütün cihazlardan çıx</h4>
+          <p>Bütün aktiv sessiyaları sonlandırır.</p>
+        </div>
+        <button class="btn-outline-sm" onclick="signOutAll()">Çıxış et</button>
+      </div>
+
+      <div class="alert-ok" id="security-ok"></div>
+      <div class="alert-err" id="security-err"></div>
+    </div>
+
+    <!-- ── DANGER ZONE ── -->
+    <div class="profile-section" id="tab-danger">
+      <div class="ps-title" style="color:#c0392b">⚠️ Hesabı sil</div>
+      <p class="ps-sub">Bu əməliyyat geri qaytarıla bilməz.</p>
+      <div class="danger-box">
+        <h4>Hesabı həmişəlik sil</h4>
+        <p>Hesabınızı silsəniz, bütün məlumatlarınız (rezervasiyalar, rəylər, profil) silinəcək. Bu əməliyyat geri qaytarıla bilməz. Davam etmək istəyirsinizsə aşağıdakı düyməyə basın.</p>
+        <button class="btn-danger" onclick="openDeleteModal()">Hesabı sil</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Delete confirmation modal -->
+<div id="del-overlay">
+  <div id="del-modal">
+    <div class="del-ico">🗑️</div>
+    <h3>Hesabı sil</h3>
+    <p>Bu əməliyyat geri qaytarıla bilməz. Təsdiq etmək üçün aşağıya <strong>SİL</strong> yazın.</p>
+    <input type="text" class="del-input" id="del-confirm-input" placeholder="SİL yazın..."/>
+    <div class="del-btns">
+      <button class="btn-outline-sm" onclick="closeDeleteModal()">Ləğv et</button>
+      <button class="btn-danger" id="del-confirm-btn" onclick="confirmDelete()" disabled>Həmişəlik sil</button>
+    </div>
+    <div class="alert-err" id="del-err" style="margin-top:1rem"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-bottom">© 2026 AçıqTəhsil. Bütün hüquqlar qorunur.</div>
+</footer>
+
+<script type="module">
+import { onAuthChange, logoutUser, resetPassword, getUserProfile } from './firebase-config.js';
+import { getAuth, updateProfile, sendEmailVerification, deleteUser, reauthenticateWithCredential, EmailAuthProvider }
+  from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { getFirestore, doc, setDoc, deleteDoc }
+  from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+const auth = getAuth();
+const db   = getFirestore();
+let _user  = null;
+
+// ── Auth state ────────────────────────────────────────────────
+onAuthChange(async user => {
+  _user = user;
+  if (!user) {
+    document.getElementById('not-logged-view').style.display = 'flex';
+    document.getElementById('profile-view').style.display    = 'none';
+    return;
+  }
+  document.getElementById('not-logged-view').style.display = 'none';
+  document.getElementById('profile-view').style.display    = 'grid';
+  populateProfile(user);
+});
+
+async function populateProfile(user) {
+  const profile = await getUserProfile(user.uid).catch(()=>null);
+  const name    = profile?.displayName || user.displayName || '';
+  const email   = user.email || '';
+
+  // Sidebar
+  document.getElementById('p-avatar-big').textContent   = (name||email).charAt(0).toUpperCase();
+  document.getElementById('p-name-big').textContent     = name || email;
+  document.getElementById('p-email-small').textContent  = email;
+
+  // General tab
+  document.getElementById('p-display-name').value = name;
+  document.getElementById('p-email-field').value  = email;
+  document.getElementById('p-created').value      = user.metadata?.creationTime
+    ? new Date(user.metadata.creationTime).toLocaleDateString('az-AZ') : '—';
+  document.getElementById('p-last-login').value   = user.metadata?.lastSignInTime
+    ? new Date(user.metadata.lastSignInTime).toLocaleDateString('az-AZ') : '—';
+  document.getElementById('p-verified').value     = user.emailVerified ? '✅ Təsdiqlənib' : '⏳ Təsdiqlənməyib';
+  const providerIds = user.providerData?.map(p=>p.providerId) || [];
+  document.getElementById('p-provider').value     = providerIds.includes('google.com') ? 'Google' : 'E-poçt + Şifrə';
+
+  // Security tab
+  const verifyStatus = document.getElementById('email-verify-status');
+  const verifyBtn    = document.getElementById('verify-btn');
+  if (user.emailVerified) {
+    verifyStatus.textContent = '✅ E-poçtunuz təsdiqlənib.';
+    verifyBtn.style.display  = 'none';
+  } else {
+    verifyStatus.textContent = '⏳ E-poçtunuz hələ təsdiqlənməyib.';
+    verifyBtn.style.display  = 'inline-block';
+  }
+}
+
+// ── Tab switching ─────────────────────────────────────────────
+window.showTab = function(tab, btn) {
+  document.querySelectorAll('.profile-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.snav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  btn.classList.add('active');
+};
+
+// ── Save display name ─────────────────────────────────────────
+window.saveDisplayName = async function() {
+  const name = document.getElementById('p-display-name').value.trim();
+  if (!name || !_user) return;
+  const ok  = document.getElementById('general-ok');
+  const err = document.getElementById('general-err');
+  try {
+    await updateProfile(_user, { displayName: name });
+    await setDoc(doc(db,'users',_user.uid), { displayName: name }, { merge: true });
+    document.getElementById('p-name-big').textContent  = name;
+    document.getElementById('p-avatar-big').textContent = name.charAt(0).toUpperCase();
+    ok.style.display = 'block'; setTimeout(()=>{ ok.style.display='none'; }, 3000);
+  } catch(e) {
+    err.textContent = '❌ Xəta: ' + e.message;
+    err.style.display = 'block'; setTimeout(()=>{ err.style.display='none'; }, 4000);
+  }
+};
+
+// ── Password reset ────────────────────────────────────────────
+window.sendPassReset = async function() {
+  if (!_user?.email) return;
+  const ok  = document.getElementById('security-ok');
+  const err = document.getElementById('security-err');
+  try {
+    await resetPassword(_user.email);
+    ok.textContent = '✅ Şifrə sıfırlama linki ' + _user.email + ' ünvanına göndərildi.';
+    ok.style.display = 'block'; setTimeout(()=>{ ok.style.display='none'; }, 5000);
+  } catch(e) {
+    err.textContent = '❌ Xəta: ' + e.message;
+    err.style.display = 'block';
+  }
+};
+
+// ── Resend verification ───────────────────────────────────────
+window.resendVerification = async function() {
+  if (!_user) return;
+  const ok  = document.getElementById('security-ok');
+  try {
+    await sendEmailVerification(_user);
+    ok.textContent = '✅ Təsdiq e-poçtu göndərildi. Zəhmət olmasa gələn qutunuzu yoxlayın.';
+    ok.style.display = 'block'; setTimeout(()=>{ ok.style.display='none'; }, 5000);
+  } catch(e) {
+    document.getElementById('security-err').textContent = '❌ Xəta: ' + e.message;
+    document.getElementById('security-err').style.display = 'block';
+  }
+};
+
+// ── Sign out all ──────────────────────────────────────────────
+window.signOutAll = async function() {
+  await logoutUser();
+  window.location.href = 'index.html';
+};
+
+// ── Delete account ────────────────────────────────────────────
+window.openDeleteModal = function() {
+  document.getElementById('del-overlay').classList.add('open');
+  document.getElementById('del-confirm-input').value = '';
+  document.getElementById('del-confirm-btn').disabled = true;
+};
+window.closeDeleteModal = function() {
+  document.getElementById('del-overlay').classList.remove('open');
+};
+document.getElementById('del-confirm-input').addEventListener('input', e => {
+  document.getElementById('del-confirm-btn').disabled = e.target.value.trim() !== 'SİL';
+});
+window.confirmDelete = async function() {
+  if (!_user) return;
+  const err = document.getElementById('del-err');
+  try {
+    // Delete Firestore user doc
+    await deleteDoc(doc(db, 'users', _user.uid)).catch(()=>{});
+    // Delete the Firebase Auth account
+    await deleteUser(_user);
+    window.location.href = 'index.html';
+  } catch(e) {
+    if (e.code === 'auth/requires-recent-login') {
+      err.textContent = '❌ Hesabı silmək üçün yenidən daxil olun (son giriş çox köhnədir).';
+    } else {
+      err.textContent = '❌ Xəta: ' + e.message;
+    }
+    err.style.display = 'block';
+  }
+};
+
+window.toggleMenu = function(){ document.getElementById('mob').classList.toggle('open'); };
+window.closeMob   = function(){ document.getElementById('mob').classList.remove('open'); };
+</script>
+</body></html>
