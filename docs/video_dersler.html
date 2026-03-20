@@ -6,9 +6,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--navy:#0a1628;--blue:#1a4fa0;--accent:#e8a020;--gold:#f5c842;--green:#1d5c3e;--orange:#f07d24;--white:#fff;--text:#1e2d45;--muted:#5a6e8a;--bg:#faf8f2;--card:#fff;--border:#e8e2d6}
+:root{--navy:#1a2744;--blue:#1a3d2b;--accent:#e8671a;--gold:#e8671a;--green:#1a3d2b;--orange:#e8671a;--white:#fff;--text:#1a2744;--muted:#5a6b55;--bg:#f5f2eb;--card:#fff;--border:#d4ddc8}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;height:70px;background:rgba(10,22,40,.97);backdrop-filter:blur(10px);gap:1rem}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;height:70px;background:rgba(26,39,68,.97);backdrop-filter:blur(10px);gap:1rem}
 .nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;text-decoration:none;flex-shrink:0}
 .nav-logo span{color:var(--gold)}
 .nav-links{display:flex;gap:1.4rem;list-style:none;align-items:center;flex:1;justify-content:center}
@@ -106,7 +106,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .btn-done{background:var(--green);color:#fff;border:none;padding:.85rem 2rem;border-radius:10px;font-weight:700;font-size:.95rem;cursor:pointer;font-family:inherit;transition:background .2s}
 .btn-done:hover{background:#145231}
 
-footer{background:#060e1c;padding:60px 5vw 30px;color:rgba(255,255,255,.55)}
+footer{background:#111d0e;padding:60px 5vw 30px;color:rgba(255,255,255,.55)}
 .ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:1100px;margin:0 auto 3rem}
 .ft-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;text-decoration:none;display:block}
 .ft-logo span{color:var(--gold)}
@@ -245,12 +245,12 @@ footer ul a:hover{color:var(--gold)}
   <div class="ft-grid">
     <div class="ft-brand"><a href="index.html" class="ft-logo">Açıq<span>Təhsil</span></a><p>Azərbaycanın rəqəmsal təhsil platforması.</p></div>
     <div><h5>Keçidlər</h5><ul><li><a href="index.html">Ana Səhifə</a></li><li><a href="kurslar.html">Kurslar</a></li><li><a href="video_dersler.html">Video Dərslər</a></li><li><a href="kommentler.html">Kommentlər</a></li><li><a href="bashvur.html">Başvur</a></li></ul></div>
-    <div><h5>Əlaqə</h5><p style="font-size:.87rem;margin-bottom:.5rem">📍 Bakı, Azərbaycan</p><p style="font-size:.87rem;margin-bottom:.5rem">✉️ müraciət@aciqtehsil.az</p><p style="font-size:.87rem">📞 +994 50 123 45 67</p></div>
+    <div><h5>Əlaqə</h5><p style="font-size:.87rem;margin-bottom:.5rem">📍 Bakı, Azərbaycan</p><p style="font-size:.87rem;margin-bottom:.5rem">✉️ müraciə<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d2a692b3b1bba3a6b7baa1bbbefcb3a8">[email&#160;protected]</a></p><p style="font-size:.87rem">📞 +994 50 123 45 67</p></div>
   </div>
   <div class="ft-bottom">© 2026 AçıqTəhsil. Bütün hüquqlar qorunur.</div>
 </footer>
 
-<script type="module" src="auth-modal.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module" src="auth-modal.js"></script>
 <script type="module">
 // This module runs AFTER auth-modal.js (modules execute in HTML order).
 // window.AT is guaranteed set. onAuthChange shares the same Firebase auth singleton.
@@ -396,7 +396,4 @@ window.confirmBooking = confirmBooking;
 function toggleMenu(){document.getElementById('mob').classList.toggle('open')}
 function closeMob(){document.getElementById('mob').classList.remove('open')}
 const _revs=document.querySelectorAll('.reveal');
-const _ob=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*100);_ob.unobserve(e.target)}})},{threshold:.1});
-_revs.forEach(r=>_ob.observe(r));
-</script>
-</body></html>
+const _ob=new
