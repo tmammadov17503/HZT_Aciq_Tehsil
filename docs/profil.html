@@ -28,12 +28,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .not-logged p{color:var(--muted);max-width:360px;line-height:1.7}
 .profile-header{display:none;background:var(--card);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:1.5rem}
 .profile-header.show{display:block}
-.ph-banner{height:100px;background:linear-gradient(135deg,var(--green),#0f2519)}
-.ph-body{padding:0 2rem 1.5rem;display:flex;align-items:center;gap:1.4rem;margin-top:-40px}
-.ph-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#c0392b);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:2rem;border:4px solid #fff;flex-shrink:0;margin-top:0}
-.ph-info{padding-top:2rem}
-.ph-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:800;color:var(--navy);line-height:1.2}
-.ph-email{font-size:.83rem;color:var(--muted);margin-top:.15rem}
+.ph-banner{height:90px;background:linear-gradient(135deg,var(--green),#0f2519)}
+/* Avatar overlaps banner bottom — sits half in banner, half below */
+.ph-avatar-wrap{padding:0 2rem;margin-top:-40px;margin-bottom:.8rem}
+.ph-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#c0392b);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:2rem;border:4px solid var(--card)}
+/* Name + email sit BELOW the avatar, never touching the banner */
+.ph-info{padding:0 2rem 1.6rem}
+.ph-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:800;color:var(--navy);line-height:1.3}
+.ph-email{font-size:.83rem;color:var(--muted);margin-top:.2rem}
 .tab-bar{display:none;background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:.4rem;margin-bottom:1.5rem;gap:.3rem;flex-wrap:wrap}
 .tab-bar.show{display:flex}
 .tab-btn{flex:1;min-width:120px;padding:.6rem .9rem;border:none;border-radius:10px;background:none;font-family:inherit;font-size:.87rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap;text-align:center}
@@ -125,12 +127,12 @@ footer{background:#111d0e;padding:30px 5vw;color:rgba(255,255,255,.5);text-align
 
   <div class="profile-header" id="view-header">
     <div class="ph-banner"></div>
-    <div class="ph-body">
+    <div class="ph-avatar-wrap">
       <div class="ph-avatar" id="p-avatar">?</div>
-      <div class="ph-info">
-        <div class="ph-name" id="p-name">Yüklənir...</div>
-        <div class="ph-email" id="p-email"></div>
-      </div>
+    </div>
+    <div class="ph-info">
+      <div class="ph-name" id="p-name">Yüklənir...</div>
+      <div class="ph-email" id="p-email"></div>
     </div>
   </div>
 
