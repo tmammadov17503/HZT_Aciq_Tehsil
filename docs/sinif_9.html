@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>9-cu sinif | AçıqTəhsil</title>
+<link rel="icon" type="image/svg+xml" href="logo.svg"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -270,4 +271,6 @@ function renderRes(q="") {
 
 // Scroll reveal
 const _revs=document.querySelectorAll('.reveal');
-const _ob=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);_ob.unobserve(e.target)}})},{thres
+const _ob=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);_ob.unobserve(e.target)}})},{threshold:.1});
+_revs.forEach(r=>_ob.observe(r));
+</script></body></html>
