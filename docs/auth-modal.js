@@ -143,6 +143,13 @@ const style = document.createElement("style");
 style.textContent = css;
 document.head.appendChild(style);
 
+// Favicon — injected automatically on every page via auth-modal.js
+if (!document.querySelector('link[rel="icon"]')) {
+  const fav = document.createElement("link");
+  fav.rel = "icon"; fav.type = "image/svg+xml"; fav.href = "logo.svg";
+  document.head.appendChild(fav);
+}
+
 // Arvo font for logo
 const font = document.createElement("link");
 font.rel = "stylesheet";
