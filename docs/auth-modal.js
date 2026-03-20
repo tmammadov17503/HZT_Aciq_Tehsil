@@ -16,8 +16,8 @@ import { registerUser, loginUser, loginWithGoogle, resetPassword,
 // ── CSS ───────────────────────────────────────────────────────
 const css = `
 :root{
-  --at-green:#1d5c3e;--at-orange:#f07d24;--at-bg:#faf8f2;
-  --at-card:#fff;--at-border:#e8e2d6;--at-muted:#7a7060;
+  --at-green:#1a3d2b;--at-orange:#e8671a;--at-bg:#f5f2eb;
+  --at-card:#fff;--at-border:#d4ddc8;--at-muted:#7a7060;
   --at-text:#1a1a1a;
 }
 #at-overlay{
@@ -48,7 +48,7 @@ const css = `
 /* messages */
 .at-err{background:#fde8e8;color:#c0392b;border-radius:8px;padding:.6rem .85rem;
   font-size:.84rem;margin-bottom:.8rem;display:none;line-height:1.45}
-.at-ok{background:#e6f4ea;color:#1d5c3e;border-radius:8px;padding:.6rem .85rem;
+.at-ok{background:#e6f4ea;color:#1a3d2b;border-radius:8px;padding:.6rem .85rem;
   font-size:.84rem;margin-bottom:.8rem;display:none;line-height:1.45}
 /* fields */
 .at-field{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.9rem}
@@ -98,7 +98,7 @@ const css = `
   background:#e53935;color:#fff;font-size:.6rem;font-weight:700;
   width:16px;height:16px;border-radius:50%;display:none;
   align-items:center;justify-content:center;
-  border:2px solid #0a1628;
+  border:2px solid #1a2744;
 }
 #at-badge.show{display:flex}
 #at-notif-drop{
@@ -111,7 +111,7 @@ const css = `
   background:#f4f6fb;margin-bottom:.4rem;line-height:1.5}
 #at-avatar{
   width:36px;height:36px;border-radius:50%;
-  background:linear-gradient(135deg,#1d5c3e,#f07d24);
+  background:linear-gradient(135deg,#1a3d2b,#e8671a);
   display:flex;align-items:center;justify-content:center;
   color:#fff;font-weight:700;font-size:.88rem;cursor:pointer;position:relative;
 }
@@ -128,12 +128,12 @@ const css = `
 /* snackbar */
 #at-snack{
   display:none;position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
-  background:#1d5c3e;color:#fff;padding:.9rem 1.7rem;border-radius:14px;
+  background:#1a3d2b;color:#fff;padding:.9rem 1.7rem;border-radius:14px;
   font-size:.9rem;font-weight:600;z-index:9998;
   box-shadow:0 8px 30px rgba(0,0,0,.2);white-space:nowrap;
 }
 .at-nav-login-btn{
-  background:var(--accent,#e8a020);color:#0a1628;
+  background:var(--accent,#e8a020);color:#1a2744;
   padding:.45rem 1.1rem;border-radius:6px;font-weight:700;font-size:.88rem;
   border:none;cursor:pointer;transition:background .2s;
 }
@@ -158,10 +158,10 @@ document.body.insertAdjacentHTML("beforeend", `
     <button class="at-close" id="at-close-btn" aria-label="Bağla">✕</button>
     <div class="at-logo">
       <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
-        <rect width="40" height="40" rx="10" fill="#1d5c3e"/>
-        <path d="M8 30 L20 10 L32 30" stroke="#f07d24" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <rect width="40" height="40" rx="10" fill="#1a3d2b"/>
+        <path d="M8 30 L20 10 L32 30" stroke="#e8671a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         <path d="M12 24 L28 24" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
-        <circle cx="20" cy="10" r="2.5" fill="#f07d24"/>
+        <circle cx="20" cy="10" r="2.5" fill="#e8671a"/>
       </svg>
       <span>AciqTehsil</span>
     </div>
@@ -230,6 +230,7 @@ function injectNavWidget() {
           <div id="at-user-drop">
             <span class="at-drop-item" id="at-user-name-label" style="font-weight:700;cursor:default"></span>
             <hr class="at-drop-sep">
+            <a class="at-drop-item" href="profil.html" style="text-decoration:none">👤 Profil</a>
             <span class="at-drop-item" onclick="AT._logout()">🚪 Çıxış</span>
           </div>
         </div>
