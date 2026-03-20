@@ -23,7 +23,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .mobile-menu.open{display:flex}
 .mobile-menu a{color:rgba(255,255,255,.8);text-decoration:none;font-size:1rem;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.07)}
 /* ── PAGE LAYOUT ── */
-.page-wrap{max-width:1000px;margin:0 auto;padding:100px 4vw 80px;display:grid;grid-template-columns:240px 1fr;gap:2rem;align-items:start;flex:1}
+.page-wrap{max-width:1000px;margin:0 auto;padding:100px 4vw 80px;display:none;grid-template-columns:240px 1fr;gap:2rem;align-items:start;flex:1}
+.page-wrap.visible{display:grid}
 /* ── SIDEBAR ── */
 .sidebar{background:var(--card);border:1.5px solid var(--border);border-radius:20px;overflow:visible;position:sticky;top:90px}
 .profile-head{background:linear-gradient(135deg,var(--green),#0f2519);padding:2rem 1.5rem;text-align:center;border-radius:18px 18px 0 0}
@@ -105,7 +106,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .del-input:focus{border-color:#c0392b}
 .del-btns{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
 /* Not logged in screen */
-.not-logged{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;min-height:60vh;text-align:center;gap:1rem;padding:2rem}
+.not-logged{display:none;flex-direction:column;align-items:center;justify-content:center;flex:1;min-height:60vh;text-align:center;gap:1rem;padding:2rem}
+.not-logged.visible{display:flex}
 .not-logged h2{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:800;color:var(--navy)}
 .not-logged p{color:var(--muted);max-width:380px;line-height:1.7}
 /* Footer */
@@ -139,7 +141,7 @@ footer{background:#111d0e;padding:40px 5vw 24px;color:rgba(255,255,255,.5);margi
 <script type="module" src="auth-modal.js"></script>
 
 <!-- Not logged in -->
-<div class="not-logged" id="not-logged-view" style="display:none">
+<div class="not-logged" id="not-logged-view">
   <div style="font-size:3rem">🔒</div>
   <h2>Profili görmək üçün daxil olun</h2>
   <p>Bu səhifəyə daxil olmaq üçün hesabınıza giriş etməlisiniz.</p>
@@ -147,7 +149,7 @@ footer{background:#111d0e;padding:40px 5vw 24px;color:rgba(255,255,255,.5);margi
 </div>
 
 <!-- Main profile layout (shown when logged in) -->
-<div class="page-wrap" id="profile-view" style="display:none">
+<div class="page-wrap" id="profile-view">
 
   <!-- Sidebar -->
   <aside class="sidebar">
@@ -323,12 +325,12 @@ let _user  = null;
 onAuthChange(async user => {
   _user = user;
   if (!user) {
-    document.getElementById('not-logged-view').style.display = 'flex';
-    document.getElementById('profile-view').style.display    = 'none';
+    document.getElementById('not-logged-view').classList.add('visible');
+    document.getElementById('profile-view').classList.remove('visible');
     return;
   }
-  document.getElementById('not-logged-view').style.display = 'none';
-  document.getElementById('profile-view').style.display    = 'grid';
+  document.getElementById('not-logged-view').classList.remove('visible');
+  document.getElementById('profile-view').classList.add('visible');
   populateProfile(user);
 });
 
