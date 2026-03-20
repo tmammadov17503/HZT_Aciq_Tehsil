@@ -28,9 +28,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .not-logged p{color:var(--muted);max-width:360px;line-height:1.7}
 .profile-header{display:none;background:var(--card);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:1.5rem}
 .profile-header.show{display:block}
-.ph-banner{height:80px;background:linear-gradient(135deg,var(--green),#0f2519)}
-.ph-body{padding:0 2rem 1.5rem;display:flex;align-items:flex-end;gap:1.2rem;margin-top:-36px;flex-wrap:wrap}
-.ph-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#c0392b);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.9rem;border:3px solid #fff;flex-shrink:0}
+.ph-banner{height:100px;background:linear-gradient(135deg,var(--green),#0f2519)}
+.ph-body{padding:0 2rem 1.5rem;display:flex;align-items:center;gap:1.4rem;margin-top:-40px}
+.ph-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#c0392b);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:2rem;border:4px solid #fff;flex-shrink:0;margin-top:0}
+.ph-info{padding-top:2rem}
 .ph-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:800;color:var(--navy);line-height:1.2}
 .ph-email{font-size:.83rem;color:var(--muted);margin-top:.15rem}
 .tab-bar{display:none;background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:.4rem;margin-bottom:1.5rem;gap:.3rem;flex-wrap:wrap}
@@ -126,7 +127,7 @@ footer{background:#111d0e;padding:30px 5vw;color:rgba(255,255,255,.5);text-align
     <div class="ph-banner"></div>
     <div class="ph-body">
       <div class="ph-avatar" id="p-avatar">?</div>
-      <div>
+      <div class="ph-info">
         <div class="ph-name" id="p-name">Yüklənir...</div>
         <div class="ph-email" id="p-email"></div>
       </div>
