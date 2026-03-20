@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="az"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Kommentlər | AçıqTəhsil</title>
+<link rel="icon" type="image/svg+xml" href="logo.svg"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1a2744;--deep:#1a3d2b;--blue:#1a3d2b;--accent:#e8671a;--gold:#e8671a;--light:#d6e8c8;--green:#1a3d2b;--orange:#e8671a;--white:#fff;--text:#1a2744;--muted:#5a6b55;--bg:#f5f2eb;--card:#fff;--border:#d4ddc8}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;height:70px;background:rgba(26,39,68,.97);backdrop-filter:blur(10px);gap:1rem}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;text-decoration:none;flex-shrink:0}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:1.4rem;list-style:none;align-items:center;flex:1;justify-content:center}
+.nav-links a{text-decoration:none;color:rgba(255,255,255,.75);font-size:.85rem;font-weight:500;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.nav-cta{background:var(--accent)!important;color:var(--navy)!important;padding:.4rem 1rem;border-radius:6px;font-weight:700!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:#fff}
+.mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:var(--navy);padding:1.5rem 5vw;z-index:99;flex-direction:column}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:rgba(255,255,255,.8);text-decoration:none;font-size:1rem;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.07)}
+footer{background:#111d0e;padding:60px 5vw 30px;color:rgba(255,255,255,.55)}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;max-width:1100px;margin:0 auto 3rem}
+.ft-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;text-decoration:none;display:block}
+.ft-logo span{color:var(--gold)}
+.ft-brand p{font-size:.87rem;line-height:1.7;max-width:300px;margin-top:.5rem}
+footer h5{color:#fff;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem}
+footer ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+footer ul a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.88rem;transition:color .2s}
+footer ul a:hover{color:var(--gold)}
+.ft-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:1.6rem;text-align:center;font-size:.82rem;max-width:1100px;margin:0 auto}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:900px){.nav-links{display:none}.hamburger{display:flex}.ft-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.ft-grid{grid-template-columns:1fr}}
+
+/* ── Hero ── */
+.page-hero{padding:120px 5vw 60px;background:linear-gradient(135deg,#1a3d2b,#0f2519);text-align:center;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(26,79,160,.4),transparent 60%);pointer-events:none}
+.page-hero .tag{display:inline-block;background:rgba(245,200,66,.15);border:1px solid rgba(245,200,66,.4);color:var(--gold);font-size:.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:.35rem .9rem;border-radius:20px;margin-bottom:1rem;position:relative}
+.page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;color:#fff;position:relative}
+.page-hero p{color:rgba(255,255,255,.7);font-size:1rem;max-width:520px;margin:.6rem auto 0;position:relative}
+
+/* ── Layout ── */
+.content{padding:60px 5vw 80px;max-width:1000px;margin:0 auto}
+
+/* ── Comment cards ── */
+/* ── Scrolling ticker ── */
+.ticker-section{margin-bottom:3.5rem;overflow:hidden;position:relative}
+.ticker-section::before,.ticker-section::after{
+  content:'';position:absolute;top:0;bottom:0;z-index:2;width:80px;pointer-events:none;
+}
+.ticker-section::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+.ticker-section::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+.ticker-track{
+  display:flex;gap:1.2rem;
+  animation:tickerScroll 35s linear infinite;
+  width:max-content;
+}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes tickerScroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+/* Each comment card in the ticker */
+.ticker-card{
+  flex-shrink:0;width:280px;
+  background:var(--card);border:1.5px solid var(--border);border-radius:16px;
+  padding:1.3rem 1.4rem;cursor:default;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,width .3s;
+  position:relative;
+}
+.ticker-card:hover{
+  transform:scale(1.06);
+  box-shadow:0 12px 40px rgba(26,61,43,.15);
+  z-index:10;width:320px;
+}
+.tc-meta{display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem}
+.tc-avatar{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--green),var(--orange));
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:700;font-size:.85rem;
+}
+.tc-name{font-weight:700;font-size:.88rem;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tc-date{font-size:.72rem;color:var(--muted);margin-left:auto;white-space:nowrap;flex-shrink:0}
+.tc-stars{display:flex;gap:2px;margin-bottom:.5rem}
+.tc-stars .star{font-size:.9rem;color:#d4ddc8}
+.tc-stars .star.filled{color:#e8671a}
+.tc-text{
+  font-size:.85rem;color:var(--text);line-height:1.6;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+  transition:all .3s;
+}
+.ticker-card:hover .tc-text{-webkit-line-clamp:8}
+.ticker-empty{text-align:center;padding:2.5rem;color:var(--muted);font-size:.95rem}
+/* new card highlight */
+.ticker-card.tc-new{border-color:var(--green);background:#f0f7ec;animation:tcIn .5s ease}
+@keyframes tcIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+
+/* ── Form card ── */
+.form-wrap{position:relative}
+.form-gate{
+  position:absolute;inset:0;z-index:10;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:18px;overflow:hidden;
+  background:rgba(250,248,242,.55);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+.gate-card{
+  background:#fff;border-radius:18px;padding:2.2rem 2rem;
+  text-align:center;max-width:340px;width:90%;
+  box-shadow:0 12px 48px rgba(10,22,40,.14);
+  border:1.5px solid var(--border);
+}
+.gate-icon{font-size:2.4rem;margin-bottom:.8rem}
+.gate-card h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:800;
+  color:var(--navy);margin-bottom:.6rem}
+.gate-card p{font-size:.87rem;color:var(--muted);line-height:1.65;margin-bottom:1.4rem}
+.gate-btn{
+  background:var(--orange);color:#fff;border:none;
+  padding:.8rem 1.8rem;border-radius:10px;font-weight:700;font-size:.93rem;
+  cursor:pointer;font-family:inherit;transition:background .2s,transform .15s;
+}
+.gate-btn:hover{background:#d96e1a;transform:translateY(-1px)}
+.form-card{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:2.2rem}
+.form-card h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:.3rem}
+.form-card .sub{color:var(--muted);font-size:.88rem;margin-bottom:1.6rem}
+.ff{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem}
+.ff label{font-size:.8rem;font-weight:600;color:var(--text)}
+.ff input,.ff textarea{border:1.5px solid var(--border);border-radius:9px;padding:.75rem 1rem;font-size:.9rem;font-family:inherit;color:var(--text);background:#fff;transition:border-color .2s;outline:none;resize:none}
+.ff input:focus,.ff textarea:focus{border-color:var(--blue)}
+.ff.half{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.ff.half .inner{display:flex;flex-direction:column;gap:.35rem}
+.ff.half .inner label{font-size:.8rem;font-weight:600;color:var(--text)}
+/* star rating input */
+.star-row{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+.star-row label{font-size:.8rem;font-weight:600;color:var(--text)}
+.star-input{display:flex;gap:6px;flex-direction:row-reverse;justify-content:flex-end}
+.star-input input{display:none}
+.star-input label{font-size:1.7rem;color:#d0c9bb;cursor:pointer;transition:color .15s,transform .15s;line-height:1}
+/* highlight hovered star and all before it (row-reverse trick) */
+.star-input label:hover,
+.star-input label:hover ~ label,
+.star-input input:checked ~ label{color:#f5c842;transform:scale(1.1)}
+/* btn */
+.btn-sub{background:var(--blue);color:#fff;border:none;padding:.85rem;border-radius:9px;font-weight:700;font-size:.95rem;cursor:pointer;font-family:inherit;transition:background .2s;width:100%}
+.btn-sub:hover{background:var(--orange)}
+.ok-msg{display:none;background:#e6f4ea;color:#1d5c3e;padding:.9rem 1.2rem;border-radius:9px;margin-top:1rem;font-size:.9rem;font-weight:500}
+@media(max-width:560px){.ff.half{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Açıq<span>Təhsil</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Ana Səhifə</a></li>
+    <li><a href="kurslar.html">Kurslar</a></li>
+    <li><a href="video_dersler.html">Video Dərslər</a></li>
+    <li><a href="kommentler.html" class="active">Kommentlər</a></li>
+    <li><a href="bashvur.html" class="nav-cta">Başvur</a></li>
+  </ul>
+  <div id="at-nav-slot"></div>
+  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mob">
+  <a href="index.html" onclick="closeMob()">Ana Səhifə</a>
+  <a href="kurslar.html" onclick="closeMob()">Kurslar</a>
+  <a href="video_dersler.html" onclick="closeMob()">Video Dərslər</a>
+  <a href="kommentler.html" onclick="closeMob()">Kommentlər</a>
+  <a href="bashvur.html" onclick="closeMob()">Başvur</a>
+</div>
+<script type="module" src="auth-modal.js"></script>
+
+<div class="page-hero">
+  <div class="tag">💬 İcma</div>
+  <h1>Kommentlər</h1>
+  <p>AçıqTəhsil icmasının rəyləri və tövsiyələri</p>
+</div>
+
+<div class="content">
+  <!-- Scrolling ticker feed -->
+  <div class="ticker-section" id="ticker-section">
+    <div class="ticker-track" id="ticker-track">
+      <div class="ticker-empty">⏳ Rəylər yüklənir...</div>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="form-wrap reveal" id="form-wrap">
+    <!-- ── Login gate overlay (shown when logged out) ── -->
+    <div class="form-gate" id="form-gate">
+      <div class="gate-card">
+        <div class="gate-icon">✍️</div>
+        <h3>Rəy yazmaq üçün daxil olun</h3>
+        <p>Platformamız haqqında öz fikirlərini bölüşmək üçün hesabına daxil ol və ya qeydiyyatdan keç.</p>
+        <button class="gate-btn" onclick="window.AT.openModal()">Daxil ol / Qeydiyyat</button>
+      </div>
+    </div>
+    <!-- ── Actual form (blurred when logged out) ── -->
+    <div class="form-card" id="form-card">
+      <h2>💬 Rəy Bildirin</h2>
+      <p class="sub">Platformamız haqqında fikirlərinizi bölüşün.</p>
+
+      <div class="ff half">
+        <div class="inner"><label>Ad Soyad *</label><input type="text"  id="c-name"  placeholder="Adınız Soyadınız"/></div>
+        <div class="inner"><label>E-poçt</label>    <input type="email" id="c-email" placeholder="email@example.com"/></div>
+      </div>
+
+      <!-- Star rating -->
+      <div class="star-row">
+        <label>Qiymətləndirmə *</label>
+        <div class="star-input" id="star-input">
+          <input type="radio" id="s5" name="stars" value="5"/><label for="s5" title="5 ulduz">★</label>
+          <input type="radio" id="s4" name="stars" value="4"/><label for="s4" title="4 ulduz">★</label>
+          <input type="radio" id="s3" name="stars" value="3"/><label for="s3" title="3 ulduz">★</label>
+          <input type="radio" id="s2" name="stars" value="2"/><label for="s2" title="2 ulduz">★</label>
+          <input type="radio" id="s1" name="stars" value="1"/><label for="s1" title="1 ulduz">★</label>
+        </div>
+      </div>
+
+      <div class="ff"><label>Rəyiniz *</label><textarea id="c-text" rows="4" placeholder="Rəyinizi buraya yazın..."></textarea></div>
+
+      <button class="btn-sub" onclick="submitComment()">Rəy Göndər →</button>
+      <div class="ok-msg" id="c-ok"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-grid">
+    <div class="ft-brand"><a href="index.html" class="ft-logo">Açıq<span>Təhsil</span></a><p>Azərbaycanın rəqəmsal təhsil platforması.</p></div>
+    <div><h5>Keçidlər</h5><ul><li><a href="index.html">Ana Səhifə</a></li><li><a href="kurslar.html">Kurslar</a></li><li><a href="video_dersler.html">Video Dərslər</a></li><li><a href="kommentler.html">Kommentlər</a></li><li><a href="bashvur.html">Başvur</a></li></ul></div>
+    <div><h5>Əlaqə</h5><p style="font-size:.87rem;margin-bottom:.5rem">📍 Bakı, Azərbaycan</p><p style="font-size:.87rem;margin-bottom:.5rem">✉️ müraciə<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0f7b4f6e6c667e7b6a677c6663216e75">[email&#160;protected]</a></p><p style="font-size:.87rem">📞 +994 50 123 45 67</p></div>
+  </div>
+  <div class="ft-bottom">© 2026 AçıqTəhsil. Bütün hüquqlar qorunur.</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+import { saveComment, getComments, onAuthChange } from "./firebase-config.js";
+
+// ── Auth gate ─────────────────────────────────────────────────
+onAuthChange(user => {
+  const gate = document.getElementById("form-gate");
+  if (gate) gate.style.display = user ? "none" : "flex";
+});
+
+// ── Scroll reveal ─────────────────────────────────────────────
+const revOb = new IntersectionObserver(es=>{
+  es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);revOb.unobserve(e.target)}});
+},{threshold:.1});
+function observeReveal(){ document.querySelectorAll('.reveal:not(.visible)').forEach(r=>revOb.observe(r)); }
+observeReveal();
+
+// ── Star helpers ──────────────────────────────────────────────
+function getSelectedStars() {
+  const c = document.querySelector('input[name="stars"]:checked');
+  return c ? parseInt(c.value) : 0;
+}
+function resetStars() {
+  document.querySelectorAll('input[name="stars"]').forEach(r=>r.checked=false);
+}
+function renderStars(count) {
+  return [1,2,3,4,5].map(i=>`<span class="star${i<=count?' filled':''}">★</span>`).join('');
+}
+
+// ── Ticker card builder ───────────────────────────────────────
+function makeCard(c, isNew=false) {
+  const el = document.createElement('div');
+  el.className = 'ticker-card' + (isNew ? ' tc-new' : '');
+  const initial = (c.name||'A').charAt(0).toUpperCase();
+  el.innerHTML = `
+    <div class="tc-meta">
+      <div class="tc-avatar">${initial}</div>
+      <span class="tc-name">${c.name||'Anonim'}</span>
+      <span class="tc-date">${c.date||''}</span>
+    </div>
+    ${c.stars ? `<div class="tc-stars">${renderStars(c.stars)}</div>` : ''}
+    <p class="tc-text">${c.text||''}</p>
+  `;
+  return el;
+}
+
+// ── In-memory pool ────────────────────────────────────────────
+const _SEEDS = [
+  {name:"Jalya Mamedzade", stars:5, text:"AçıqTəhsil platforması həqiqətən çox faydalıdır! Riyaziyyat materialları xüsusilə imtahana hazırlıqda böyük kömək etdi.", date:"4 gün əvvəl"},
+  {name:"Elvin Həsənov",   stars:5, text:"Buraxılış imtahanına hazırlaşmaq üçün əla resurslar var. Tövsiyə edirəm!", date:"5 gün əvvəl"},
+  {name:"Nigar Əliyeva",   stars:4, text:"Video dərslər çox aydın izah edilib. Müəllimlər peşəkardır.", date:"1 həftə əvvəl"},
+];
+let _pool = [..._SEEDS];
+
+// ── Render ticker (duplicates cards for seamless loop) ────────
+function renderTicker(highlightFirst=false) {
+  const track = document.getElementById('ticker-track');
+  if(!track) return;
+  if(!_pool.length) {
+    track.innerHTML = '<div class="ticker-empty">Hələ rəy yoxdur. İlk rəyi siz yazın!</div>';
+    return;
+  }
+  track.innerHTML = '';
+  // Build double set for seamless infinite scroll
+  const allCards = [..._pool, ..._pool];
+  allCards.forEach((c, i) => {
+    const card = makeCard(c, highlightFirst && i === 0);
+    track.appendChild(card);
+  });
+  // Adjust animation speed based on count (more cards = faster)
+  const speed = Math.max(20, Math.min(50, _pool.length * 8));
+  track.style.animationDuration = speed + 's';
+}
+
+// ── Load from Firestore ───────────────────────────────────────
+async function loadFromFirestore() {
+  try {
+    const docs = await getComments();
+    if(docs.length > 0) {
+      const real = docs.map(c => ({
+        name:  c.name  || "Anonim",
+        stars: c.stars || 0,
+        text:  c.text  || "",
+        date:  c.createdAt?.toDate ? c.createdAt.toDate().toLocaleDateString("az-AZ") : "Bu gün"
+      }));
+      const seedTexts = new Set(_SEEDS.map(s=>s.text));
+      const newReal = real.filter(c => !seedTexts.has(c.text));
+      _pool = [...newReal, ..._SEEDS];
+      renderTicker();
+    }
+  } catch(e) {
+    console.log("Firestore read:", e.code || e.message);
+  }
+}
+
+// ── Submit ────────────────────────────────────────────────────
+window.submitComment = async function() {
+  const name  = document.getElementById("c-name").value.trim();
+  const email = document.getElementById("c-email").value.trim();
+  const text  = document.getElementById("c-text").value.trim();
+  const stars = getSelectedStars();
+  const ok    = document.getElementById("c-ok");
+
+  if(!name)  { alert("Zəhmət olmasa adınızı daxil edin.");    return; }
+  if(!stars) { alert("Zəhmət olmasa qiymətləndirmə seçin."); return; }
+  if(!text)  { alert("Zəhmət olmasa rəyinizi yazın.");        return; }
+
+  // Optimistically add to ticker
+  const newComment = { name, stars, text, date: "İndi" };
+  _pool.unshift(newComment);
+  renderTicker(true);
+
+  // Clear form
+  document.getElementById("c-name").value  = "";
+  document.getElementById("c-email").value = "";
+  document.getElementById("c-text").value  = "";
+  resetStars();
+
+  // Persist to Firestore
+  const btn = document.querySelector(".btn-sub");
+  btn.disabled = true; btn.textContent = "Göndərilir...";
+  try {
+    await saveComment({ name, email, stars, text });
+    ok.textContent = "✅ Rəyiniz uğurla saxlanıldı! Təşəkkür edirik.";
+    ok.style.background = "#e6f4ea"; ok.style.color = "#1a3d2b";
+    ok.style.display = "block";
+    setTimeout(()=>{ ok.style.display="none"; }, 4500);
+  } catch(e) {
+    _pool.shift();
+    renderTicker();
+    document.getElementById("c-name").value  = name;
+    document.getElementById("c-email").value = email;
+    document.getElementById("c-text").value  = text;
+    ok.textContent = "❌ Xəta: Rəy saxlanılmadı. Zəhmət olmasa Firebase Firestore-un aktiv olduğunu yoxlayın.";
+    ok.style.background = "#fde8e8"; ok.style.color = "#c0392b";
+    ok.style.display = "block";
+    console.log("Firestore save error:", e.code, e.message);
+  } finally {
+    btn.disabled = false; btn.textContent = "Rəy Göndər →";
+  }
+};
+
+window.toggleMenu = function(){ document.getElementById('mob').classList.toggle('open'); };
+window.closeMob   = function(){ document.getElementById('mob').classList.remove('open'); };
+
+renderTicker();
+loadFromFirestore();
+</script>
+</body></html>
