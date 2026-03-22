@@ -153,7 +153,7 @@ footer ul a:hover{color:#fff}
       <div style="padding:2rem;color:var(--muted)">⏳ Rəylər yüklənir...</div>
     </div>
   </div>
-  <div class="form-wrap reveal">
+  <div class="form-wrap">
     <div class="form-gate" id="form-gate">
       <div class="gate-card">
         <div class="gate-ico">✍️</div>
@@ -162,7 +162,7 @@ footer ul a:hover{color:#fff}
         <button class="gate-btn" onclick="window.AT&&window.AT.openModal()">Daxil ol / Qeydiyyat</button>
       </div>
     </div>
-    <div class="form-card">
+    <div class="form-card" style="opacity:1;transform:none">
       <h2>💬 Rəy Bildirin</h2>
       <p class="form-sub">Platformamız haqqında fikirlərinizi bölüşün.</p>
       <div class="ff-half">
@@ -204,13 +204,13 @@ footer ul a:hover{color:#fff}
     <div>
       <h5>Əlaqə</h5>
       <p style="font-size:.87rem;margin-bottom:.4rem">📍 Bakı, Azərbaycan</p>
-      <p style="font-size:.87rem;margin-bottom:.4rem">✉️ muraciet@aciqtehsil.az</p>
+      <p style="font-size:.87rem;margin-bottom:.4rem">✉️ <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6a071f180b09030f1e2a0b09031b1e0f02190306440b10">[email&#160;protected]</a></p>
       <p style="font-size:.87rem">📞 +994 50 123 45 67</p>
     </div>
   </div>
   <div class="ft-bottom">© 2026 AçıqTəhsil. Bütün hüquqlar qorunur.</div>
 </footer>
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
 import { saveComment, getComments, onAuthChange } from './firebase-config.js';
 onAuthChange(u=>{ const g=document.getElementById('form-gate'); if(g) g.style.display=u?'none':'flex'; });
 const _SEEDS=[
@@ -268,9 +268,14 @@ window.submitComment=async function(){
     ok.textContent='❌ Xəta: Firestore aktiv deyil.';ok.style.background='#fde8e8';ok.style.color='#c0392b';
   }finally{btn.disabled=false;btn.textContent='Rəy Göndər →';}
   ok.style.display='block';setTimeout(()=>ok.style.display='none',4500);
+
 };
 window.toggleMenu=function(){document.getElementById('mob').classList.toggle('open');};
 window.closeMob=function(){document.getElementById('mob').classList.remove('open');};
 renderTicker();loadFirestore();
+// Scroll reveal
+const _rv=document.querySelectorAll('.reveal');
+const _ro=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);_ro.unobserve(e.target)}})},{threshold:.1});
+_rv.forEach(r=>_ro.observe(r));
 </script>
 </body></html>
