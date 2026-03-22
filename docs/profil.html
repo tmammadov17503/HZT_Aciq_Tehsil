@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Profil | AçıqTəhsil</title>
+<link rel="icon" type="image/svg+xml" href="logo.svg"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{
+  --bg:#f5f0e8;--nav-bg:#fff;--green-dk:#1a3d2b;--green-md:#2d6a4f;
+  --green-lt:#c8ddb0;--green-pale:#eef5e8;--orange:#e8671a;
+  --text:#1a2744;--muted:#6b7a5e;--card:#fff;--border:#d0dcc0;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);
+  box-shadow:0 1px 12px rgba(0,0,0,.08);display:flex;align-items:center;
+  justify-content:space-between;padding:0 5vw;height:68px;gap:1rem}
+.nav-brand{display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0}
+.nav-brand svg{flex-shrink:0}
+.nav-brand-name{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:700;color:var(--green-dk)}
+.nav-links{display:flex;gap:1.6rem;list-style:none;align-items:center;flex:1;justify-content:center}
+.nav-links a{text-decoration:none;color:var(--text);font-size:.88rem;font-weight:500;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--green-dk)}
+.nav-cta{background:var(--orange)!important;color:#fff!important;
+  padding:.42rem 1.1rem;border-radius:6px;font-weight:700!important;transition:opacity .2s!important}
+.nav-cta:hover{opacity:.88!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;
+  background:none;border:none;padding:6px;flex-shrink:0}
+.hamburger span{display:block;width:24px;height:2px;background:var(--green-dk);
+  border-radius:2px;transition:all .3s}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;z-index:99;
+  background:#fff;border-bottom:2px solid var(--green-lt);padding:1rem 5vw;
+  flex-direction:column;box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:var(--text);text-decoration:none;font-size:.95rem;font-weight:500;
+  padding:.75rem 0;border-bottom:1px solid var(--border)}
+.mobile-menu a:last-child{border-bottom:none}
+@media(max-width:860px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:none}
+
+body{display:flex;flex-direction:column}
+.page{flex:1;max-width:860px;margin:0 auto;width:100%;padding:88px 4vw 60px}
+.not-logged{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;gap:1rem}
+.not-logged.show{display:flex}
+.not-logged h2{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;color:var(--green-dk)}
+.not-logged p{color:var(--muted);max-width:360px;line-height:1.7}
+.profile-header{display:none;background:var(--card);border:1.5px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:1.4rem}
+.profile-header.show{display:block}
+.ph-banner{height:96px;background:linear-gradient(135deg,var(--green-dk),#0f2519)}
+.ph-avatar-wrap{padding:0 2rem;margin-top:-40px;margin-bottom:.7rem}
+.ph-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--orange),#c0392b);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:2rem;border:4px solid var(--card)}
+.ph-info{padding:0 2rem 1.5rem}
+.ph-name{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;color:var(--green-dk)}
+.ph-email{font-size:.82rem;color:var(--muted);margin-top:.15rem}
+.tab-bar{display:none;background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:.35rem;margin-bottom:1.4rem;gap:.3rem;flex-wrap:wrap}
+.tab-bar.show{display:flex}
+.tab-btn{flex:1;min-width:120px;padding:.6rem .8rem;border:none;border-radius:10px;background:none;font-family:inherit;font-size:.86rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;text-align:center}
+.tab-btn:hover{background:var(--green-pale);color:var(--green-dk)}
+.tab-btn.active{background:var(--green-dk);color:#fff}
+.tab-btn.dtab{color:#c0392b}
+.tab-btn.dtab:hover{background:#fde8e8}
+.tab-btn.dtab.active{background:#c0392b;color:#fff}
+.tab-panel{display:none;background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:2rem}
+.tab-panel.active{display:block}
+.tp-title{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;color:var(--green-dk);margin-bottom:.3rem}
+.tp-sub{color:var(--muted);font-size:.86rem;margin-bottom:1.7rem}
+.pf-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.pf{display:flex;flex-direction:column;gap:.3rem}
+.pf label{font-size:.77rem;font-weight:600;color:var(--text)}
+.pf input{border:1.5px solid var(--border);border-radius:9px;padding:.7rem 1rem;font-size:.9rem;font-family:inherit;color:var(--text);background:#fff;outline:none;transition:border-color .2s}
+.pf input:focus{border-color:var(--green-dk)}
+.pf input[readonly]{background:#f8f6f0;color:var(--muted);cursor:default}
+.btn-save{background:var(--green-dk);color:#fff;border:none;padding:.78rem 1.7rem;border-radius:9px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;transition:opacity .2s;margin-top:.4rem}
+.btn-save:hover{opacity:.88}
+.btn-sec{background:none;border:1.5px solid var(--border);color:var(--text);padding:.7rem 1.3rem;border-radius:9px;font-weight:600;font-size:.87rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-sec:hover{border-color:var(--green-dk);color:var(--green-dk)}
+.btn-danger{background:#fde8e8;color:#c0392b;border:1.5px solid #f5c6c6;padding:.78rem 1.7rem;border-radius:9px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-danger:hover{background:#c0392b;color:#fff}
+.al-ok{background:var(--green-pale);color:var(--green-dk);border-radius:9px;padding:.7rem 1rem;font-size:.87rem;margin-top:.9rem;display:none}
+.al-err{background:#fde8e8;color:#c0392b;border-radius:9px;padding:.7rem 1rem;font-size:.87rem;margin-top:.9rem;display:none}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.7rem}
+.stat-box{background:var(--bg);border:1.5px solid var(--border);border-radius:14px;padding:1.1rem;text-align:center}
+.stat-box .num{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:900;color:var(--green-dk)}
+.stat-box .lbl{font-size:.77rem;color:var(--muted);margin-top:.15rem}
+.course-list{display:flex;flex-direction:column;gap:.75rem}
+.course-row{display:flex;align-items:center;gap:1rem;padding:.95rem 1.1rem;background:var(--bg);border:1.5px solid var(--border);border-radius:12px}
+.course-ico{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.course-info{flex:1}
+.course-info h4{font-weight:700;font-size:.9rem;color:var(--green-dk);margin-bottom:.12rem}
+.course-info p{font-size:.79rem;color:var(--muted)}
+.cbadge{font-size:.71rem;font-weight:700;padding:.28rem .65rem;border-radius:20px;flex-shrink:0}
+.cb-ok{background:var(--green-pale);color:var(--green-dk)}
+.cb-soon{background:#fef3e2;color:#c0692b}
+.sec-row{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 0;border-bottom:1px solid var(--border);gap:1rem;flex-wrap:wrap}
+.sec-row:last-of-type{border-bottom:none}
+.sec-row h4{font-size:.9rem;font-weight:700;color:var(--green-dk);margin-bottom:.18rem}
+.sec-row p{font-size:.79rem;color:var(--muted)}
+.danger-box{border:1.5px solid #f5c6c6;border-radius:14px;padding:1.4rem;background:#fff9f9}
+.danger-box h4{font-size:.93rem;font-weight:700;color:#c0392b;margin-bottom:.38rem}
+.danger-box p{font-size:.84rem;color:#7a4040;line-height:1.6;margin-bottom:1.1rem}
+#del-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);align-items:center;justify-content:center;padding:20px}
+#del-overlay.open{display:flex}
+#del-modal{background:#fff;border-radius:18px;width:min(420px,96vw);padding:2.2rem;box-shadow:0 20px 60px rgba(0,0,0,.2);text-align:center}
+.del-ico{font-size:2.6rem;margin-bottom:.9rem}
+#del-modal h3{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:700;color:#c0392b;margin-bottom:.55rem}
+#del-modal p{color:#666;font-size:.88rem;line-height:1.6;margin-bottom:1.3rem}
+.del-input{width:100%;border:1.5px solid #f5c6c6;border-radius:9px;padding:.72rem 1rem;font-size:.9rem;font-family:inherit;margin-bottom:.9rem;outline:none;text-align:center}
+.del-input:focus{border-color:#c0392b}
+.del-btns{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap}
+footer{background:var(--green-dk);padding:30px 5vw;color:rgba(255,255,255,.5);text-align:center;font-size:.81rem;margin-top:auto}
+@media(max-width:640px){.pf-grid{grid-template-columns:1fr}.stat-row{grid-template-columns:1fr 1fr}.tab-btn{min-width:90px;font-size:.79rem}}
+</style></head><body>
+<nav>
+  <a href="index.html" class="nav-brand"><svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+  <rect width="40" height="40" rx="10" fill="#1a3d2b"/>
+  <path d="M8 30 L20 10 L32 30" stroke="#e8671a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M12 24 L28 24" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="20" cy="10" r="2.5" fill="#e8671a"/>
+</svg><span class="nav-brand-name">AçıqTəhsil</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Ana Səhifə</a></li>
+    <li><a href="kurslar.html">Kurslar</a></li>
+    <li><a href="video_dersler.html">Video Dərslər</a></li>
+    <li><a href="kommentler.html">Kommentlər</a></li>
+    <li><a href="bashvur.html" class="nav-cta">Başvur</a></li>
+  </ul>
+  <div id="at-nav-slot"></div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menyu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mob">
+  <a href="index.html" onclick="closeMob()">Ana Səhifə</a>
+  <a href="kurslar.html" onclick="closeMob()">Kurslar</a>
+  <a href="video_dersler.html" onclick="closeMob()">Video Dərslər</a>
+  <a href="kommentler.html" onclick="closeMob()">Kommentlər</a>
+  <a href="bashvur.html" onclick="closeMob()" style="color:var(--orange);font-weight:700">Başvur</a>
+</div>
+<script type="module" src="auth-modal.js"></script>
+<div class="page">
+  <div class="not-logged" id="view-out">
+    <div style="font-size:3rem">🔒</div>
+    <h2>Profili görmək üçün daxil olun</h2>
+    <p>Bu səhifəyə daxil olmaq üçün hesabınıza giriş etməlisiniz.</p>
+    <button class="btn-save" onclick="window.AT&&window.AT.openModal()" style="margin-top:.5rem">Daxil ol</button>
+  </div>
+  <div class="profile-header" id="view-header">
+    <div class="ph-banner"></div>
+    <div class="ph-avatar-wrap"><div class="ph-avatar" id="p-avatar">?</div></div>
+    <div class="ph-info"><div class="ph-name" id="p-name">Yüklənir...</div><div class="ph-email" id="p-email"></div></div>
+  </div>
+  <div class="tab-bar" id="view-tabs">
+    <button class="tab-btn active" onclick="showTab('general',this)">👤 Ümumi məlumat</button>
+    <button class="tab-btn" onclick="showTab('courses',this)">📚 Kurslarım</button>
+    <button class="tab-btn" onclick="showTab('security',this)">🔐 Təhlükəsizlik</button>
+    <button class="tab-btn dtab" onclick="showTab('danger',this)">⚠️ Hesabı sil</button>
+  </div>
+  <div class="tab-panel active" id="panel-general">
+    <div class="tp-title">Ümumi məlumat</div>
+    <p class="tp-sub">Şəxsi məlumatlarınızı idarə edin.</p>
+    <div class="pf-grid">
+      <div class="pf"><label>Ad Soyad</label><input type="text" id="p-display-name" placeholder="Adınız Soyadınız"/></div>
+      <div class="pf"><label>E-poçt (dəyişdirilmir)</label><input type="email" id="p-email-ro" readonly/></div>
+      <div class="pf"><label>Qeydiyyat tarixi</label><input type="text" id="p-created" readonly/></div>
+      <div class="pf"><label>Son giriş</label><input type="text" id="p-last" readonly/></div>
+      <div class="pf"><label>E-poçt statusu</label><input type="text" id="p-verified" readonly/></div>
+      <div class="pf"><label>Giriş metodu</label><input type="text" id="p-provider" readonly/></div>
+    </div>
+    <button class="btn-save" onclick="saveDisplayName()">Yadda saxla</button>
+    <div class="al-ok" id="gen-ok">Məlumatlar yeniləndi.</div>
+    <div class="al-err" id="gen-err"></div>
+  </div>
+  <div class="tab-panel" id="panel-courses">
+    <div class="tp-title">Kurslarım</div>
+    <p class="tp-sub">Daxil olduğunuz tədris proqramları.</p>
+    <div class="stat-row"><div class="stat-box"><div class="num">3</div><div class="lbl">Aktiv proqram</div></div><div class="stat-box"><div class="num">0</div><div class="lbl">Tamamlanmış</div></div><div class="stat-box"><div class="num">100%</div><div class="lbl">Pulsuz</div></div></div>
+    <div class="course-list">
+      <div class="course-row"><div class="course-ico" style="background:var(--green-pale)">📗</div><div class="course-info"><h4>9-cu sinif proqramı</h4><p>Azərbaycan dili · İngilis dili · Riyaziyyat</p></div><span class="cbadge cb-ok">Aktiv</span></div>
+      <div class="course-row"><div class="course-ico" style="background:var(--green-pale)">📘</div><div class="course-info"><h4>10-cu sinif proqramı</h4><p>Buraxılış + 4 Blok qrupu</p></div><span class="cbadge cb-ok">Aktiv</span></div>
+      <div class="course-row"><div class="course-ico" style="background:var(--green-pale)">📙</div><div class="course-info"><h4>11-ci sinif proqramı</h4><p>Buraxılış + 4 Blok qrupu</p></div><span class="cbadge cb-ok">Aktiv</span></div>
+      <div class="course-row" style="opacity:.6"><div class="course-ico" style="background:#fef3e2">🎥</div><div class="course-info"><h4>Video Dərslər</h4><p>Pulsuz və ödənişli seanslar</p></div><span class="cbadge cb-soon">Rezervasiya et</span></div>
+    </div>
+  </div>
+  <div class="tab-panel" id="panel-security">
+    <div class="tp-title">Təhlükəsizlik</div>
+    <p class="tp-sub">Hesabınızın təhlükəsizlik parametrləri.</p>
+    <div class="sec-row"><div><h4>Şifrəni dəyiş</h4><p>E-poçtunuza şifrə sıfırlama linki göndəriləcək.</p></div><button class="btn-sec" onclick="sendPassReset()">Sıfırlama linki göndər</button></div>
+    <div class="sec-row"><div><h4>E-poçt təsdiqləməsi</h4><p id="verify-status">Yüklənir...</p></div><button class="btn-sec" id="verify-btn" onclick="resendVerify()" style="display:none">Yenidən göndər</button></div>
+    <div class="sec-row"><div><h4>Çıxış et</h4><p>Bütün aktiv sessiyaları sonlandırır.</p></div><button class="btn-sec" onclick="signOutAll()">Çıxış et</button></div>
+    <div class="al-ok" id="sec-ok"></div><div class="al-err" id="sec-err"></div>
+  </div>
+  <div class="tab-panel" id="panel-danger">
+    <div class="tp-title" style="color:#c0392b">Hesabı sil</div>
+    <p class="tp-sub">Bu əməliyyat geri qaytarıla bilməz.</p>
+    <div class="danger-box">
+      <h4>Hesabı həmişəlik sil</h4>
+      <p>Hesabınızı silsəniz bütün məlumatlarınız silinəcək. Bu əməliyyat geri qaytarıla bilməz.</p>
+      <button class="btn-danger" onclick="openDelModal()">Hesabı sil</button>
+    </div>
+  </div>
+</div>
+<div id="del-overlay"><div id="del-modal">
+  <div class="del-ico">🗑️</div><h3>Hesabı sil</h3>
+  <p>Bu əməliyyat geri qaytarıla bilməz. Təsdiq etmək üçün <strong>SİL</strong> yazın.</p>
+  <input type="text" class="del-input" id="del-inp" placeholder="SİL yazın..."/>
+  <div class="del-btns"><button class="btn-sec" onclick="closeDelModal()">Ləğv et</button><button class="btn-danger" id="del-btn" onclick="doDelete()" disabled>Həmişəlik sil</button></div>
+  <div class="al-err" id="del-err" style="margin-top:.9rem"></div>
+</div></div>
+<footer>© 2026 AçıqTəhsil. Bütün hüquqlar qorunur.</footer>
+<script type="module">
+import { onAuthChange,logoutUser,resetPassword,getUserProfile } from './firebase-config.js';
+import { getAuth,updateProfile,sendEmailVerification,deleteUser } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { getFirestore,doc,setDoc,deleteDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+const auth=getAuth(),db=getFirestore();let _u=null;
+onAuthChange(async u=>{
+  _u=u;
+  const out=document.getElementById('view-out'),hdr=document.getElementById('view-header'),tabs=document.getElementById('view-tabs');
+  if(!u){out.classList.add('show');hdr.classList.remove('show');tabs.classList.remove('show');return;}
+  out.classList.remove('show');hdr.classList.add('show');tabs.classList.add('show');
+  document.getElementById('panel-general').classList.add('active');
+  const pr=await getUserProfile(u.uid).catch(()=>null);
+  const name=u.displayName||pr?.displayName||'';const email=u.email||'';
+  document.getElementById('p-avatar').textContent=(name||email).charAt(0).toUpperCase();
+  document.getElementById('p-name').textContent=name||email;
+  document.getElementById('p-email').textContent=email;
+  document.getElementById('p-display-name').value=name;
+  document.getElementById('p-email-ro').value=email;
+  document.getElementById('p-created').value=u.metadata?.creationTime?new Date(u.metadata.creationTime).toLocaleDateString('az-AZ'):'-';
+  document.getElementById('p-last').value=u.metadata?.lastSignInTime?new Date(u.metadata.lastSignInTime).toLocaleDateString('az-AZ'):'-';
+  document.getElementById('p-verified').value=u.emailVerified?'Tesdiqlenmisdir':'Tesdiqlenmeyib';
+  const prov=u.providerData?.map(p=>p.providerId)||[];
+  document.getElementById('p-provider').value=prov.includes('google.com')?'Google':'E-poct + Sifre';
+  const vs=document.getElementById('verify-status'),vb=document.getElementById('verify-btn');
+  if(u.emailVerified){vs.textContent='E-postunuz tesdiqlenmisdir.';vb.style.display='none';}
+  else{vs.textContent='E-postunuz henuz tesdiqlenmeyib.';vb.style.display='inline-block';}
+});
+window.showTab=function(tab,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');btn.classList.add('active');
+};
+window.saveDisplayName=async function(){
+  const name=document.getElementById('p-display-name').value.trim();if(!name||!_u)return;
+  const ok=document.getElementById('gen-ok'),err=document.getElementById('gen-err');
+  try{await updateProfile(_u,{displayName:name});await setDoc(doc(db,'users',_u.uid),{displayName:name},{merge:true});
+    document.getElementById('p-name').textContent=name;document.getElementById('p-avatar').textContent=name.charAt(0).toUpperCase();
+    ok.style.display='block';setTimeout(()=>ok.style.display='none',3000);}
+  catch(e){err.textContent='Xeta: '+e.message;err.style.display='block';setTimeout(()=>err.style.display='none',4000);}
+};
+window.sendPassReset=async function(){if(!_u?.email)return;const ok=document.getElementById('sec-ok'),err=document.getElementById('sec-err');
+  try{await resetPassword(_u.email);ok.textContent='Sifre sifirlama linki gondərildi: '+_u.email;ok.style.display='block';setTimeout(()=>ok.style.display='none',5000);}
+  catch(e){err.textContent='Xeta: '+e.message;err.style.display='block';}
+};
+window.resendVerify=async function(){if(!_u)return;const ok=document.getElementById('sec-ok');
+  try{await sendEmailVerification(_u);ok.textContent='Tesdiq e-postu gondərildi.';ok.style.display='block';setTimeout(()=>ok.style.display='none',5000);}
+  catch(e){document.getElementById('sec-err').textContent='Xeta: '+e.message;document.getElementById('sec-err').style.display='block';}
+};
+window.signOutAll=async function(){await logoutUser();window.location.href='index.html';};
+window.openDelModal=function(){document.getElementById('del-overlay').classList.add('open');document.getElementById('del-inp').value='';document.getElementById('del-btn').disabled=true;};
+window.closeDelModal=function(){document.getElementById('del-overlay').classList.remove('open');};
+document.getElementById('del-inp').addEventListener('input',e=>{document.getElementById('del-btn').disabled=e.target.value.trim()!=='SİL';});
+window.doDelete=async function(){if(!_u)return;const err=document.getElementById('del-err');
+  try{await deleteDoc(doc(db,'users',_u.uid)).catch(()=>{});await deleteUser(_u);window.location.href='index.html';}
+  catch(e){err.textContent=e.code==='auth/requires-recent-login'?'Hesabi silmek ucun yeniden daxil olun.':'Xeta: '+e.message;err.style.display='block';}
+};
+window.toggleMenu=function(){document.getElementById('mob').classList.toggle('open');};
+window.closeMob=function(){document.getElementById('mob').classList.remove('open');};
+</script></body></html>
