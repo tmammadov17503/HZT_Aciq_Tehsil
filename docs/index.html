@@ -55,6 +55,25 @@ footer ul a:hover{color:#fff}
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .65s,transform .65s}
 .reveal.visible{opacity:1;transform:none}
 
+/* ── SPLASH ── */
+#splash{position:fixed;inset:0;z-index:99999;background:#1a3d2b;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1.1rem;transition:opacity .5s ease,visibility .5s ease}
+#splash.hide{opacity:0;visibility:hidden}
+.sp-logo{animation:spPop .65s cubic-bezier(.34,1.56,.64,1) both}
+.sp-name{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:900;color:#fff;
+  animation:spFade .7s ease .25s both}
+.sp-sub{font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);animation:spFade .7s ease .42s both}
+.sp-dots{display:flex;gap:.45rem;margin-top:.35rem;animation:spFade .7s ease .55s both}
+.sp-dot{width:7px;height:7px;border-radius:50%;background:#e8671a}
+.sp-dot:nth-child(1){animation:spB 1s ease .65s infinite}
+.sp-dot:nth-child(2){animation:spB 1s ease .8s infinite}
+.sp-dot:nth-child(3){animation:spB 1s ease .95s infinite}
+@keyframes spPop{from{opacity:0;transform:scale(.45)}to{opacity:1;transform:scale(1)}}
+@keyframes spFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes spB{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+/* ── HERO ── */
 .hero{min-height:100vh;background:linear-gradient(155deg,#1a3d2b 0%,#0f2519 60%,#1a3d2b 100%);
   display:flex;align-items:center;padding:90px 5vw 60px}
 .hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;
@@ -75,37 +94,30 @@ footer ul a:hover{color:#fff}
 .btn-ghost:hover{border-color:#c8ddb0;color:#c8ddb0}
 .hero-cards{display:flex;flex-direction:column;gap:.9rem}
 .hc{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
-  border-radius:14px;padding:1.2rem 1.5rem;display:flex;align-items:center;gap:1rem;
-  backdrop-filter:blur(4px)}
+  border-radius:14px;padding:1.2rem 1.5rem;display:flex;align-items:center;gap:1rem}
 .hc-ico{width:44px;height:44px;border-radius:11px;background:var(--orange);
   display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
 .hc-num{font-family:'Fraunces',serif;font-size:1.55rem;font-weight:900;color:#fff;line-height:1}
 .hc-lbl{font-size:.77rem;color:rgba(255,255,255,.55);margin-top:.1rem}
 section{padding:80px 5vw}
 .sec{max-width:1100px;margin:0 auto}
-.stag{font-size:.73rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:var(--gmd);margin-bottom:.5rem}
-.stitle{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3.5vw,2.5rem);
-  font-weight:700;color:var(--gdk);margin-bottom:.9rem;line-height:1.2}
-.ssub{color:var(--muted);max-width:500px;font-size:.96rem;line-height:1.75;margin-bottom:2.2rem}
+.stag{font-size:.73rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gmd);margin-bottom:.5rem}
+.stitle{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;color:var(--gdk);margin-bottom:.9rem;line-height:1.2}
 .mission-bg{background:var(--glt)}
 .mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
 .mission-text p{color:var(--text);font-size:.95rem;line-height:1.8;margin-bottom:.9rem}
-.mission-quote{border-left:4px solid var(--orange);padding-left:1.1rem;margin-top:1.3rem;
-  font-style:italic;color:var(--gdk);font-size:.97rem;line-height:1.7}
+.mission-quote{border-left:4px solid var(--orange);padding-left:1.1rem;margin-top:1.3rem;font-style:italic;color:var(--gdk);font-size:.97rem;line-height:1.7}
 .val-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
 .vc{background:#fff;border-radius:13px;padding:1.3rem;box-shadow:0 2px 14px rgba(26,61,43,.07)}
 .vc .ico{font-size:1.6rem;margin-bottom:.55rem}
 .vc h4{font-size:.9rem;font-weight:700;color:var(--gdk);margin-bottom:.25rem}
 .vc p{font-size:.81rem;color:var(--muted);line-height:1.6}
 .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.7rem}
-.rc{border-radius:16px;overflow:hidden;background:var(--card);
-  border:1.5px solid var(--bdr);transition:all .3s}
+.rc{border-radius:16px;overflow:hidden;background:var(--card);border:1.5px solid var(--bdr);transition:all .3s}
 .rc:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(26,61,43,.11)}
 .rc-img{height:172px;display:flex;align-items:center;justify-content:center;font-size:3.2rem}
 .rc-body{padding:1.4rem}
-.rc-body h3{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:700;
-  color:var(--gdk);margin-bottom:.45rem}
+.rc-body h3{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:700;color:var(--gdk);margin-bottom:.45rem}
 .rc-body p{font-size:.85rem;color:var(--muted);line-height:1.65;margin-bottom:.9rem}
 .rc-link{font-size:.84rem;font-weight:700;color:var(--orange);text-decoration:none}
 .why-bg{background:var(--gdk)}
@@ -113,32 +125,33 @@ section{padding:80px 5vw}
 .why-hd h2{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:700;color:#fff}
 .why-hd p{color:rgba(255,255,255,.55);margin-top:.4rem}
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
-.wc{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.09);
-  border-radius:14px;padding:1.7rem 1.3rem;text-align:center}
-.wc:hover{background:rgba(255,255,255,.12)}
+.wc{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:1.7rem 1.3rem;text-align:center}
 .wc .ico{font-size:1.9rem;margin-bottom:.7rem}
 .wc h4{font-size:.92rem;font-weight:700;color:#c8ddb0;margin-bottom:.35rem}
 .wc p{font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.65}
-.cta-band{background:var(--gpale);border-top:2px solid var(--glt);border-bottom:2px solid var(--glt);
-  text-align:center;padding:68px 5vw}
-.cta-band h2{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);
-  font-weight:700;color:var(--gdk);margin-bottom:.7rem}
+.cta-band{background:var(--gpale);border-top:2px solid var(--glt);border-bottom:2px solid var(--glt);text-align:center;padding:68px 5vw}
+.cta-band h2{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;color:var(--gdk);margin-bottom:.7rem}
 .cta-band p{color:var(--muted);font-size:.96rem;margin-bottom:1.9rem}
 .cta-btns{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
-.btn-dk{background:var(--gdk);color:#fff;padding:.82rem 1.9rem;border-radius:8px;
-  font-weight:700;font-size:.9rem;text-decoration:none;transition:opacity .2s}
+.btn-dk{background:var(--gdk);color:#fff;padding:.82rem 1.9rem;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;transition:opacity .2s}
 .btn-dk:hover{opacity:.86}
-@media(max-width:860px){
-  .hero-inner,.mission-grid{grid-template-columns:1fr}
-  .res-grid{grid-template-columns:1fr 1fr}
-  .why-grid{grid-template-columns:1fr 1fr}
-  .val-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:480px){
-  .res-grid,.why-grid,.val-grid{grid-template-columns:1fr}
-}
+@media(max-width:860px){.hero-inner,.mission-grid{grid-template-columns:1fr}.res-grid{grid-template-columns:1fr 1fr}.why-grid{grid-template-columns:1fr 1fr}.val-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.res-grid,.why-grid,.val-grid{grid-template-columns:1fr}}
 </style>
 </head><body>
+
+<div id="splash">
+  <svg class="sp-logo" width="68" height="68" viewBox="0 0 40 40" fill="none">
+    <rect width="40" height="40" rx="9" fill="#1a3d2b"/>
+    <path d="M9 30 L20 11 L31 30" stroke="#e8671a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M13 24 L27 24" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="20" cy="11" r="2.5" fill="#e8671a"/>
+  </svg>
+  <div class="sp-name">AçıqTəhsil</div>
+  <div class="sp-sub">Pulsuz Rəqəmsal Təhsil</div>
+  <div class="sp-dots"><div class="sp-dot"></div><div class="sp-dot"></div><div class="sp-dot"></div></div>
+</div>
+
 <nav>
   <a href="index.html" class="nav-brand"><svg width="30" height="30" viewBox="0 0 40 40" fill="none">
 <rect width="40" height="40" rx="9" fill="#1a3d2b"/>
@@ -261,10 +274,14 @@ section{padding:80px 5vw}
 </footer>
 <script>
 function closeMob(){document.getElementById('mobmenu').classList.remove('open')}
-document.querySelectorAll('.reveal').forEach((el,i)=>{
-  new IntersectionObserver(([e])=>{
-    if(e.isIntersecting){setTimeout(()=>el.classList.add('visible'),i*60);} 
+document.querySelectorAll('.reveal').forEach(function(el,i){
+  new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){setTimeout(function(){el.classList.add('visible')},i*60);}}); 
   },{threshold:.1}).observe(el);
 });
+setTimeout(function(){
+  var s=document.getElementById('splash');
+  if(s){s.classList.add('hide');setTimeout(function(){s.remove();},520);}
+},1500);
 </script>
 </body></html>
