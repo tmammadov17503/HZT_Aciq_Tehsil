@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Video Dərslər | AçıqTəhsil</title>
+<link rel="icon" type="image/svg+xml" href="logo.svg"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f0e8;--nav:#fff;--gdk:#1a3d2b;--gmd:#2d6a4f;
+  --glt:#c8ddb0;--gpale:#eef5e8;--orange:#e8671a;
+  --text:#1a2744;--muted:#6b7a5e;--card:#fff;--bdr:#d0dcc0;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav);
+  box-shadow:0 1px 12px rgba(0,0,0,.07);display:flex;align-items:center;
+  justify-content:space-between;padding:0 5vw;height:66px;gap:1rem}
+.nav-brand{display:flex;align-items:center;gap:.5rem;text-decoration:none;flex-shrink:0}
+.nav-brand-name{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;color:var(--gdk)}
+.nav-links{display:flex;gap:1.5rem;list-style:none;align-items:center;flex:1;justify-content:center}
+.nav-links a{text-decoration:none;color:var(--text);font-size:.87rem;font-weight:500;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--gdk)}
+.nav-cta{background:var(--orange)!important;color:#fff!important;padding:.4rem 1.1rem;
+  border-radius:6px;font-weight:700!important}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;
+  padding:6px;cursor:pointer;flex-shrink:0}
+.hamburger span{display:block;width:24px;height:2px;background:var(--gdk);border-radius:2px}
+.mob{display:none;position:fixed;top:66px;left:0;right:0;z-index:99;
+  background:#fff;padding:1rem 5vw;flex-direction:column;
+  border-bottom:2px solid var(--glt);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.mob.open{display:flex}
+.mob a{color:var(--text);text-decoration:none;font-size:.95rem;font-weight:500;
+  padding:.75rem 0;border-bottom:1px solid var(--bdr)}
+.mob a:last-child{border-bottom:none;color:var(--orange);font-weight:700}
+@media(max-width:860px){.nav-links{display:none}.hamburger{display:flex}}
+
+footer{background:var(--gdk);padding:48px 5vw 24px;color:rgba(255,255,255,.55)}
+.ft-inner{max-width:1100px;margin:0 auto}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem}
+.ft-name{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.ft-desc{font-size:.84rem;line-height:1.7;max-width:260px}
+footer h5{color:#fff;font-size:.78rem;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;margin-bottom:.8rem}
+footer ul{list-style:none;display:flex;flex-direction:column;gap:.45rem}
+footer ul a{color:rgba(255,255,255,.55);text-decoration:none;font-size:.86rem;transition:color .2s}
+footer ul a:hover{color:#fff}
+.ft-contact p{font-size:.86rem;margin-bottom:.4rem}
+.ft-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:1.2rem;
+  text-align:center;font-size:.79rem}
+@media(max-width:760px){.ft-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.ft-grid{grid-template-columns:1fr}}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s,transform .65s}
+.reveal.visible{opacity:1;transform:none}
+
+.page-hero{padding:110px 5vw 56px;background:linear-gradient(155deg,#1a3d2b,#0f2519);text-align:center}
+.page-hero .tag{display:inline-block;background:rgba(200,221,176,.18);border:1px solid rgba(200,221,176,.35);color:#c8ddb0;font-size:.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:.32rem .85rem;border-radius:20px;margin-bottom:.9rem}
+.page-hero h1{font-family:'Fraunces',serif;font-size:clamp(2.1rem,5vw,3.2rem);font-weight:900;color:#fff}
+.page-hero p{color:rgba(255,255,255,.65);margin-top:.55rem;font-size:.96rem;max-width:500px;margin-left:auto;margin-right:auto}
+.content{max-width:1100px;margin:0 auto;padding:56px 5vw 80px}
+
+.stabs{display:flex;background:var(--gpale);border:2px solid var(--glt);border-radius:13px;padding:.32rem;margin-bottom:2.8rem;gap:.35rem}
+.stab{flex:1;padding:.72rem;border:none;border-radius:9px;background:none;font-family:inherit;
+  font-size:.93rem;font-weight:600;cursor:pointer;color:var(--muted);transition:all .2s;text-align:center}
+.stab.active{background:var(--gdk);color:#fff}
+.stab:hover:not(.active){background:var(--glt)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem}
+.vc{border-radius:16px;overflow:hidden;background:var(--card);border:1.5px solid var(--bdr);transition:all .3s}
+.vc:hover{transform:translateY(-5px);box-shadow:0 14px 40px rgba(26,61,43,.12)}
+.vc-img{height:178px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative}
+.vc-badge{position:absolute;top:12px;right:12px;background:var(--gdk);color:#fff;font-size:.69rem;font-weight:700;padding:.26rem .68rem;border-radius:20px}
+.vc-body{padding:1.4rem}
+.vc-cat{font-size:.71rem;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--gmd);margin-bottom:.38rem}
+.vc-body h3{font-family:'Fraunces',serif;font-size:1.08rem;font-weight:700;color:var(--gdk);margin-bottom:.48rem}
+.vc-body p{font-size:.84rem;color:var(--muted);line-height:1.65;margin-bottom:1.1rem}
+.btn-join{display:block;text-align:center;background:var(--gdk);color:#fff;padding:.72rem;border-radius:9px;font-weight:600;font-size:.88rem;transition:background .2s;cursor:pointer;border:none;width:100%;font-family:inherit}
+.btn-join:hover{background:var(--orange)}
+.svc-status{position:absolute;bottom:11px;left:11px;font-size:.69rem;font-weight:700;padding:.26rem .72rem;border-radius:20px}
+.s-open{background:rgba(45,106,79,.2);color:var(--gdk);border:1px solid rgba(45,106,79,.3)}
+.s-soon{background:rgba(232,103,26,.14);color:var(--orange);border:1px solid rgba(232,103,26,.22)}
+.svc-price{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:700;color:var(--gdk);margin-bottom:1.1rem}
+.svc-price small{font-size:.78rem;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400}
+.btn-book{display:block;text-align:center;background:var(--orange);color:#fff;padding:.72rem;border-radius:9px;font-weight:600;font-size:.88rem;transition:opacity .2s;cursor:pointer;border:none;width:100%;font-family:inherit}
+.btn-book:hover{opacity:.86}
+.overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.48);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:16px}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:18px;width:min(430px,96vw);padding:2.3rem 2rem;
+  box-shadow:0 28px 70px rgba(0,0,0,.18);position:relative;animation:mIn .28s ease both}
+@keyframes mIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.modal-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--muted)}
+.modal-title{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:700;color:var(--gdk);margin-bottom:.28rem}
+.modal-sub{color:var(--muted);font-size:.86rem;margin-bottom:1.5rem;line-height:1.6}
+.mf{display:flex;flex-direction:column;gap:.3rem;margin-bottom:1.1rem}
+.mf label{font-size:.77rem;font-weight:600;color:var(--text)}
+.mf input{border:1.5px solid var(--bdr);border-radius:9px;padding:.7rem 1rem;font-size:.92rem;font-family:inherit;color:var(--text);outline:none;transition:border-color .2s;letter-spacing:.05em;text-transform:uppercase}
+.mf input:focus{border-color:var(--gdk)}
+.mf input[readonly]{background:#f8f6f0;color:var(--muted);text-transform:none}
+.mf-hint{font-size:.74rem;color:var(--muted);margin-top:.18rem}
+.mbtn{width:100%;background:var(--gdk);color:#fff;border:none;padding:.86rem;border-radius:9px;font-weight:700;font-size:.93rem;cursor:pointer;font-family:inherit;transition:opacity .2s;margin-top:.1rem}
+.mbtn:hover{opacity:.86}
+.m-err{background:#fde8e8;color:#c0392b;border-radius:8px;padding:.58rem .88rem;font-size:.83rem;margin-bottom:.7rem;display:none}
+.m-ok{background:var(--gpale);color:var(--gdk);border-radius:8px;padding:.58rem .88rem;font-size:.83rem;margin-bottom:.7rem;display:none}
+.bm-body{display:grid;grid-template-columns:1fr 1fr 240px;gap:1.2rem;padding:1.4rem 1.8rem 1.8rem}
+.bm-head{padding:1.6rem 1.8rem 0;display:flex;align-items:flex-start;justify-content:space-between}
+.bm-head h2{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700;color:var(--gdk)}
+.bm-head p{color:var(--muted);font-size:.83rem;margin-top:.18rem}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem}
+.cal-nav h3{font-weight:700;font-size:.95rem;color:var(--text)}
+.cal-arr{background:none;border:1.5px solid var(--bdr);border-radius:7px;width:28px;height:28px;cursor:pointer;color:var(--text);font-size:.85rem;transition:all .18s}
+.cal-arr:hover{border-color:var(--orange);color:var(--orange)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cdow{font-size:.68rem;font-weight:700;text-align:center;color:var(--muted);padding:.22rem 0}
+.cday{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.78rem;cursor:pointer;border:none;background:transparent;color:var(--text);position:relative;transition:all .16s}
+.cday:hover:not(.empty):not(.past){background:var(--gpale);color:var(--gdk)}
+.cday.sel{background:var(--orange)!important;color:#fff!important;font-weight:700}
+.cday.today{border:2px solid var(--orange)}
+.cday.past{color:#ccc;cursor:not-allowed}
+.cday.slots::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:var(--orange)}
+.tw h4{font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:.65rem}
+.tg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.38rem}
+.ts{border:1.5px solid var(--bdr);border-radius:7px;padding:.46rem .18rem;text-align:center;font-size:.81rem;font-weight:600;cursor:pointer;transition:all .16s;background:#fff;color:var(--text)}
+.ts:hover{border-color:var(--orange);color:var(--orange)}
+.ts.sel{background:var(--orange);border-color:var(--orange);color:#fff}
+.dp{background:#fff;border-radius:12px;padding:1.2rem;border:1.5px solid var(--bdr)}
+.dp h4{font-family:'Fraunces',serif;font-size:.94rem;font-weight:700;color:var(--gdk);margin-bottom:.8rem}
+.dp-row{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.4rem;gap:.4rem}
+.dp-row span:first-child{color:var(--muted)}
+.dp-row span:last-child{font-weight:600;color:var(--text);text-align:right}
+.dp-div{border:none;border-top:1px solid var(--bdr);margin:.6rem 0}
+.btn-next{width:100%;background:var(--orange);color:#fff;border:none;padding:.78rem;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;margin-top:.8rem;font-family:inherit;transition:opacity .2s}
+.btn-next:hover{opacity:.86}
+.btn-next:disabled{background:#ddd;color:#999;cursor:not-allowed;opacity:1}
+.cf{display:none;padding:2.5rem;text-align:center}
+.cf .ico{font-size:3.2rem;margin-bottom:.9rem}
+.cf h2{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;color:var(--gdk);margin-bottom:.6rem}
+.cf p{color:var(--muted);font-size:.9rem;line-height:1.7;margin-bottom:1.3rem}
+.cf-box{background:var(--gpale);border-radius:11px;padding:1rem 1.3rem;text-align:left;margin:0 auto 1.3rem;max-width:320px}
+.cf-row{font-size:.86rem;color:var(--text);margin-bottom:.3rem}
+.cf-row strong{color:var(--gdk)}
+.btn-done{background:var(--gdk);color:#fff;border:none;padding:.78rem 1.9rem;border-radius:9px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;transition:opacity .2s}
+.btn-done:hover{opacity:.86}
+#book-modal{width:min(920px,97vw);max-height:92vh;overflow-y:auto;background:var(--bg)}
+@media(max-width:860px){.grid3{grid-template-columns:1fr 1fr}.bm-body{grid-template-columns:1fr}}
+@media(max-width:480px){.grid3{grid-template-columns:1fr}}
+</style>
+</head><body>
+<nav>
+  <a href="index.html" class="nav-brand"><svg width="30" height="30" viewBox="0 0 40 40" fill="none">
+<rect width="40" height="40" rx="9" fill="#1a3d2b"/>
+<path d="M9 30 L20 11 L31 30" stroke="#e8671a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M13 24 L27 24" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="20" cy="11" r="2.5" fill="#e8671a"/>
+</svg><span class="nav-brand-name">AçıqTəhsil</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Ana Səhifə</a></li>
+    <li><a href="kurslar.html">Kurslar</a></li>
+    <li><a href="video_dersler.html" class=active>Video Dərslər</a></li>
+    <li><a href="kommentler.html">Kommentlər</a></li>
+    <li><a href="bashvur.html" class="nav-cta">Başvur</a></li>
+  </ul>
+  <div id="at-nav-slot"></div>
+  <button class="hamburger" onclick="document.getElementById('mobmenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mob" id="mobmenu">
+  <a href="index.html" onclick="closeMob()">Ana Səhifə</a>
+  <a href="kurslar.html" onclick="closeMob()">Kurslar</a>
+  <a href="video_dersler.html" onclick="closeMob()">Video Dərslər</a>
+  <a href="kommentler.html" onclick="closeMob()">Kommentlər</a>
+  <a href="bashvur.html">Başvur</a>
+</div>
+<script type="module" src="auth-modal.js"></script>
+<div class="page-hero">
+  <div class="tag">🎥 Xidmətlər</div>
+  <h1>Video Dərslər</h1>
+  <p>Peşəkar müəllimlər tərəfindən hazırlanmış pulsuz və ödənişli kurslar.</p>
+</div>
+<div class="content">
+  <div class="stabs reveal">
+    <button class="stab active" onclick="showSec('pulsuz',this)">🆓 Pulsuz Dərslər</button>
+    <button class="stab" onclick="showSec('pullu',this)">💳 Ödənişli Seanslar</button>
+  </div>
+  <div id="sec-pulsuz">
+    <div class="grid3">
+      <div class="vc reveal"><div class="vc-img" style="background:linear-gradient(135deg,#2d6a4f,#1a3d2b)">🧮<span class="vc-badge">Pulsuz</span></div><div class="vc-body"><div class="vc-cat">Riyaziyyat</div><h3>Riyaziyyat Dərsləri</h3><p>Əsaslardan qabaqcıl səviyyəyə qədər riyaziyyat video dərsləri. Cəbr, həndəsə, analiz.</p><button class="btn-join" data-course="Riyaziyyat Dərsləri">Qoşul</button></div></div>
+      <div class="vc reveal"><div class="vc-img" style="background:linear-gradient(135deg,#1a5c3e,#2d6a4f)">📖<span class="vc-badge">Pulsuz</span></div><div class="vc-body"><div class="vc-cat">Azərbaycan dili</div><h3>Dil Dərsləri</h3><p>Azərbaycan dili qrammatikası, orfoqrafiyası və mətn təhlili üzrə video dərslər.</p><button class="btn-join" data-course="Dil Dərsləri">Qoşul</button></div></div>
+      <div class="vc reveal"><div class="vc-img" style="background:linear-gradient(135deg,#1a3d2b,#1a5c3e)">🔬<span class="vc-badge">Pulsuz</span></div><div class="vc-body"><div class="vc-cat">Elm fənləri</div><h3>Elm Dərsləri</h3><p>Fizika, kimya, biologiya üzrə interaktiv video dərslər. Buraxılış imtahanlarına hazırlıq.</p><button class="btn-join" data-course="Elm Dərsləri">Qoşul</button></div></div>
+    </div>
+  </div>
+  <div id="sec-pullu" style="display:none">
+    <div class="grid3">
+      <div class="vc reveal"><div class="vc-img" style="background:linear-gradient(135deg,#2d6a4f,#1a3d2b)">🧮<span class="svc-status s-open">Mövcuddur</span></div><div class="vc-body"><div class="vc-cat">Riyaziyyat</div><h3>Math Tutoring</h3><p>Əsaslardan qabaqcıl səviyyəyə qədər riyaziyyat. 1-ə-1 onlayn seans.</p><div class="svc-price">70 ₼ <small>/ seans (1.5 saat)</small></div><button class="btn-book" data-svc="Math Tutoring" data-price="70 ₼">Rezerv Et</button></div></div>
+      <div class="vc reveal"><div class="vc-img" style="background:linear-gradient(135deg,#1a5c3e,#2d6a4f)">📖<span class="svc-status s-open">Mövcuddur</span></div><div class="vc-body"><div class="vc-cat">Akademik Bacarıqlar</div><h3>Study Skills Course</h3><p>Effektli öyrənmə üsulları, vaxt idarəetməsi və imtahana hazırlıq.</p><div class="svc-price">50 ₼ <small>/ seans (1 saat)</small></div><button class="btn-book" data-svc="Study Skills" data-price="50 ₼">Rezerv Et</button></div></div>
+      <div class="vc reveal"><div class="vc-img" style="background:linear-gradient(135deg,#1a3d2b,#1a5c3e)">🔬<span class="svc-status s-soon">Tezliklə</span></div><div class="vc-body"><div class="vc-cat">Elm</div><h3>Science Workshops</h3><p>Fizika, kimya, biologiya üzrə interaktiv workshops.</p><div class="svc-price">60 ₼ <small>/ seans (1.5 saat)</small></div><button class="btn-book" data-svc="Science Workshops" data-price="60 ₼">Rezerv Et</button></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="fin-ov">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('fin-ov').classList.remove('open')">✕</button>
+    <div class="modal-title">🆓 Pulsuz Dərslərə Qoşul</div>
+    <p class="modal-sub">FIN kodunuzu daxil edin. FIN kod şəxsiyyət vəsiqənizin arxa tərəfindədir.</p>
+    <div class="m-err" id="fin-err"></div>
+    <div class="m-ok" id="fin-ok"></div>
+    <div class="mf"><label>FIN Kod</label><input type="text" id="fin-inp" placeholder="XXXXXXX" maxlength="7"/><span class="mf-hint">7 simvol — hərflər və rəqəmlər</span></div>
+    <div class="mf"><label>Kurs</label><input type="text" id="fin-course" readonly/></div>
+    <button class="mbtn" onclick="submitFin()">Təsdiqlə və Qoşul</button>
+  </div>
+</div>
+
+<div class="overlay" id="book-ov">
+  <div class="modal" id="book-modal">
+    <div id="book-main">
+      <div class="bm-head">
+        <div><h2>Rezervasiya</h2><p>Tarix və saat seçin — GMT+4</p></div>
+        <button class="modal-close" onclick="document.getElementById('book-ov').classList.remove('open')">✕</button>
+      </div>
+      <div class="bm-body">
+        <div>
+          <div class="cal-nav"><button class="cal-arr" onclick="prevM()">‹</button><h3 id="cal-lbl"></h3><button class="cal-arr" onclick="nextM()">›</button></div>
+          <div class="cal-grid" id="cal-grid"></div>
+        </div>
+        <div class="tw"><h4 id="tw-lbl">Tarix seçin</h4><div class="tg" id="tg"></div></div>
+        <div class="dp">
+          <h4>Detallar</h4>
+          <div class="dp-row"><span>Xidmət</span><span id="dp-svc">—</span></div>
+          <div class="dp-row"><span>Qiymət</span><span id="dp-price">—</span></div>
+          <div class="dp-row"><span>Tarix</span><span id="dp-date">—</span></div>
+          <div class="dp-row"><span>Saat</span><span id="dp-time">—</span></div>
+          <div class="dp-div"></div>
+          <div class="dp-row"><span style="font-weight:700">Cəmi</span><span id="dp-total" style="font-weight:700;color:var(--gdk)">—</span></div>
+          <button class="btn-next" id="btn-next" onclick="confirmBook()" disabled>Növbəti →</button>
+        </div>
+      </div>
+    </div>
+    <div class="cf" id="book-cf">
+      <div class="ico">🎉</div><h2>Rezervasiya Uğurlu!</h2>
+      <p>Seansınız uğurla qeydə alındı.</p>
+      <div class="cf-box">
+        <div class="cf-row">📚 <strong id="cf-svc"></strong></div>
+        <div class="cf-row">📅 <strong id="cf-date"></strong></div>
+        <div class="cf-row">⏰ <strong id="cf-time"></strong></div>
+        <div class="cf-row">💰 <strong id="cf-price"></strong></div>
+      </div>
+      <button class="btn-done" onclick="document.getElementById('book-ov').classList.remove('open')">Bağla</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-inner">
+    <div class="ft-grid">
+      <div><div class="ft-name">AçıqTəhsil</div><p class="ft-desc">Azərbaycanın pulsuz rəqəmsal təhsil platforması.</p></div>
+      <div><h5>Keçidlər</h5><ul>
+        <li><a href="index.html">Ana Səhifə</a></li>
+        <li><a href="kurslar.html">Kurslar</a></li>
+        <li><a href="video_dersler.html">Video Dərslər</a></li>
+        <li><a href="kommentler.html">Kommentlər</a></li>
+        <li><a href="bashvur.html">Başvur</a></li>
+      </ul></div>
+      <div><h5>Əlaqə</h5><div class="ft-contact">
+        <p>📍 Bakı, Azərbaycan</p>
+        <p>✉️ muraciet@aciqtehsil.az</p>
+        <p>📞 +994 50 123 45 67</p>
+      </div></div>
+    </div>
+    <div class="ft-bottom">© 2026 AçıqTəhsil. Bütün hüquqlar qorunur.</div>
+  </div>
+</footer>
+<script type="module">
+import { onAuthChange, saveBooking } from './firebase-config.js';
+let _u=null; onAuthChange(u=>{ _u=u; });
+window.showSec=function(s,btn){
+  document.getElementById('sec-pulsuz').style.display=s==='pulsuz'?'block':'none';
+  document.getElementById('sec-pullu').style.display=s==='pullu'?'block':'none';
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+};
+let _fc='';
+document.querySelectorAll('.btn-join').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    function open(){_fc=btn.dataset.course;document.getElementById('fin-course').value=_fc;document.getElementById('fin-inp').value='';document.getElementById('fin-err').style.display='none';document.getElementById('fin-ok').style.display='none';document.getElementById('fin-ov').classList.add('open');setTimeout(()=>document.getElementById('fin-inp').focus(),100);}
+    if(_u){open();return;}
+    if(window.AT){AT.requireLogin(open);}else{window.addEventListener('at-ready',()=>AT.requireLogin(open),{once:true});}
+  });
+});
+window.submitFin=function(){
+  const fin=document.getElementById('fin-inp').value.trim().toUpperCase();
+  const err=document.getElementById('fin-err'),ok=document.getElementById('fin-ok');
+  if(!/^[A-Z0-9]{7}$/.test(fin)){err.textContent='FIN kod 7 simvoldan ibarət olmalıdır (hərf və rəqəm).';err.style.display='block';ok.style.display='none';return;}
+  err.style.display='none';ok.textContent='FIN kod təsdiqləndi! '+_fc+' kursuna qoşuldunuz.';ok.style.display='block';
+  setTimeout(()=>document.getElementById('fin-ov').classList.remove('open'),2200);
+};
+const MO=['Yanvar','Fevral','Mart','Aprel','May','İyun','İyul','Avqust','Sentyabr','Oktyabr','Noyabr','Dekabr'];
+const DW=['B.e','Ç.a','Ç','C.a','C','Ş','B'];
+const TS=['10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30'];
+let _sv='',_sp='',_sd=null,_st='',_cy,_cm;
+document.querySelectorAll('.btn-book').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    function open(){
+      _sv=btn.dataset.svc;_sp=btn.dataset.price;_sd=null;_st='';
+      const n=new Date();_cy=n.getFullYear();_cm=n.getMonth();
+      document.getElementById('dp-svc').textContent=_sv;document.getElementById('dp-price').textContent=_sp;
+      document.getElementById('dp-date').textContent='—';document.getElementById('dp-time').textContent='—';
+      document.getElementById('dp-total').textContent=_sp;document.getElementById('btn-next').disabled=true;
+      document.getElementById('book-main').style.display='block';document.getElementById('book-cf').style.display='none';
+      document.getElementById('book-ov').classList.add('open');renderCal();
+    }
+    if(_u){open();return;}
+    if(window.AT){AT.requireLogin(open);}else{window.addEventListener('at-ready',()=>AT.requireLogin(open),{once:true});}
+  });
+});
+window.prevM=function(){_cm--;if(_cm<0){_cm=11;_cy--;}renderCal();};
+window.nextM=function(){_cm++;if(_cm>11){_cm=0;_cy++;}renderCal();};
+function renderCal(){
+  document.getElementById('cal-lbl').textContent=MO[_cm]+' '+_cy;
+  const g=document.getElementById('cal-grid');
+  let h=DW.map(d=>`<div class="cdow">${d}</div>`).join('');
+  const first=new Date(_cy,_cm,1);const tot=new Date(_cy,_cm+1,0).getDate();
+  let sd=(first.getDay()+6)%7;
+  for(let i=0;i<sd;i++)h+=`<div class="cday empty"></div>`;
+  const now=new Date();now.setHours(0,0,0,0);
+  for(let d=1;d<=tot;d++){
+    const dt=new Date(_cy,_cm,d);const ip=dt<now,iw=dt.getDay()===0||dt.getDay()===6;
+    const it=dt.getTime()===now.getTime(),hs=!ip&&!iw;
+    const isel=_sd&&_sd.getTime()===dt.getTime();
+    let cls='cday'+(ip?' past':'')+(it?' today':'')+(hs?' slots':'')+(isel?' sel':'');
+    h+=`<button class="${cls}"${hs?` data-d="${d}"`:''}>${d}</button>`;
+  }
+  g.innerHTML=h;
+  g.querySelectorAll('[data-d]').forEach(b=>b.addEventListener('click',()=>selDay(parseInt(b.dataset.d))));
+}
+function selDay(d){
+  _sd=new Date(_cy,_cm,d);_st='';
+  document.getElementById('dp-date').textContent=d+' '+MO[_cm]+' '+_cy;
+  document.getElementById('dp-time').textContent='—';document.getElementById('btn-next').disabled=true;
+  renderCal();renderTimes();
+}
+function renderTimes(){
+  const lbl=document.getElementById('tw-lbl'),g=document.getElementById('tg');
+  if(!_sd){lbl.textContent='Tarix seçin';g.innerHTML='';return;}
+  lbl.textContent=_sd.getDate()+' '+MO[_sd.getMonth()]+' üçün vaxtlar';
+  g.innerHTML=TS.map(t=>`<button class="ts${_st===t?' sel':''}" data-t="${t}">${t}</button>`).join('');
+  g.querySelectorAll('[data-t]').forEach(b=>b.addEventListener('click',()=>{_st=b.dataset.t;document.getElementById('dp-time').textContent=_st;document.getElementById('btn-next').disabled=false;renderTimes();}));
+}
+window.confirmBook=async function(){
+  document.getElementById('book-main').style.display='none';document.getElementById('book-cf').style.display='block';
+  document.getElementById('cf-svc').textContent=_sv;
+  document.getElementById('cf-date').textContent=_sd.getDate()+' '+MO[_sd.getMonth()]+' '+_sd.getFullYear();
+  document.getElementById('cf-time').textContent=_st;document.getElementById('cf-price').textContent=_sp;
+  try{if(_u)await saveBooking({userId:_u.uid,service:_sv,price:_sp,date:_sd.toISOString(),time:_st});}catch(e){console.log(e);}
+};
+</script>
+<script>
+function closeMob(){document.getElementById('mobmenu').classList.remove('open')}
+document.querySelectorAll('.reveal').forEach((el,i)=>{
+  new IntersectionObserver(([e])=>{
+    if(e.isIntersecting){setTimeout(()=>el.classList.add('visible'),i*60);} 
+  },{threshold:.1}).observe(el);
+});
+</script>
+</body></html>
